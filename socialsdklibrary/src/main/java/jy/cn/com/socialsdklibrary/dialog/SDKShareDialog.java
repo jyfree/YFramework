@@ -1,0 +1,80 @@
+package jy.cn.com.socialsdklibrary.dialog;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.util.Pair;
+import android.view.Gravity;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.GridView;
+import android.widget.ImageView;
+
+import java.util.List;
+
+import jy.cn.com.socialsdklibrary.R;
+import jy.cn.com.socialsdklibrary.adapter.SDKAdapter2Share;
+import jy.cn.com.socialsdklibrary.bean.SDKShareChannel;
+import jy.cn.com.socialsdklibrary.util.SDKScreenUtil;
+
+/**
+ * Administrator
+ * created at 2015/12/14 14:54
+ * TODO:分享对话框
+ */
+public class SDKShareDialog extends Dialog {
+
+    private List<SDKShareChannel> dataList;
+    private OnSDKShareListener sdkShareListener;
+
+
+    public SDKShareDialog(Context context, int themeResId, List<SDKShareChannel> dataList, OnSDKShareListener sdkShareListener) {
+        super(context, themeResId);
+        this.dataList = dataList;
+        this.sdkShareListener = sdkShareListener;
+        initContentView(context);
+        initUI();
+    }
+
+    private void initContentView(Context context) {
+
+        setContentView(R.layout.social_sdk_dialog_share);
+
+        getWindow().setGravity(Gravity.BOTTOM);
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+
+        Pair<Integer, Integer> res = SDKScreenUtil.getResolution(context);
+        lp.width = res.first;
+        getWindow().setAttributes(lp);
+        this.setCanceledOnTouchOutside(true);
+        this.setCancelable(true);
+    }
+
+    private void initUI() {
+        final ImageView iv_close = findViewById(R.id.social_sdk_close);
+        iv_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+        final GridView mGridView = findViewById(R.id.social_sdk_gridView);
+
+        mGridView.setAdapter(new SDKAdapter2Share(getContext(), dataList));
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                SDKShareDialog.this.dismiss();
+                if (sdkShareListener != null) {
+                    sdkShareListener.onSelectShare(dataList.get(position));
+                }
+            }
+        });
+    }
+
+
+    public interface OnSDKShareListener {
+        void onSelectShare(SDKShareChannel sdkShareChannel);
+    }
+}

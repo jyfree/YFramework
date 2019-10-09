@@ -1,0 +1,47 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs', rootProject.ext.socialsdklib_path
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation rootProject.ext.android_v7
+    //微信
+    api 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    //支付宝
+    api(name: 'alipaySdk-15.6.2-20190416165036', ext: 'aar')
+    //微博
+    api 'com.sina.weibo.sdk:core:4.3.6:openDefaultRelease@aar'
+
+}
+
+repositories {
+    mavenCentral()
+}

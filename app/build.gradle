@@ -1,0 +1,73 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "jy.cn.com.yframework"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        flavorDimensions "versionCode"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    productFlavors {
+
+        product_test {
+            applicationId "com.jj.mitao2"
+            manifestPlaceholders = [package_name: "com.jj.mitao2", CHANNEL_VALUE: "test", UMENG_APPKEY_VALUE: "123", TENCENT_VALUE: "tencent1105229451", WX_VALUE: "wx499feadd9f2855f8"]
+        }
+    }
+
+    buildTypes {
+        release {
+            //混淆
+            minifyEnabled true
+            //Zipalign优化
+            zipAlignEnabled true
+
+            // 移除无用的resource文件
+            shrinkResources true
+
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        disable 'GoogleAppIndexingWarning'
+        baseline file("lint-baseline.xml")
+    }
+
+    repositories {
+        flatDir {
+            dirs 'libs', rootProject.ext.socialsdklib_path
+        }
+    }
+}
+
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def apkName = "jy_${variant.flavorName}"
+        def fileName = "${variant.buildType.getName()}_${apkName}_${variant.versionName}.apk"
+        outputFileName = fileName
+    }
+}
+
+
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':ylibrary')
+    implementation project(':socialsdklibrary')
+    implementation rootProject.ext.android_v7
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+repositories {
+    mavenCentral()
+}
