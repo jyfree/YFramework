@@ -17,6 +17,7 @@ import jy.cn.com.yframework.simple.social.LoginSimpleActivity
 import jy.cn.com.yframework.simple.social.PaySimpleActivity
 import jy.cn.com.yframework.simple.social.ShareSimpleActivity
 import jy.cn.com.yframework.simple.thread.ThreadSimpleActivity
+import jy.cn.com.yframework.simple.timer.TimerSimpleActivity
 import jy.cn.com.ylibrary.base.BaseActivity
 import jy.cn.com.ylibrary.cmd.CMDMessage
 import jy.cn.com.ylibrary.cmd.CMDReceiverListener
@@ -58,6 +59,7 @@ class MainActivity : BaseActivity() {
             R.id.go_share -> ShareSimpleActivity.startAct(this)
             R.id.go_login -> LoginSimpleActivity.startAct(this)
             R.id.go_pay -> PaySimpleActivity.startAct(this)
+            R.id.go_timer -> TimerSimpleActivity.startAct(this)
         }
     }
 

@@ -74,6 +74,10 @@
         <activity
             android:name=".simple.social.LoginSimpleActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".simple.timer.TimerSimpleActivity"
+            android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
 

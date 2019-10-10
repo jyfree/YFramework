@@ -96,6 +96,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="支付示例" />
+
+        <Button
+            android:id="@+id/go_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="倒计时示例" />
     </LinearLayout>
 
 </ScrollView>
