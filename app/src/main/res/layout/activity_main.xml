@@ -103,6 +103,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="倒计时示例" />
+
+        <Button
+            android:id="@+id/go_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="权限申请示例" />
     </LinearLayout>
 
 </ScrollView>

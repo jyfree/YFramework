@@ -12,6 +12,7 @@ import jy.cn.com.yframework.simple.http.DownloadSimpleActivity
 import jy.cn.com.yframework.simple.http.MvpApiSimpleActivity
 import jy.cn.com.yframework.simple.http.bean.SendGiftVo
 import jy.cn.com.yframework.simple.loading.LoadingSimpleActivity
+import jy.cn.com.yframework.simple.permission.PermissionSimpleActivity
 import jy.cn.com.yframework.simple.rxbus.RxBusSimpleActivity
 import jy.cn.com.yframework.simple.social.LoginSimpleActivity
 import jy.cn.com.yframework.simple.social.PaySimpleActivity
@@ -60,6 +61,7 @@ class MainActivity : BaseActivity() {
             R.id.go_login -> LoginSimpleActivity.startAct(this)
             R.id.go_pay -> PaySimpleActivity.startAct(this)
             R.id.go_timer -> TimerSimpleActivity.startAct(this)
+            R.id.go_permission -> PermissionSimpleActivity.startAct(this)
         }
     }
 

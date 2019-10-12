@@ -37,7 +37,7 @@ object AppUtils {
 
     /**
      * 安装App（支持7.0）
-     *
+     * 8.0 需要manifest注册权限：android.permission.REQUEST_INSTALL_PACKAGES
      * @param file      文件
      * @param authority 7.0及以上安装需要传入清单文件中的`<provider>`的authorities属性
      * <br></br>参看https://developer.android.com/reference/android/support/v4/content/FileProvider.html

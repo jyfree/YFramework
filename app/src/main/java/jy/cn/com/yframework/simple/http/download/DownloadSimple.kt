@@ -18,7 +18,7 @@ import java.io.File
 
  * @Author Administrator
  * @Date 2019/9/27-15:55
- * @TODO 下载示例 ，注意：需要有访问sdcard权限
+ * @TODO 下载示例 ，注意：需要有访问sdcard权限 和 rc_file_path.xml配置
  */
 object DownloadSimple {
 
