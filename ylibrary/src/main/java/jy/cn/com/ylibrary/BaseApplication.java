@@ -12,6 +12,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import jy.cn.com.ylibrary.sp.SharedPreferencesConfigUtils;
+
 
 /**
  * 程序入口
@@ -35,6 +37,7 @@ public class BaseApplication extends Application {
         if (null == mInstance) {
             mInstance = this;
         }
+        SharedPreferencesConfigUtils.getInstance(this).init();
     }
 
     /**

@@ -14,6 +14,7 @@ import jy.cn.com.ylibrary.util.YLogUtil
  */
 class CountDownTimerHelper {
 
+    private val TAG = CountDownTimerHelper::class.java.simpleName
     private var timer: CountDownTimer? = null
     private var subscriber: Any? = null
     private var onTickListener: ((Long) -> Unit)? = null
@@ -63,7 +64,7 @@ class CountDownTimerHelper {
                     return
                 }
                 if (isShowTickLog) {
-                    YLogUtil.iFormat("定时器--正在执行--【订阅者对象：%s----class对象：%s----timer对象：%s----时间：%s】",
+                    YLogUtil.iFormatTag(TAG, "定时器--正在执行--【订阅者对象：%s----class对象：%s----timer对象：%s----时间：%s】",
                             subscriber, this@CountDownTimerHelper, this, millisUntilFinished)
 
                 }
@@ -73,7 +74,7 @@ class CountDownTimerHelper {
             override fun onFinish() {
                 cancelTimer()
                 if (isShowTickLog) {
-                    YLogUtil.iFormat("定时器--执行完成--【订阅者对象：%s----class对象：%s----timer对象：%s】",
+                    YLogUtil.iFormatTag(TAG, "定时器--执行完成--【订阅者对象：%s----class对象：%s----timer对象：%s】",
                             subscriber, this@CountDownTimerHelper, this)
                 }
                 onFinishListener?.invoke()
@@ -89,7 +90,7 @@ class CountDownTimerHelper {
      */
     fun cancelTimer() {
         if (isShowTickLog) {
-            YLogUtil.iFormat("定时器--停止执行--【订阅者对象：%s----class对象：%s----timer对象：%s】",
+            YLogUtil.iFormatTag(TAG, "定时器--停止执行--【订阅者对象：%s----class对象：%s----timer对象：%s】",
                     subscriber, this@CountDownTimerHelper, timer)
         }
         timer?.cancel()

@@ -1,174 +1,143 @@
 package jy.cn.com.ylibrary.sp;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Parcelable;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import jy.cn.com.ylibrary.util.EncodeUtils;
 import jy.cn.com.ylibrary.util.ParcelableUtil;
-import jy.cn.com.ylibrary.util.YLogUtil;
 
 /**
  * Administrator
  * created at 2018/11/20 12:08
  * TODO:sp基类
  */
-public class SharedPreferencesBaseUtils {
+public abstract class SharedPreferencesBaseUtils {
 
-    private final String TAG = "SP";
-    public SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferencesHelper helper;
 
-    public boolean getBoolean(String keyName) {
-        try {
-            return sharedPreferences.getBoolean(keyName, false);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
+    SharedPreferencesBaseUtils(Context context) {
+        if (sharedPreferences == null) {
+            sharedPreferences = context.getSharedPreferences(getSpName(), getMode());
         }
-        return false;
+        helper = new SharedPreferencesHelper(sharedPreferences);
     }
 
+    public void init() {
+        helper.applyLoad();
+    }
+
+    public abstract String getSpName();
+
+    public abstract int getMode();
+
+    //*************************************************************************
+    public boolean getBoolean(String keyName) {
+        return getBoolean(keyName, false);
+    }
+
+    public boolean getBoolean(String keyName, boolean defValue) {
+        if (helper.containsKey(keyName)) {
+            return (boolean) helper.get(keyName);
+        }
+        return sharedPreferences.getBoolean(keyName, defValue);
+    }
 
     public void setBoolean(String keyName, boolean value) {
-        try {
-            sharedPreferences.edit().putBoolean(keyName, value).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
+        helper.saveDataAndSyncTask(keyName, value);
     }
 
     public int getInt(String keyName) {
-        try {
-            return sharedPreferences.getInt(keyName, 0);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
-        return 0;
+        return getInt(keyName, 0);
     }
 
     public int getInt(String keyName, int defValue) {
-        try {
-            return sharedPreferences.getInt(keyName, defValue);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
+        if (helper.containsKey(keyName)) {
+            return (int) helper.get(keyName);
         }
-        return defValue;
+        return sharedPreferences.getInt(keyName, defValue);
     }
 
     public void setInt(String keyName, int value) {
-        try {
-            sharedPreferences.edit().putInt(keyName, value).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
+        helper.saveDataAndSyncTask(keyName, value);
     }
 
-    public void setObject(String keyName, Parcelable parcelable) {
-        try {
-            byte[] bytes = ParcelableUtil.marShall(parcelable);
-            sharedPreferences.edit().putString(keyName, EncodeUtils.base64Encode2String(bytes)).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
-    }
-
-    public <T extends Parcelable> T getObject(String keyName, Parcelable.Creator<T> creator) {
-        try {
-            return ParcelableUtil.unMarShall(sharedPreferences.getString(keyName, ""), creator);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-            return null;
-        }
-    }
 
     public String getString(String keyName) {
-        try {
-            return sharedPreferences.getString(keyName, "");
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
+        return getString(keyName, "");
+    }
+
+    public String getString(String keyName, String defValue) {
+        if (helper.containsKey(keyName)) {
+            return (String) helper.get(keyName);
         }
-        return "";
+        return sharedPreferences.getString(keyName, defValue);
     }
 
 
     public void setString(String keyName, String value) {
-        try {
-            sharedPreferences.edit().putString(keyName, value).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
-    }
-
-    public Set<String> getStringSet(String keyName) {
-        try {
-            return sharedPreferences.getStringSet(keyName, null);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
-        return null;
-    }
-
-    public void setStringSet(String keyName, Set<String> value) {
-        try {
-            sharedPreferences.edit().putStringSet(keyName, value).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
+        helper.saveDataAndSyncTask(keyName, value);
     }
 
     public long getLong(String keyName) {
-        try {
-            return sharedPreferences.getLong(keyName, 0);
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
-        return 0;
+        return getLong(keyName, 0);
     }
 
+    public long getLong(String keyName, long defValue) {
+        if (helper.containsKey(keyName)) {
+            return (long) helper.get(keyName);
+        }
+        return sharedPreferences.getLong(keyName, defValue);
+    }
 
     public void setLong(String keyName, long value) {
-        try {
-            sharedPreferences.edit().putLong(keyName, value).apply();
-        } catch (Exception e) {
-            YLogUtil.INSTANCE.eTag(TAG, e.getMessage());
-        }
+        helper.saveDataAndSyncTask(keyName, value);
     }
 
-    public void putHashMapInfo(String key, Map<String, Integer> datas) {
-        JSONObject object = new JSONObject();
-        for (Map.Entry<String, Integer> entry : datas.entrySet()) {
-            try {
-                object.put(entry.getKey(), entry.getValue());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        setString(key, object.toString());
+
+    public float getFloat(String keyName) {
+        return getFloat(keyName, 0);
     }
 
-    public Map<String, Integer> getHashMapInfo(String key) {
-        Map<String, Integer> datas = new HashMap<>();
-        String result = getString(key);
-
-        try {
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray names = jsonObject.names();
-            if (names != null) {
-                for (int j = 0; j < names.length(); j++) {
-                    String name = names.getString(j);
-                    int value = jsonObject.getInt(name);
-                    datas.put(name, value);
-                }
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+    public float getFloat(String keyName, float defValue) {
+        if (helper.containsKey(keyName)) {
+            return (float) helper.get(keyName);
         }
-        return datas;
+        return sharedPreferences.getFloat(keyName, defValue);
+    }
+
+    public void setFloat(String keyName, float value) {
+        helper.saveDataAndSyncTask(keyName, value);
+    }
+
+
+    public Set<String> getStringSet(String keyName) {
+        if (helper.containsKey(keyName)) {
+            return (Set<String>) helper.get(keyName);
+        }
+        return sharedPreferences.getStringSet(keyName, null);
+    }
+
+    public void setStringSet(String keyName, Set<String> value) {
+        helper.saveDataAndSyncTask(keyName, value);
+    }
+
+    public <T extends Parcelable> T getObject(String keyName, Parcelable.Creator<T> creator) {
+        return ParcelableUtil.unMarShall(getString(keyName), creator);
+    }
+
+
+    public void setObject(String keyName, Parcelable parcelable) {
+        byte[] bytes = ParcelableUtil.marShall(parcelable);
+        helper.saveDataAndSyncTask(keyName, EncodeUtils.base64Encode2String(bytes));
+    }
+
+
+    public void setHashMap(Map<String, Object> dataMap) {
+        helper.saveDataAndSyncTaskOfMap(dataMap);
     }
 }

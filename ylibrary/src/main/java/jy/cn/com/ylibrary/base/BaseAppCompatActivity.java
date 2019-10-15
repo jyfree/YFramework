@@ -48,7 +48,7 @@ public abstract class BaseAppCompatActivity extends RxAppCompatActivity implemen
                 HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长", System.currentTimeMillis() - startActivityTime);
+                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startActivityTime);
                     }
                 });
             }

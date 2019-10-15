@@ -48,7 +48,7 @@ public abstract class BaseActivity extends RxActivity implements BaseContract.Ba
                 HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长", System.currentTimeMillis() - startActivityTime);
+                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startActivityTime);
                     }
                 });
             }

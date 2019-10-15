@@ -64,7 +64,7 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
                 HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长", System.currentTimeMillis() - startFragmentTime);
+                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startFragmentTime);
                     }
                 });
             }

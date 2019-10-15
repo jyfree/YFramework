@@ -64,7 +64,7 @@ public abstract class BaseAppcompatDialogFragment extends RxAppCompatDialogFragm
                 HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长", System.currentTimeMillis() - startFragmentTime);
+                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startFragmentTime);
                     }
                 });
             }

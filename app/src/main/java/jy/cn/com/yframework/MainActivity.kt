@@ -17,6 +17,7 @@ import jy.cn.com.yframework.simple.rxbus.RxBusSimpleActivity
 import jy.cn.com.yframework.simple.social.LoginSimpleActivity
 import jy.cn.com.yframework.simple.social.PaySimpleActivity
 import jy.cn.com.yframework.simple.social.ShareSimpleActivity
+import jy.cn.com.yframework.simple.sp.SpSimpleActivity
 import jy.cn.com.yframework.simple.thread.ThreadSimpleActivity
 import jy.cn.com.yframework.simple.timer.TimerSimpleActivity
 import jy.cn.com.ylibrary.base.BaseActivity
@@ -62,6 +63,7 @@ class MainActivity : BaseActivity() {
             R.id.go_pay -> PaySimpleActivity.startAct(this)
             R.id.go_timer -> TimerSimpleActivity.startAct(this)
             R.id.go_permission -> PermissionSimpleActivity.startAct(this)
+            R.id.go_sp -> SpSimpleActivity.startAct(this)
         }
     }
 

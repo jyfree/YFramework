@@ -33,7 +33,7 @@ class ApiSimpleActivity : BaseActivity() {
 
     override fun initUI(savedInstanceState: Bundle?) {
 
-        imageView.setImageDefaultLoadIconUrl("https://img.apk8.com/upload/appsx/14980378457933197.jpg")
+        imageView.setImageDefaultLoadIconUrl("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1571114721744&di=8f0504a49b71a543956088d64914acf7&imgtype=0&src=http%3A%2F%2Fimg.pconline.com.cn%2Fimages%2Fupload%2Fupc%2Ftx%2Fitbbs%2F1211%2F14%2Fc8%2F15758099_1352884051397_1024x1024it.jpg")
     }
 
     fun onRequest(view: View) {

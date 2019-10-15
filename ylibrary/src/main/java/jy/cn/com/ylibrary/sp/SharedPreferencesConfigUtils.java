@@ -13,6 +13,7 @@ public class SharedPreferencesConfigUtils extends SharedPreferencesBaseUtils {
 
     private static final String SP_NAME = "Config_File";
 
+
     public static SharedPreferencesConfigUtils getInstance(Context context) {
         if (mInstance == null) {
             synchronized (SharedPreferencesConfigUtils.class) {
@@ -24,16 +25,17 @@ public class SharedPreferencesConfigUtils extends SharedPreferencesBaseUtils {
         return mInstance;
     }
 
-    private SharedPreferencesConfigUtils(Context context) {
-        try {
-            if (sharedPreferences == null)
-                //设置为共享，以免service需要访问
-                sharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_MULTI_PROCESS);
-
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
+    SharedPreferencesConfigUtils(Context context) {
+        super(context);
     }
 
+    @Override
+    public String getSpName() {
+        return SP_NAME;
+    }
 
+    @Override
+    public int getMode() {
+        return Context.MODE_MULTI_PROCESS;
+    }
 }
