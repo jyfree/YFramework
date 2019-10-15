@@ -15,10 +15,10 @@ public class DatabaseManager {
 
     private AtomicInteger mOpenCounter = new AtomicInteger();
     private static DatabaseManager instance;
-    private static DbOpenHelper mDatabaseHelper;
+    private static DBOpenHelper mDatabaseHelper;
     private SQLiteDatabase mDatabase;
 
-    public static synchronized void initializeInstance(DbOpenHelper helper) {
+    public static synchronized void initializeInstance(DBOpenHelper helper) {
         if (instance == null) {
             instance = new DatabaseManager();
             mDatabaseHelper = helper;
@@ -60,5 +60,4 @@ public class DatabaseManager {
 
         }
     }
-
 }
