@@ -16,6 +16,8 @@ import java.util.Map;
  */
 public abstract class BaseDao<T> {
 
+    private HashMap<String, Integer> hashMap = new HashMap<>();
+
     /**
      * 插入或更新单条数据
      *
@@ -151,7 +153,7 @@ public abstract class BaseDao<T> {
             if (db.isOpen()) {
                 while (cursor.moveToNext()) {
 
-                    String id = cursor.getString(cursor.getColumnIndex(key));
+                    String id = cursor.getString(getColumnIndex(cursor, key));
                     map.put(id, getItemInfo(cursor));
 
                 }
@@ -292,22 +294,31 @@ public abstract class BaseDao<T> {
 
 
     public String getString(Cursor cursor, String name) {
-        return cursor.getString(cursor.getColumnIndex(name));
+        return cursor.getString(getColumnIndex(cursor, name));
     }
 
     public int getInt(Cursor cursor, String name) {
-        return cursor.getInt(cursor.getColumnIndex(name));
+        return cursor.getInt(getColumnIndex(cursor, name));
     }
 
     public long getLong(Cursor cursor, String name) {
-        return cursor.getLong(cursor.getColumnIndex(name));
+        return cursor.getLong(getColumnIndex(cursor, name));
     }
 
     public float getFloat(Cursor cursor, String name) {
-        return cursor.getFloat(cursor.getColumnIndex(name));
+        return cursor.getFloat(getColumnIndex(cursor, name));
     }
 
     public boolean getBool(Cursor cursor, String name) {
-        return cursor.getInt(cursor.getColumnIndex(name)) == 1;
+        return cursor.getInt(getColumnIndex(cursor, name)) == 1;
+    }
+
+    private int getColumnIndex(Cursor cursor, String name) {
+        if (hashMap.containsKey(name)) {
+            return hashMap.get(name);
+        }
+        int index = cursor.getColumnIndex(name);
+        hashMap.put(name, index);
+        return index;
     }
 }
