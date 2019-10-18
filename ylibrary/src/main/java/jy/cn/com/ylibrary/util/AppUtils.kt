@@ -2,8 +2,10 @@ package jy.cn.com.ylibrary.util
 
 import android.app.ActivityManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Process
 import jy.cn.com.ylibrary.BaseApplication
+import jy.cn.com.ylibrary.sp.SharedPreferencesConfigUtils
 import java.io.File
 
 
@@ -47,5 +49,31 @@ object AppUtils {
         BaseApplication.getInstance().startActivity(IntentUtils.getInstallAppIntent(file, authority))
     }
 
+    /**
+     * 获取APP签名
+     */
+    fun getSignature(): String {
+        try {
+            var spSignature = SharedPreferencesConfigUtils.getInstance(BaseApplication.getInstance().applicationContext).getString(SharedPreferencesConfigUtils.SIGNATURE)
+            if (!spSignature.isNullOrEmpty()) {
+                return spSignature
+            }
+            val pm: PackageManager = BaseApplication.getInstance().packageManager
+            val apps = pm.getInstalledPackages(PackageManager.GET_SIGNATURES)
+            for (packageInfo in apps) {
+                if (packageInfo.packageName.contains(BaseApplication.getInstance().packageName)) {
+
+                    spSignature = MD5Util.getMD5(packageInfo.signatures[0].toByteArray())
+                    SharedPreferencesConfigUtils.getInstance(BaseApplication.getInstance().applicationContext).setString(SharedPreferencesConfigUtils.SIGNATURE, spSignature)
+                    return spSignature
+                }
+            }
+
+        } catch (e: Exception) {
+            YLogUtil.e("getSignature", e.message)
+        }
+
+        return "unKnow"
+    }
 
 }

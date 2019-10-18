@@ -13,6 +13,8 @@ public class SharedPreferencesConfigUtils extends SharedPreferencesBaseUtils {
 
     private static final String SP_NAME = "Config_File";
 
+    public static final String SIGNATURE = "signature";
+
 
     public static SharedPreferencesConfigUtils getInstance(Context context) {
         if (mInstance == null) {
