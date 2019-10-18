@@ -44,7 +44,7 @@ class PicSimpleActivity : BaseActivity(), PicListener {
     fun take(view: View) {
         when (view.id) {
             R.id.takeCamera -> PicHelper.takePic(this, PicHelper.TAKE_CAMERA, getPicOptions(), this)
-            R.id.takePhotoAlbum -> PicHelper.takePic(this, PicHelper.TAKE_CAMERA, getPicOptions(), this)
+            R.id.takePhotoAlbum -> PicHelper.takePic(this, PicHelper.TAKE_PICTURE, getPicOptions(), this)
         }
     }
 
