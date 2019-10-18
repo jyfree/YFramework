@@ -10,6 +10,7 @@ import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
 import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.db.DBOpenHelper;
 import jy.cn.com.ylibrary.db.DatabaseManager;
+import jy.cn.com.ylibrary.helper.LogCatHelper;
 import jy.cn.com.ylibrary.imageload.ImageLoaderConfiguration;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
 import jy.cn.com.ylibrary.loadsir.core.LoadSir;
@@ -45,6 +46,8 @@ public class TestApplication extends BaseApplication {
             ImageLoaderConfiguration.getInstance().initImageResId(R.drawable.load_default_image, R.drawable.load_default_image, R.drawable.load_default_image);
             //初始化社会化SDK
             initSocialSDK();
+            //将logcat保存到文件
+            LogCatHelper.getInstance(this, "").start();
         }
     }
 
