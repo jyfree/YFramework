@@ -117,6 +117,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="SP示例" />
+
+        <Button
+            android:id="@+id/go_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="拍照和图库示例" />
     </LinearLayout>
 
 </ScrollView>
