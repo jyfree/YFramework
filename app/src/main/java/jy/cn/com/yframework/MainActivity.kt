@@ -15,6 +15,7 @@ import jy.cn.com.yframework.simple.loading.LoadingSimpleActivity
 import jy.cn.com.yframework.simple.permission.PermissionSimpleActivity
 import jy.cn.com.yframework.simple.pic.PicSimpleActivity
 import jy.cn.com.yframework.simple.rxbus.RxBusSimpleActivity
+import jy.cn.com.yframework.simple.selector.SelectorSimpleActivity
 import jy.cn.com.yframework.simple.social.LoginSimpleActivity
 import jy.cn.com.yframework.simple.social.PaySimpleActivity
 import jy.cn.com.yframework.simple.social.ShareSimpleActivity
@@ -66,6 +67,7 @@ class MainActivity : BaseActivity() {
             R.id.go_permission -> PermissionSimpleActivity.startAct(this)
             R.id.go_sp -> SpSimpleActivity.startAct(this)
             R.id.go_pic -> PicSimpleActivity.startAct(this)
+            R.id.go_shadow -> SelectorSimpleActivity.startAct(this)
         }
     }
 

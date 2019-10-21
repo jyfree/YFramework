@@ -93,6 +93,11 @@
         <activity
             android:name=".simple.pic.PicSimpleActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".simple.selector.SelectorSimpleActivity"
+            android:screenOrientation="portrait" />
+
         <!--**********************************************************************-->
 
 

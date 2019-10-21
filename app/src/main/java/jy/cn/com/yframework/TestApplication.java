@@ -8,12 +8,13 @@ import jy.cn.com.yframework.simple.loading.callback.ImageLoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.LoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
 import jy.cn.com.ylibrary.BaseApplication;
-import jy.cn.com.ylibrary.db.DatabaseOpenHelper;
 import jy.cn.com.ylibrary.db.DatabaseManager;
+import jy.cn.com.ylibrary.db.DatabaseOpenHelper;
 import jy.cn.com.ylibrary.helper.LogCatHelper;
 import jy.cn.com.ylibrary.imageload.ImageLoaderConfiguration;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
 import jy.cn.com.ylibrary.loadsir.core.LoadSir;
+import jy.cn.com.ylibrary.selector.XSelector;
 import jy.cn.com.ylibrary.util.AppUtils;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
@@ -48,6 +49,8 @@ public class TestApplication extends BaseApplication {
             initSocialSDK();
             //将logcat保存到文件
             LogCatHelper.getInstance(this, "").start();
+            //初始化颜色背景选择器
+            XSelector.INSTANCE.init(this);
         }
     }
 
