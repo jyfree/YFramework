@@ -28,12 +28,12 @@ import android.database.sqlite.SQLiteOpenHelper;
  * <p/>
  * 若为null，则不能设置事务，否则会导致db死锁
  */
-public class DBOpenHelper extends SQLiteOpenHelper {
+public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
-    private static final String TAG = DBOpenHelper.class.getSimpleName();
+    private static final String TAG = DatabaseOpenHelper.class.getSimpleName();
 
     private static final int DATABASE_VERSION = 1;
-    private static DBOpenHelper instance;
+    private static DatabaseOpenHelper instance;
 
     /**
      * 下载信息表
@@ -49,13 +49,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             + DownloadDao.COLUMN_NAME_URL + " TEXT, "
             + DownloadDao.COLUMN_NAME_UPDATE_PROGRESS + " INTEGER); ";
 
-    private DBOpenHelper(Context context) {
+    private DatabaseOpenHelper(Context context) {
         super(context, getUserDatabaseName(), null, DATABASE_VERSION);
     }
 
-    public synchronized static DBOpenHelper getInstance(Context context) {
+    public synchronized static DatabaseOpenHelper getInstance(Context context) {
         if (instance == null) {
-            instance = new DBOpenHelper(context.getApplicationContext());
+            instance = new DatabaseOpenHelper(context.getApplicationContext());
         }
         return instance;
     }
