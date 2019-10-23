@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase
 import jy.cn.com.ylibrary.http.bean.DownInfo
 
 object DownloadDao : BaseDao<DownInfo>() {
+
     const val TABLE_NAME = "download"
 
     const val COLUMN_NAME_PRIMARY_ID = "id"//主键
@@ -17,7 +18,8 @@ object DownloadDao : BaseDao<DownInfo>() {
     const val COLUMN_NAME_URL = "url"//url
     const val COLUMN_NAME_UPDATE_PROGRESS = "updateProgress"//是否需要实时更新下载进度,避免线程的多次切换
 
-    override fun getTableName(): String = TABLE_NAME
+    override val tableName: String
+        get() = TABLE_NAME
 
     override fun getContentValues(item: DownInfo): ContentValues {
         val values = ContentValues()
@@ -31,7 +33,7 @@ object DownloadDao : BaseDao<DownInfo>() {
         return values
     }
 
-    override fun getItemInfo(cursor: Cursor?): DownInfo = DownInfo(
+    override fun getItemInfo(cursor: Cursor): DownInfo = DownInfo(
             getString(cursor, COLUMN_NAME_SAVE_PATH),
             getLong(cursor, COLUMN_NAME_COUNT_LENGTH),
             getLong(cursor, COLUMN_NAME_READ_LENGTH),
@@ -41,27 +43,17 @@ object DownloadDao : BaseDao<DownInfo>() {
             getBool(cursor, COLUMN_NAME_UPDATE_PROGRESS)
     )
 
-    override fun compareItem(item1: DownInfo?, item2: DownInfo?): Boolean = item1?.url == item2?.url
+    override fun compareItem(item1: DownInfo, item2: DownInfo): Boolean = item1.url == item2.url
 
-    override fun updateItem(db: SQLiteDatabase?, item: DownInfo) {
-        db?.update(tableName, getContentValues(item), "$COLUMN_NAME_URL = ?", arrayOf(item.url))
+    override fun updateItem(db: SQLiteDatabase, item: DownInfo) {
+        db.update(tableName, getContentValues(item), "$COLUMN_NAME_URL = ?", arrayOf(item.url))
     }
 
     fun queryDownloadInfoByPath(path: String): DownInfo? {
-        var cursor: Cursor? = null
-        var itemInfo: DownInfo? = null
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            cursor = db.query(TABLE_NAME, null, "$COLUMN_NAME_URL = ?", arrayOf(path), null, null, null)
-            if (cursor.moveToFirst()) {
-                itemInfo = getItemInfo(cursor)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
-        }
-        return itemInfo
+
+        val db = DatabaseManager.getInstance().openDatabase()
+        val cursor = db.query(TABLE_NAME, null, "$COLUMN_NAME_URL = ?", arrayOf(path), null, null, null)
+
+        return queryItem(db, cursor)
     }
 }

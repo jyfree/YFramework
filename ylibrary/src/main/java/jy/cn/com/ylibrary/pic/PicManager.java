@@ -205,7 +205,7 @@ public class PicManager {
     }
 
     /**
-     * 摧毁本库的 AcpActivity
+     * 摧毁本库的 PicActivity
      */
     private void onDestroy(Activity activity) {
         if (activity != null) {

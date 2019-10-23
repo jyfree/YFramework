@@ -37,14 +37,19 @@ class CountDownTimerHelper {
                     }
                 }
                 is Fragment -> {
-                    if ((subscriber as Fragment).activity == null ||
-                            (subscriber as Fragment).activity.isFinishing) {
+                    val tmpFragment = subscriber as Fragment
+                    if (tmpFragment.activity == null || tmpFragment.activity.isFinishing) {
+                        isRunning = false
+                        cancelTimer()
+                        return isRunning
+                    }
+                    if (tmpFragment.isDetached) {
                         isRunning = false
                         cancelTimer()
                         return isRunning
                     }
                     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-                    if ((subscriber as Fragment).fragmentManager?.isDestroyed == true) {
+                    if (tmpFragment.fragmentManager?.isDestroyed == true) {
                         isRunning = false
                         cancelTimer()
                     }

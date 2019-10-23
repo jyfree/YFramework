@@ -44,6 +44,9 @@ dependencies {
     //okio
     api 'com.squareup.okio:okio:2.1.0'
     implementation 'com.squareup.wire:wire-runtime:2.3.0-RC1'
+
+    //kotlin 协程
+    api rootProject.ext.kotlinCoroutines
 }
 
 repositories {
