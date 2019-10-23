@@ -18,6 +18,21 @@ object DownloadDao : BaseDao<DownInfo>() {
     const val COLUMN_NAME_URL = "url"//url
     const val COLUMN_NAME_UPDATE_PROGRESS = "updateProgress"//是否需要实时更新下载进度,避免线程的多次切换
 
+    /**
+     * 下载信息表
+     */
+    const val DOWNLOAD_TABLE_CREATE = ("CREATE TABLE "
+            + TABLE_NAME + " ("
+            + COLUMN_NAME_PRIMARY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COLUMN_NAME_SAVE_PATH + " TEXT, "
+            + COLUMN_NAME_COUNT_LENGTH + " INTEGER, "
+            + COLUMN_NAME_READ_LENGTH + " INTEGER, "
+            + COLUMN_NAME_CONNECTION_TIME + " INTEGER, "
+            + COLUMN_NAME_STATE_INT + " INTEGER, "
+            + COLUMN_NAME_URL + " TEXT, "
+            + COLUMN_NAME_UPDATE_PROGRESS + " INTEGER); ")
+
+
     override val tableName: String
         get() = TABLE_NAME
 

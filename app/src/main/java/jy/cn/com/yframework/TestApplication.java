@@ -2,6 +2,7 @@ package jy.cn.com.yframework;
 
 import jy.cn.com.socialsdklibrary.SDKConfig;
 import jy.cn.com.yframework.simple.cmd.CMDMessageHandler;
+import jy.cn.com.yframework.simple.db.DBOpenHelper;
 import jy.cn.com.yframework.simple.loading.callback.EmptyCallback;
 import jy.cn.com.yframework.simple.loading.callback.ErrorCallback;
 import jy.cn.com.yframework.simple.loading.callback.ImageLoadingCallback;
@@ -9,7 +10,6 @@ import jy.cn.com.yframework.simple.loading.callback.LoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
 import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.db.DatabaseManager;
-import jy.cn.com.ylibrary.db.DatabaseOpenHelper;
 import jy.cn.com.ylibrary.helper.LogCatHelper;
 import jy.cn.com.ylibrary.imageload.ImageLoaderConfiguration;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
@@ -40,7 +40,7 @@ public class TestApplication extends BaseApplication {
             //初始化loading
             initLoadSir();
             //初始化数据库
-            DatabaseManager.initializeInstance(DatabaseOpenHelper.getInstance(getApplicationContext()));
+            DatabaseManager.initializeInstance(DBOpenHelper.getInstance(getApplicationContext()));
             //初始化cmd
             CMDMessageHandler.INSTANCE.register();
             //初始化imageLoad

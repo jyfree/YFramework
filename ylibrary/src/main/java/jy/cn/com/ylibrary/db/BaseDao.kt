@@ -211,6 +211,9 @@ abstract class BaseDao<T> {
 
     }
 
+    /**
+     * 获取item（自定义db和cursor）
+     */
     fun queryItem(db: SQLiteDatabase, cursor: Cursor?): T? {
 
         var t: T? = null
