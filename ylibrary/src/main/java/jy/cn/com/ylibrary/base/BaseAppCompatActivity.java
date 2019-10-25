@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.base.contract.BaseContract;
 import jy.cn.com.ylibrary.helper.LoadSirHelper;
-import jy.cn.com.ylibrary.util.HandlerUtil;
 import jy.cn.com.ylibrary.util.ToastUtil;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
@@ -37,23 +36,9 @@ public abstract class BaseAppCompatActivity extends RxAppCompatActivity implemen
         setContentView(initLayoutID());
         BaseApplication.getInstance().addActivity(this);
         initUI(savedInstanceState);
-        initCompleteTime();
+        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startActivityTime);
     }
 
-
-    public void initCompleteTime() {
-        getWindow().getDecorView().post(new Runnable() {
-            @Override
-            public void run() {
-                HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startActivityTime);
-                    }
-                });
-            }
-        });
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

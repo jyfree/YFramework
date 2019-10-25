@@ -14,7 +14,6 @@ import org.jetbrains.annotations.NotNull;
 
 import jy.cn.com.ylibrary.base.contract.BaseContract;
 import jy.cn.com.ylibrary.helper.LoadSirHelper;
-import jy.cn.com.ylibrary.util.HandlerUtil;
 import jy.cn.com.ylibrary.util.ToastUtil;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
@@ -48,7 +47,7 @@ public abstract class BaseAppcompatDialogFragment extends RxAppCompatDialogFragm
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view, savedInstanceState);
-        initCompleteTime(view);
+        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startFragmentTime);
     }
 
     @Override
@@ -57,19 +56,6 @@ public abstract class BaseAppcompatDialogFragment extends RxAppCompatDialogFragm
         ToastUtil.cancelToast();
     }
 
-    public void initCompleteTime(View view) {
-        view.post(new Runnable() {
-            @Override
-            public void run() {
-                HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startFragmentTime);
-                    }
-                });
-            }
-        });
-    }
 
     /**
      * 初始化布局ID
