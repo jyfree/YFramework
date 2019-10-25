@@ -6,6 +6,8 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import jy.cn.com.ylibrary.coroutine.CoroutineCall
 import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
+import jy.cn.com.ylibrary.thread.lifecycle.ThreadRequest
+import jy.cn.com.ylibrary.thread.lifecycle.ThreadResultCallback
 import java.util.*
 
 /**
@@ -13,7 +15,7 @@ import java.util.*
  * @Date 2018/12/5-11:29
  * @TODO 数据库基类
  */
-abstract class BaseDao<T> : CoroutineCall {
+abstract class BaseDao<T> : CoroutineCall, ThreadRequest {
 
     private val hashMap = HashMap<String, Int>()
 
@@ -184,6 +186,15 @@ abstract class BaseDao<T> : CoroutineCall {
      */
     fun getListInfo(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
         request(coroutineResultCallback, lifecycleOwner) {
+            getListInfo()
+        }
+    }
+
+    /**
+     * 获取list集合（子线程方式）
+     */
+    fun getListInfo(threadResultCallback: ThreadResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
+        request(threadResultCallback, lifecycleOwner) {
             getListInfo()
         }
     }

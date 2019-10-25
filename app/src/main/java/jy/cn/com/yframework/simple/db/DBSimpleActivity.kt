@@ -2,11 +2,14 @@ package jy.cn.com.yframework.simple.db
 
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import jy.cn.com.yframework.R
 import jy.cn.com.ylibrary.base.BaseAppCompatActivity
 import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
 import jy.cn.com.ylibrary.db.DownloadDao
+import jy.cn.com.ylibrary.thread.lifecycle.ThreadResultCallback
 import jy.cn.com.ylibrary.util.ActivityUtils
+import jy.cn.com.ylibrary.util.YLogUtil
 
 /**
 
@@ -27,8 +30,47 @@ class DBSimpleActivity : BaseAppCompatActivity() {
     override fun initClassTag(): Any = DBSimpleActivity::class.java.simpleName
 
     override fun initUI(savedInstanceState: Bundle?) {
-        DownloadDao.getListInfo(CoroutineResultCallback {
 
-        }, this)
+    }
+
+    fun onLoadDB(view: View) {
+        when (view.id) {
+            //协程方式查询db
+            R.id.load_coroutine -> requestCoroutine()
+            //主线程查询db
+            R.id.load_def -> requestDef()
+            //子线程查询db
+            R.id.load_thread -> requestThread()
+        }
+    }
+
+    private fun requestCoroutine() {
+        val startTime = System.currentTimeMillis()
+        for (i in 0..10000) {
+            DownloadDao.getListInfo(CoroutineResultCallback {
+                YLogUtil.i("协程--data", it, i)
+            }, this)
+        }
+        YLogUtil.i("协程--全部--time", System.currentTimeMillis() - startTime)
+    }
+
+    private fun requestDef() {
+        val startTime = System.currentTimeMillis()
+        for (i in 0..1000) {
+            val itemStartTime = System.currentTimeMillis()
+            DownloadDao.getListInfo()
+            YLogUtil.i("主线程--单次--time", System.currentTimeMillis() - itemStartTime)
+        }
+        YLogUtil.i("主线程--全部--time", System.currentTimeMillis() - startTime)
+    }
+
+    private fun requestThread() {
+        val startTime = System.currentTimeMillis()
+        for (i in 0..10000) {
+            DownloadDao.getListInfo(ThreadResultCallback {
+                YLogUtil.i("子线程--data", it, i)
+            }, this)
+        }
+        YLogUtil.i("子线程--全部--time", System.currentTimeMillis() - startTime)
     }
 }
