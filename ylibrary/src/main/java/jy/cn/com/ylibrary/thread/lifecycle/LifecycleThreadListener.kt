@@ -12,6 +12,8 @@ import android.arch.lifecycle.OnLifecycleEvent
  */
 open class LifecycleThreadListener(private val thread: Thread, private val cancelEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) : LifecycleObserver {
 
+    var isDestroy = false
+
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun pause() = handleEvent(Lifecycle.Event.ON_PAUSE)
 
@@ -23,7 +25,8 @@ open class LifecycleThreadListener(private val thread: Thread, private val cance
 
     private fun handleEvent(e: Lifecycle.Event) {
 
-        if (e == cancelEvent && thread.isInterrupted) {
+        if (e == cancelEvent) {
+            isDestroy = true
             thread.interrupt()
         }
     }

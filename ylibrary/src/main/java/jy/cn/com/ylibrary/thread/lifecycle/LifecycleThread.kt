@@ -21,19 +21,25 @@ fun <T> executeThread(
         block: () -> T
 ) {
 
+    var life: LifecycleThreadListener? = null
     val thread = object : Thread() {
 
         override fun run() {
             try {
-                block()
+                if (life?.isDestroy == false) {
+                    block()
+                }
             } catch (e: InterruptedException) {
                 e.printStackTrace()
                 YLogUtil.e("executeThread--InterruptedException", e.message)
             }
         }
     }
+    life = LifecycleThreadListener(thread)
+    lifecycleOwner.lifecycle.addObserver(life)
+
     submit(thread)
-    lifecycleOwner.lifecycle.addObserver(LifecycleThreadListener(thread))
+
 
 }
 
