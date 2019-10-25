@@ -46,22 +46,25 @@ object DownloadSimple {
 
         val listener = object : HttpDownOnNextListener<DownInfo>() {
             override fun onNext(t: DownInfo) {
-
+                YLogUtil.i("onNext", t)
             }
 
             override fun onStart() {
-
+                YLogUtil.i("onStart")
             }
 
-            override fun onComplete() {
-                val fileName = url.substring(url.lastIndexOf("/") + 1)
-                val file = File(FileUtils.getSdcardPath() + fileName)
+            override fun onComplete(downInfo: DownInfo) {
+                YLogUtil.i("onComplete", downInfo)
+
+                val fileName = downInfo.url!!.substring(downInfo.url!!.lastIndexOf("/") + 1)
+                val file = File(downInfo.savePath + fileName)
                 AppUtils.installApp(file, "${TestApplication.getInstance()?.packageName}.FileProvider")
             }
 
             override fun updateProgress(readLength: Long, countLength: Long) {
                 val progress = ((readLength.toFloat() / countLength.toFloat()) * 100).toInt()
                 YLogUtil.i("updateProgress", "$progress%")
+
             }
 
         }

@@ -39,7 +39,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
      */
     override fun onComplete() {
         if (mSubscriberOnNextListener.get() != null) {
-            mSubscriberOnNextListener.get()!!.onComplete()
+            mSubscriberOnNextListener.get()!!.onComplete(mDownInfo)
         }
         HttpDownManager.remove(mDownInfo)
         mDownInfo.setState(DownState.FINISH)

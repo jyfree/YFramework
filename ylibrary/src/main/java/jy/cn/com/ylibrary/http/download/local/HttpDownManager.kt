@@ -150,7 +150,7 @@ object HttpDownManager {
                 channelOut = randomAccessFile.channel
                 val mappedBuffer = channelOut!!.map(FileChannel.MapMode.READ_WRITE,
                         info.readLength, allLength - info.readLength)
-                val buffer = ByteArray(1024 * 1024)
+                val buffer = ByteArray(1024)
                 var len: Int = -1
                 while (inputStream.read(buffer).also { len = it } != -1) {
                     mappedBuffer.put(buffer, 0, len)

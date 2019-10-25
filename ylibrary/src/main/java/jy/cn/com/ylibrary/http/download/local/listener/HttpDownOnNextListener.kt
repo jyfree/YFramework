@@ -1,6 +1,8 @@
 package jy.cn.com.ylibrary.http.download.local.listener
 
-abstract class HttpDownOnNextListener<T>{
+import jy.cn.com.ylibrary.http.bean.DownInfo
+
+abstract class HttpDownOnNextListener<T> {
     /**
      * 成功后回调方法
      * @param t
@@ -15,7 +17,7 @@ abstract class HttpDownOnNextListener<T>{
     /**
      * 完成下载
      */
-    abstract fun onComplete()
+    abstract fun onComplete(downInfo: DownInfo)
 
     /**
      * 下载进度

@@ -36,17 +36,14 @@ class RetryWhenNetworkException : Function<Observable<out Throwable>, Observable
                 .zipWith(Observable.range(1, count + 1), BiFunction<Throwable, Int, Wrapper> { t1, t2 ->
                     Wrapper(t1, t2)
                 })
-                .flatMap(object : Function<Wrapper, Observable<*>> {
-                    override fun apply(wrapper: Wrapper): Observable<*> {
-                        return if ((wrapper.throwable is ConnectException
-                                        || wrapper.throwable is SocketTimeoutException
-                                        || wrapper.throwable is TimeoutException) && wrapper.index < count + 1) { //如果超出重试次数也抛出错误，否则默认是会进入onCompleted
-                            Observable.timer(delay + (wrapper.index - 1) * increaseDelay, TimeUnit.MILLISECONDS)
+                .flatMap { wrapper ->
+                    if ((wrapper.throwable is ConnectException
+                                    || wrapper.throwable is SocketTimeoutException
+                                    || wrapper.throwable is TimeoutException) && wrapper.index < count + 1) { //如果超出重试次数也抛出错误，否则默认是会进入onCompleted
+                        Observable.timer(delay + (wrapper.index - 1) * increaseDelay, TimeUnit.MILLISECONDS)
 
-                        } else Observable.error<Any>(wrapper.throwable)
-                    }
-
-                })
+                    } else Observable.error<Any>(wrapper.throwable)
+                }
     }
 
     private inner class Wrapper internal constructor(val throwable: Throwable, val index: Int)
