@@ -131,6 +131,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="selector示例" />
+
+        <Button
+            android:id="@+id/go_db"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="db协程示例" />
     </LinearLayout>
 
 </ScrollView>

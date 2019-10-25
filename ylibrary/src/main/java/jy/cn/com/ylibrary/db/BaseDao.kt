@@ -1,8 +1,11 @@
 package jy.cn.com.ylibrary.db
 
+import android.arch.lifecycle.LifecycleOwner
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import jy.cn.com.ylibrary.coroutine.CoroutineCall
+import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
 import java.util.*
 
 /**
@@ -10,7 +13,7 @@ import java.util.*
  * @Date 2018/12/5-11:29
  * @TODO 数据库基类
  */
-abstract class BaseDao<T> {
+abstract class BaseDao<T> : CoroutineCall {
 
     private val hashMap = HashMap<String, Int>()
 
@@ -174,6 +177,15 @@ abstract class BaseDao<T> {
         }
         return map
 
+    }
+
+    /**
+     * 获取list集合（协程方式）
+     */
+    fun getListInfo(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
+        request(coroutineResultCallback, lifecycleOwner) {
+            getListInfo()
+        }
     }
 
     /**

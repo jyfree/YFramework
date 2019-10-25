@@ -46,6 +46,9 @@ android {
             dirs 'libs', rootProject.ext.socialsdklib_path
         }
     }
+    packagingOptions {
+        exclude 'META-INF/proguard/coroutines.pro'
+    }
 }
 
 android.applicationVariants.all { variant ->

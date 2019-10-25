@@ -274,4 +274,9 @@
 -keep class jy.cn.com.yframework.simple.http.bean.** { *; }
 -keep class jy.cn.com.ylibrary.http.bean.** { *; }
 -keep class jy.cn.com.socialsdklibrary.wx.WXPayBean
+
+#协程
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}
 #********************************APP混淆 end*************************************

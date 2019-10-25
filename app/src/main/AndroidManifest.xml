@@ -98,6 +98,10 @@
             android:name=".simple.selector.SelectorSimpleActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".simple.db.DBSimpleActivity"
+            android:screenOrientation="portrait" />
+
         <!--**********************************************************************-->
 
 

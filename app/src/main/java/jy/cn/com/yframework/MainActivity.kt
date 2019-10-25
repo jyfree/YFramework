@@ -6,6 +6,7 @@ import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 import jy.cn.com.yframework.simple.bar.BarSimpleActivity
 import jy.cn.com.yframework.simple.cmd.CMDSimpleActivity
+import jy.cn.com.yframework.simple.db.DBSimpleActivity
 import jy.cn.com.yframework.simple.dialog.DialogSimple
 import jy.cn.com.yframework.simple.http.ApiSimpleActivity
 import jy.cn.com.yframework.simple.http.DownloadSimpleActivity
@@ -68,6 +69,7 @@ class MainActivity : BaseActivity() {
             R.id.go_sp -> SpSimpleActivity.startAct(this)
             R.id.go_pic -> PicSimpleActivity.startAct(this)
             R.id.go_shadow -> SelectorSimpleActivity.startAct(this)
+            R.id.go_db -> DBSimpleActivity.startAct(this)
         }
     }
 
