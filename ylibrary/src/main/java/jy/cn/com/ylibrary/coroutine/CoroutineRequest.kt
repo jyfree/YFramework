@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
  * @Date 2019/10/24-18:19
  * @TODO
  */
-interface CoroutineCall {
+interface CoroutineRequest {
     fun <T> requestCoroutine(
             coroutineResultCallback: CoroutineResultCallback<T>,
             lifecycleOwner: LifecycleOwner,
@@ -25,7 +25,7 @@ interface CoroutineCall {
                     coroutineResultCallback.forResult(t)
                 }
             } catch (ex: Exception) {
-                YLogUtil.e("CoroutineCall request  error : ${ex.message}")
+                YLogUtil.e("CoroutineRequest request  error : ${ex.message}")
                 coroutineResultCallback.forResult(null)
             }
         }

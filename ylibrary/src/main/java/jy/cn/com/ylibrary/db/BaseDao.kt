@@ -1,7 +1,7 @@
 package jy.cn.com.ylibrary.db
 
 import android.arch.lifecycle.LifecycleOwner
-import jy.cn.com.ylibrary.coroutine.CoroutineCall
+import jy.cn.com.ylibrary.coroutine.CoroutineRequest
 import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
 import jy.cn.com.ylibrary.thread.lifecycle.ThreadRequest
 import jy.cn.com.ylibrary.thread.lifecycle.ThreadResultCallback
@@ -12,7 +12,7 @@ import java.util.*
  * @Date 2018/12/5-11:29
  * @TODO 数据库基类
  */
-abstract class BaseDao<T> : BaseSuperDao<T>(), CoroutineCall, ThreadRequest {
+abstract class BaseDao<T> : BaseSuperDao<T>(), CoroutineRequest, ThreadRequest {
 
 
     //*******************************协程方式*********************************************
