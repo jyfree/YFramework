@@ -1,9 +1,6 @@
 package jy.cn.com.ylibrary.db
 
 import android.arch.lifecycle.LifecycleOwner
-import android.content.ContentValues
-import android.database.Cursor
-import android.database.sqlite.SQLiteDatabase
 import jy.cn.com.ylibrary.coroutine.CoroutineCall
 import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
 import jy.cn.com.ylibrary.thread.lifecycle.ThreadRequest
@@ -15,340 +12,107 @@ import java.util.*
  * @Date 2018/12/5-11:29
  * @TODO 数据库基类
  */
-abstract class BaseDao<T> : CoroutineCall, ThreadRequest {
+abstract class BaseDao<T> : BaseSuperDao<T>(), CoroutineCall, ThreadRequest {
 
-    private val hashMap = HashMap<String, Int>()
 
-    /**
-     * 获取表名
-     *
-     * @return
-     */
-    abstract val tableName: String
-
-    /**
-     * 插入或更新单条数据
-     *
-     * @param item
-     */
-    @Synchronized
-    fun insertOrUpdate(item: T) {
-        val tmpList = getListInfo()
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            if (db.isOpen) {
-                //db是否存在此数据
-                var isExist = false
-                for (tmpInfo in tmpList) {
-                    if (compareItem(item, tmpInfo)) {
-                        isExist = true
-                        break
-                    }
-                }
-                if (isExist) {
-                    updateItem(db, item)
-                } else {
-                    db.insert(tableName, null, getContentValues(item))
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DatabaseManager.getInstance().closeDatabase()
-        }
-    }
+    //*******************************协程方式*********************************************
 
     /**
      * 插入单条数据
-     *
-     * @param item
      */
-    @Synchronized
-    fun insert(item: T) {
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            if (db.isOpen) {
-                db.insert(tableName, null, getContentValues(item))
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DatabaseManager.getInstance().closeDatabase()
-        }
+    fun insertToCoroutine(item: T) {
+        requestCoroutine { insert(item) }
     }
 
     /**
      * 批量插入（旧数据删除）
-     *
-     * @param dataList
      */
-    @Synchronized
-    fun insert(dataList: ArrayList<T>) {
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            if (db.isOpen) {
-                db.beginTransaction() // 手动设置开始事务
+    fun insertToCoroutine(dataList: ArrayList<T>) {
+        requestCoroutine { insert(dataList) }
+    }
 
-                deleteAll(db)
+    /**
+     * 插入或更新单条数据
+     */
+    fun insertOrUpdateToCoroutine(item: T) {
+        requestCoroutine { insertOrUpdate(item) }
+    }
 
-                for (item in dataList) {
-                    db.insert(tableName, null, getContentValues(item))
+    /**
+     * 批量插入或更新
+     */
+    fun insertOrUpdateToCoroutine(dataList: List<T>) {
+        requestCoroutine { insertOrUpdate(dataList) }
+    }
 
-                }
-                db.setTransactionSuccessful() // 设置事务处理成功，不设置会自动回滚不提交
-                db.endTransaction() // 处理完成
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DatabaseManager.getInstance().closeDatabase()
+    /**
+     * 获取map集合
+     */
+    fun getMapInfoToCoroutine(coroutineResultCallback: CoroutineResultCallback<Map<Any, T>>, key: String, lifecycleOwner: LifecycleOwner) {
+        requestCoroutine(coroutineResultCallback, lifecycleOwner) {
+            getMapInfo(key)
         }
+    }
+
+    /**
+     * 获取list集合
+     */
+    fun getListInfoToCoroutine(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
+        requestCoroutine(coroutineResultCallback, lifecycleOwner) {
+            getListInfo()
+        }
+    }
+
+
+    //********************************子线程方式*********************************************
+    /**
+     * 插入单条数据
+     */
+    fun insertToThread(item: T) {
+        requestThread { insert(item) }
+    }
+
+    /**
+     * 批量插入（旧数据删除）
+     */
+    fun insertToThread(dataList: ArrayList<T>) {
+        requestThread { insert(dataList) }
+    }
+
+
+    /**
+     * 插入或更新单条数据
+     */
+    fun insertOrUpdateToThread(item: T) {
+        requestThread { insertOrUpdate(item) }
     }
 
 
     /**
      * 批量插入或更新
      */
-    @Synchronized
-    fun insertOrUpdate(dataList: List<T>) {
-        val tmpList = getListInfo()
-
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            if (db.isOpen) {
-                db.beginTransaction() // 手动设置开始事务
-
-
-                for (item in dataList) {
-
-                    var isExist = false//db是否存在此数据
-
-                    for (tmpInfo in tmpList) {
-
-                        if (compareItem(item, tmpInfo)) {
-                            isExist = true
-                            break
-                        }
-                    }
-                    if (isExist) {
-                        updateItem(db, item)
-                    } else {
-                        db.insert(tableName, null, getContentValues(item))
-                    }
-                }
-
-                db.setTransactionSuccessful() // 设置事务处理成功，不设置会自动回滚不提交
-                db.endTransaction() // 处理完成
-
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DatabaseManager.getInstance().closeDatabase()
-        }
+    fun insertOrUpdateToThread(dataList: List<T>) {
+        requestThread { insertOrUpdate(dataList) }
     }
+
 
     /**
      * 获取map集合
-     *
-     * @return
      */
-    fun getMapInfo(key: String): Map<Any, T> {
-        val map = HashMap<Any, T>()
-
-        var cursor: Cursor? = null
-
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            cursor = db.query(tableName, null, null, null, null, null, null)
-
-            if (db.isOpen) {
-                while (cursor?.moveToNext() == true) {
-
-                    val id = cursor.getString(getColumnIndex(cursor, key))
-                    map[id] = getItemInfo(cursor)
-
-                }
-            }
-
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
-        }
-        return map
-
-    }
-
-    /**
-     * 获取list集合（协程方式）
-     */
-    fun getListInfo(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
-        requestCoroutine(coroutineResultCallback, lifecycleOwner) {
-            getListInfo()
-        }
-    }
-
-    /**
-     * 获取list集合（子线程方式）
-     */
-    fun getListInfo(threadResultCallback: ThreadResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
+    fun getMapInfoToThread(threadResultCallback: ThreadResultCallback<Map<Any, T>>, key: String, lifecycleOwner: LifecycleOwner) {
         requestThread(threadResultCallback, lifecycleOwner) {
-            getListInfo()
+            getMapInfo(key)
         }
     }
 
     /**
      * 获取list集合
-     *
-     * @return
      */
-    fun getListInfo(): ArrayList<T> {
-        val db = DatabaseManager.getInstance().openDatabase()
-        val cursor = db.query(tableName, null, null, null, null, null, null)
-        return queryList(db, cursor)
-    }
-
-    /**
-     * 获取list集合（自定义db和cursor）
-     *
-     * @return
-     */
-    fun queryList(db: SQLiteDatabase, cursor: Cursor?): ArrayList<T> {
-
-        val msgList = ArrayList<T>()
-        try {
-            if (db.isOpen) {
-                while (cursor?.moveToNext() == true) {
-                    msgList.add(getItemInfo(cursor))
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
+    fun getListInfoToThread(threadResultCallback: ThreadResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
+        requestThread(threadResultCallback, lifecycleOwner) {
+            getListInfo()
         }
-        return msgList
-
-    }
-
-    /**
-     * 获取item（自定义db和cursor）
-     */
-    fun queryItem(db: SQLiteDatabase, cursor: Cursor?): T? {
-
-        var t: T? = null
-        try {
-            if (db.isOpen) {
-                if (cursor?.moveToFirst() == true) {
-                    t = getItemInfo(cursor)
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
-        }
-        return t
-    }
-
-    /**
-     * 删除所有信息
-     *
-     * @param db
-     */
-    fun deleteAll(db: SQLiteDatabase) {
-
-        try {
-            db.delete(tableName, null, null)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-    }
-
-    /**
-     * 删除所有信息
-     */
-    fun deleteAll() {
-
-        try {
-            val db = DatabaseManager.getInstance().openDatabase()
-            if (db.isOpen) {
-                db.delete(tableName, null, null)
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            DatabaseManager.getInstance().closeDatabase()
-        }
-
     }
 
 
-    /**
-     * item转ContentValues
-     *
-     * @param item
-     * @return
-     */
-    abstract fun getContentValues(item: T): ContentValues
-
-    /**
-     * 获取item
-     *
-     * @param cursor
-     * @return
-     */
-    abstract fun getItemInfo(cursor: Cursor): T
-
-    /**
-     * 对比两个item是否相同
-     *
-     * @param item1
-     * @param item2
-     * @return
-     */
-    abstract fun compareItem(item1: T, item2: T): Boolean
-
-    /**
-     * 更新item
-     *
-     * @param db
-     * @param item
-     */
-    abstract fun updateItem(db: SQLiteDatabase, item: T)
-
-
-    fun getString(cursor: Cursor, name: String): String {
-        return cursor.getString(getColumnIndex(cursor, name))
-    }
-
-    fun getInt(cursor: Cursor, name: String): Int {
-        return cursor.getInt(getColumnIndex(cursor, name))
-    }
-
-    fun getLong(cursor: Cursor, name: String): Long {
-        return cursor.getLong(getColumnIndex(cursor, name))
-    }
-
-    fun getFloat(cursor: Cursor, name: String): Float {
-        return cursor.getFloat(getColumnIndex(cursor, name))
-    }
-
-    fun getBool(cursor: Cursor, name: String): Boolean {
-        return cursor.getInt(getColumnIndex(cursor, name)) == 1
-    }
-
-    private fun getColumnIndex(cursor: Cursor, name: String): Int {
-        if (hashMap.containsKey(name)) {
-            return hashMap[name] ?: 0
-        }
-        val index = cursor.getColumnIndex(name)
-        hashMap[name] = index
-        return index
-    }
 }
