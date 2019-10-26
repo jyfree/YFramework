@@ -52,6 +52,7 @@ class PaySimpleActivity : BaseActivity() {
         })
         sdkPay.setWxListener {
             YLogUtil.e("未安装微信")
+            showSDKProgress(false)
         }
         sdkPay
     }

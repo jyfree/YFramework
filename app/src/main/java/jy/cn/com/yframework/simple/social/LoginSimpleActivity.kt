@@ -53,6 +53,7 @@ class LoginSimpleActivity : BaseActivity() {
         })
         sdkLogin.setWXListener {
             YLogUtil.e("未安装微信")
+            showSDKProgress(false)
         }
         sdkLogin
     }
