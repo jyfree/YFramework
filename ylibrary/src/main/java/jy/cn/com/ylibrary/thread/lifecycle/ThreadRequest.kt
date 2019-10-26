@@ -11,13 +11,13 @@ import jy.cn.com.ylibrary.util.YLogUtil
  * @TODO
  */
 interface ThreadRequest {
-    fun <T> request(
+    fun <T> requestThread(
             threadResultCallback: ThreadResultCallback<T>,
             lifecycleOwner: LifecycleOwner,
             block: () -> T?
     ) {
 
-        executeThread(lifecycleOwner) {
+        executeThreadWithLifecycle(lifecycleOwner) {
             try {
                 val t = block.invoke()
                 HandlerUtil.runOnUiThread(Runnable {
@@ -29,4 +29,11 @@ interface ThreadRequest {
             }
         }
     }
+
+    fun <T> requestThread(block: () -> T?) {
+        executeThread {
+            block.invoke()
+        }
+    }
+
 }

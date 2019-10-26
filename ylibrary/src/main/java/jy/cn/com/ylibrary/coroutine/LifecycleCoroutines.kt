@@ -38,3 +38,10 @@ fun <T> GlobalScope.asyncWithLifecycle(
     }
     lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(job))
 }
+
+fun <T> GlobalScope.then(context: CoroutineContext, block: () -> T) {
+    GlobalScope.launch(context) {
+        YLogUtil.iTag("GlobalScope", "then", Thread.currentThread().name)
+        block()
+    }
+}

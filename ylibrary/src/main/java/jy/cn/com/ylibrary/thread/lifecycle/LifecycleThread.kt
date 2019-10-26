@@ -16,10 +16,7 @@ import java.util.concurrent.ExecutorService
 //线程池
 private var SYNC_EXECUTOR = ThreadPoolFactory.createExecutor(2, 2, QueueProcessingType.FIFO)
 
-fun <T> executeThread(
-        lifecycleOwner: LifecycleOwner,
-        block: () -> T
-) {
+fun <T> executeThreadWithLifecycle(lifecycleOwner: LifecycleOwner, block: () -> T) {
 
     var life: LifecycleThreadListener? = null
     val thread = object : Thread() {
@@ -42,6 +39,18 @@ fun <T> executeThread(
 
 
 }
+
+fun <T> executeThread(block: () -> T) {
+
+    val thread = object : Thread() {
+
+        override fun run() {
+            block()
+        }
+    }
+    submit(thread)
+}
+
 
 fun submit(task: Thread) {
     if ((SYNC_EXECUTOR as ExecutorService).isShutdown) {

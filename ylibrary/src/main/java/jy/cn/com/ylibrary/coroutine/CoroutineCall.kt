@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
  * @TODO
  */
 interface CoroutineCall {
-    fun <T> request(
+    fun <T> requestCoroutine(
             coroutineResultCallback: CoroutineResultCallback<T>,
             lifecycleOwner: LifecycleOwner,
             block: () -> T?
@@ -28,6 +28,12 @@ interface CoroutineCall {
                 YLogUtil.e("CoroutineCall request  error : ${ex.message}")
                 coroutineResultCallback.forResult(null)
             }
+        }
+    }
+
+    fun <T> requestCoroutine(block: () -> T?) {
+        GlobalScope.then(Dispatchers.Default) {
+            block.invoke()
         }
     }
 }

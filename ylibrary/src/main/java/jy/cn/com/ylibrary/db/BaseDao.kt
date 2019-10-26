@@ -185,7 +185,7 @@ abstract class BaseDao<T> : CoroutineCall, ThreadRequest {
      * 获取list集合（协程方式）
      */
     fun getListInfo(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
-        request(coroutineResultCallback, lifecycleOwner) {
+        requestCoroutine(coroutineResultCallback, lifecycleOwner) {
             getListInfo()
         }
     }
@@ -194,7 +194,7 @@ abstract class BaseDao<T> : CoroutineCall, ThreadRequest {
      * 获取list集合（子线程方式）
      */
     fun getListInfo(threadResultCallback: ThreadResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
-        request(threadResultCallback, lifecycleOwner) {
+        requestThread(threadResultCallback, lifecycleOwner) {
             getListInfo()
         }
     }
