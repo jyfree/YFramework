@@ -2,9 +2,10 @@ package jy.cn.com.ylibrary.coroutine
 
 import android.arch.lifecycle.LifecycleOwner
 import jy.cn.com.ylibrary.util.YLogUtil
-import kotlinx.coroutines.*
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
-import kotlin.coroutines.EmptyCoroutineContext
 
 
 /**
@@ -23,70 +24,17 @@ import kotlin.coroutines.EmptyCoroutineContext
  * @param block Coroutine 代码块
  */
 fun <T> GlobalScope.asyncWithLifecycle(
+        context: CoroutineContext,
         lifecycleOwner: LifecycleOwner,
-        context: CoroutineContext = EmptyCoroutineContext,
-        start: CoroutineStart = CoroutineStart.DEFAULT,
-        block: suspend CoroutineScope.() -> T
-): Deferred<T> {
+        block: () -> T
+) {
 
-    val deferred = GlobalScope.async(context, start) {
-        block()
-    }
-    lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(deferred))
-    return deferred
-
-}
-
-fun <T> GlobalScope.bindWithLifecycle(
-        lifecycleOwner: LifecycleOwner,
-        block: CoroutineScope.() -> Deferred<T>
-): Deferred<T> {
-
-    val deferred = block.invoke(this)
-    lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(deferred))
-
-    return deferred
-}
-
-fun <T> GlobalScope.applyAsync(
-        block: suspend CoroutineScope.() -> T
-): Deferred<T> {
-    val deferred = GlobalScope.async {
-        block()
-    }
-    return deferred
-}
-
-infix fun <T> Deferred<T>.then(block: (T) -> Unit): Job {
-
-    return GlobalScope.launch(context = Dispatchers.Main) {
-
-        block(this@then.await())
-    }
-}
-
-infix fun <T, R> Deferred<T>.thenAsync(block: (T) -> R): Deferred<R> {
-
-    return GlobalScope.async(context = Dispatchers.Main) {
-
-        block(this@thenAsync.await())
-    }
-}
-
-suspend fun <T> Deferred<T>.awaitOrNull(timeout: Long = 0L): T? {
-    return try {
-        if (timeout > 0) {
-
-            withTimeout(timeout) {
-                this@awaitOrNull.await()
-            }
-
-        } else {
-            this.await()
+    val job = GlobalScope.launch(context) {
+        if (isActive) {
+            //也不知道为毛，这里若关闭log就会阻塞UI线程，难道执行block()太快了？？？
+            YLogUtil.iTag("GlobalScope", "launch", Thread.currentThread().name)
+            block()
         }
-    } catch (e: Exception) {
-
-        YLogUtil.e("Deferred", e.message)
-        null
     }
+    lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(job))
 }

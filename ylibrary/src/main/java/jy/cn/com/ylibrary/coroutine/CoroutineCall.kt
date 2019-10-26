@@ -2,7 +2,9 @@ package jy.cn.com.ylibrary.coroutine
 
 import android.arch.lifecycle.LifecycleOwner
 import jy.cn.com.ylibrary.util.YLogUtil
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 /**
 
@@ -14,17 +16,18 @@ interface CoroutineCall {
     fun <T> request(
             coroutineResultCallback: CoroutineResultCallback<T>,
             lifecycleOwner: LifecycleOwner,
-            block: suspend () -> T?
+            block: () -> T?
     ) {
-        GlobalScope.asyncWithLifecycle(lifecycleOwner) {
+        GlobalScope.asyncWithLifecycle(Dispatchers.Default, lifecycleOwner) {
             try {
-                block.invoke()
+                val t = block.invoke()
+                GlobalScope.launch(Dispatchers.Main) {
+                    coroutineResultCallback.forResult(t)
+                }
             } catch (ex: Exception) {
                 YLogUtil.e("CoroutineCall request  error : ${ex.message}")
-                null
+                coroutineResultCallback.forResult(null)
             }
-        }.then {
-            coroutineResultCallback.forResult(it)
         }
     }
 }

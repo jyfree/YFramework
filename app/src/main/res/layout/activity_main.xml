@@ -137,7 +137,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="db协程示例" />
+            android:text="db示例" />
     </LinearLayout>
 
 </ScrollView>

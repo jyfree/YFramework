@@ -48,7 +48,7 @@ class DBSimpleActivity : BaseAppCompatActivity() {
         val startTime = System.currentTimeMillis()
         for (i in 0..10000) {
             DownloadDao.getListInfo(CoroutineResultCallback {
-                YLogUtil.i("协程--data", it, i)
+                YLogUtil.i("协程--data", it, i, Thread.currentThread().name)
             }, this)
         }
         YLogUtil.i("协程--全部--time", System.currentTimeMillis() - startTime)
@@ -68,7 +68,7 @@ class DBSimpleActivity : BaseAppCompatActivity() {
         val startTime = System.currentTimeMillis()
         for (i in 0..10000) {
             DownloadDao.getListInfo(ThreadResultCallback {
-                YLogUtil.i("子线程--data", it, i)
+                YLogUtil.i("子线程--data", it, i, Thread.currentThread().name)
             }, this)
         }
         YLogUtil.i("子线程--全部--time", System.currentTimeMillis() - startTime)
