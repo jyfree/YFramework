@@ -8,7 +8,7 @@ import android.arch.lifecycle.OnLifecycleEvent
 
  * @Author Administrator
  * @Date 2019/10/24-17:41
- * @TODO 协程监听器，绑定生命周期
+ * @TODO 线程监听器，绑定生命周期
  */
 open class LifecycleThreadListener(private val thread: Thread, private val cancelEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) : LifecycleObserver {
 
