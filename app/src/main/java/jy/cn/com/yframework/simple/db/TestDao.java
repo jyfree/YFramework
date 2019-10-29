@@ -18,4 +18,10 @@ public class TestDao {
     @Scope(isCompareField = true)
     public String url;
     public int updateProgress;
+    @Scope(isUpdateField = true, updateFieldVersion = 2)
+    public String testUpdate;
+    @Scope(isUpdateField = true, updateFieldVersion = 3)
+    public String testUpdateTwo;
+    @Scope(isFilter = true)
+    public String testFilter;
 }

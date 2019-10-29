@@ -3,7 +3,6 @@ package jy.cn.com.ylibrary.db
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
-import jy.cn.com.ylibrary.util.YLogUtil
 
 
 /**
@@ -16,6 +15,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
     override val tableName: String
         get() = subClass.simpleName
 
+    private val subClassFields = subClass.declaredFields
 
     override fun getContentValues(item: T): ContentValues {
         val values = ContentValues()
@@ -28,20 +28,20 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
             if (value == null) {
                 value = ""
             }
-            when {
-                Int::class.java == fie.type -> {
-                    //解析注解
-                    if (fie.isAnnotationPresent(Scope::class.java)) {
-                        val scope = fie.getAnnotation(Scope::class.java)
-                        if (scope.isPrimaryKey && scope.isAutoKey) {
-                            YLogUtil.iFormatTag("BaseWrapper", "自增字段--表名：%s--字段名：%s", tableName, fie.name)
-                        } else {
-                            values.put(fie.name, value as Int)
-                        }
-                    } else {
-                        values.put(fie.name, value as Int)
-                    }
+            //解析注解
+            if (fie.isAnnotationPresent(Scope::class.java)) {
+                val scope = fie.getAnnotation(Scope::class.java)
+                if (scope.isPrimaryKey && scope.isAutoKey) {
+//                    YLogUtil.iFormatTag("BaseWrapper", "插入|更新--自增字段--表名：%s--字段名：%s", tableName, fie.name)
+                    continue
                 }
+                if (scope.isFilter) {
+//                    YLogUtil.iFormatTag("BaseWrapper", "插入|更新--过滤字段--表名：%s--字段名：%s", tableName, fie.name)
+                    continue
+                }
+            }
+            when {
+                Int::class.java == fie.type -> values.put(fie.name, value as Int)
                 Long::class.java == fie.type -> values.put(fie.name, value as Int)
                 Float::class.java == fie.type -> values.put(fie.name, value as Float)
                 String::class.java == fie.type -> values.put(fie.name, value as String)
@@ -61,12 +61,20 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
 
     override fun getItemInfo(cursor: Cursor): T {
 
-        val fields = subClass.declaredFields
+        val fields = subClassFields
         val subObject = subClass.newInstance()
 
         for (fie in fields) {
             // 允许访问私有变量
             fie.isAccessible = true
+            //解析注解
+            if (fie.isAnnotationPresent(Scope::class.java)) {
+                val scope = fie.getAnnotation(Scope::class.java)
+                if (scope.isFilter) {
+//                    YLogUtil.iFormatTag("BaseWrapper", "查询--过滤字段--表名：%s--字段名：%s", tableName, fie.name)
+                    continue
+                }
+            }
             when {
                 Int::class.java == fie.type -> fie.set(subObject, getInt(cursor, fie.name))
                 Long::class.java == fie.type -> fie.set(subObject, getInt(cursor, fie.name))
@@ -91,7 +99,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
     }
 
     override fun updateItem(db: SQLiteDatabase, item: T) {
-        val fields = item.javaClass.declaredFields
+        val fields = subClassFields
         var value: Any = ""
         var key: Any? = null
         for (fie in fields) {

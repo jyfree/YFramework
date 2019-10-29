@@ -60,13 +60,30 @@ public abstract class BaseOpenHelper extends SQLiteOpenHelper {
     public abstract void onUpgradeDB(SQLiteDatabase db, int oldVersion, int newVersion);
 
     /**
+     * 新增表字段
+     * 注意：更新的字段必需添加注解：@Scope(isUpdateField = true, updateFieldVersion = xxx)
+     * 否则更新失败
+     *
+     * @param db         db
+     * @param oldVersion 旧版本号
+     * @param subClass   需要更新的目标
+     */
+    public void addField(SQLiteDatabase db, int oldVersion, Class<?> subClass) {
+        execUpgradeSQL(db, DBFieldManager.addField(subClass, oldVersion).toArray(new String[]{}));
+    }
+
+    /**
      * 更新版本
      * 示例：String sql = "alter table [" + DownloadDao.TABLE_NAME + "] add " + "test" + " INTEGER";
      *
      * @param db
      * @param sqlArray 数据库语句集合
      */
-    protected void execUpgradeSQL(SQLiteDatabase db, String... sqlArray) {
+    public void execUpgradeSQL(SQLiteDatabase db, String... sqlArray) {
+        if (sqlArray.length == 0) {
+            YLogUtil.INSTANCE.e(TAG, "更新db语句错误，请检查版本号、db实体");
+            return;
+        }
         db.beginTransaction();
         try {
             for (String sql : sqlArray) {
@@ -75,7 +92,7 @@ public abstract class BaseOpenHelper extends SQLiteOpenHelper {
             db.setTransactionSuccessful();
         } catch (Throwable ex) {
             ex.printStackTrace();
-            YLogUtil.INSTANCE.eFormat(TAG, "更新db失败", sqlArray);
+            YLogUtil.INSTANCE.e(TAG, "更新db失败", sqlArray);
         } finally {
             db.endTransaction();
         }

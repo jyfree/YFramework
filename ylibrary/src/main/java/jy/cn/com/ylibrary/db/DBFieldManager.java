@@ -100,4 +100,52 @@ public class DBFieldManager {
 
     }
 
+    /**
+     * 新增字段
+     *
+     * @param subClass
+     * @param oldVersion
+     * @return
+     */
+    public static List<String> addField(Class<?> subClass, int oldVersion) {
+
+        String formatStr = "alter table [%s] add %s %s";
+        List<String> sqlList = new ArrayList<>();
+
+        Field[] fields = subClass.getDeclaredFields();
+        for (Field fie : fields) {
+            // 允许访问私有变量
+            fie.setAccessible(true);
+            //解析注解
+            if (fie.isAnnotationPresent(Scope.class)) {
+                Scope scope = fie.getAnnotation(Scope.class);
+                //更新字段
+                if (scope.isUpdateField() && oldVersion <= scope.updateFieldVersion()) {
+                    String typeStr;
+                    if (int.class.equals(fie.getType())) {
+                        typeStr = "INTEGER";
+                    } else if (long.class.equals(fie.getType())) {
+                        typeStr = "INTEGER";
+                    } else if (float.class.equals(fie.getType())) {
+                        typeStr = "float";
+                    } else if (String.class.equals(fie.getType())) {
+                        typeStr = "TEXT";
+                    } else if (boolean.class.equals(fie.getType())) {
+                        typeStr = "INTEGER";
+                    } else if (double.class.equals(fie.getType())) {
+                        typeStr = "double";
+                    } else {
+                        typeStr = "TEXT";
+                    }
+                    String sql = String.format(formatStr, subClass.getSimpleName(), fie.getName(), typeStr);
+                    sqlList.add(sql);
+
+                    YLogUtil.INSTANCE.iTag(TAG, "修改表", sql);
+
+                }
+            }
+        }
+        return sqlList;
+    }
+
 }

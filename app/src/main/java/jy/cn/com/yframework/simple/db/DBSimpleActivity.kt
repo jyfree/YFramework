@@ -81,12 +81,16 @@ class DBSimpleActivity : BaseAppCompatActivity() {
         testInfo.savePath = "http//:www.baidu.com"
         testInfo.connectionTime = 10
         testInfo.id = 3
+        testInfo.testFilter = "testFilter"
+        testInfo.testUpdate = "testUpdate"
+        testInfo.testUpdateTwo = "testUpdateTwo"
         dbWrapper.insertOrUpdate(testInfo)
 
         val startTime = System.currentTimeMillis()
         val list = dbWrapper.getListInfo()
         list.forEach {
-            YLogUtil.i("单条数据", it.id, it.savePath, it.connectionTime)
+            YLogUtil.iFormat("单条数据--id：%s--savePath：%s--connectionTime：%s--testFilter：%s--testUpdate：%s--testUpdateTwo：%s",
+                    it.id, it.savePath, it.connectionTime, it.testFilter, it.testUpdate, it.testUpdateTwo)
         }
         YLogUtil.iFormat("查询--用时%sms--数据:%s", System.currentTimeMillis() - startTime, list)
 

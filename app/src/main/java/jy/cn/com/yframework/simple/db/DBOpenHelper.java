@@ -13,7 +13,7 @@ import jy.cn.com.ylibrary.db.DBFieldManager;
  */
 public class DBOpenHelper extends BaseOpenHelper {
 
-    private static final int VERSION = 1;
+    private static final int VERSION = 3;
 
     private static DBOpenHelper instance;
 
@@ -36,7 +36,7 @@ public class DBOpenHelper extends BaseOpenHelper {
 
     @Override
     public void onUpgradeDB(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        addField(db, oldVersion, TestDao.class);
     }
 
 }

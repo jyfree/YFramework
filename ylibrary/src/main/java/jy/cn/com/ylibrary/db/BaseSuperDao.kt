@@ -303,7 +303,7 @@ abstract class BaseSuperDao<T> {
     abstract fun updateItem(db: SQLiteDatabase, item: T)
 
 
-    fun getString(cursor: Cursor, name: String): String {
+    fun getString(cursor: Cursor, name: String): String? {
         return cursor.getString(getColumnIndex(cursor, name))
     }
 
