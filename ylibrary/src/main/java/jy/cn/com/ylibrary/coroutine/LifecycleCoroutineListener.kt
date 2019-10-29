@@ -11,7 +11,10 @@ import kotlinx.coroutines.Job
  * @Date 2019/10/24-17:41
  * @TODO 协程监听器，绑定生命周期
  */
-open class LifecycleCoroutineListener(private val job: Job, private val cancelEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) : LifecycleObserver {
+open class LifecycleCoroutineListener(private val cancelEvent: Lifecycle.Event = Lifecycle.Event.ON_DESTROY) : LifecycleObserver {
+
+    private var job: Job? = null
+    var isDestroy = false
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     fun pause() = handleEvent(Lifecycle.Event.ON_PAUSE)
@@ -24,8 +27,15 @@ open class LifecycleCoroutineListener(private val job: Job, private val cancelEv
 
     private fun handleEvent(e: Lifecycle.Event) {
 
-        if (e == cancelEvent && !job.isCancelled) {
-            job.cancel()
+        if (e == cancelEvent) {
+            isDestroy = true
+            if (job?.isCancelled == false) {
+                job?.cancel()
+            }
         }
+    }
+
+    fun setJob(job: Job) {
+        this.job = job
     }
 }

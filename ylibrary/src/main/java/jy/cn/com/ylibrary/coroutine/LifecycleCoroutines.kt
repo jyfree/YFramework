@@ -29,14 +29,15 @@ fun <T> GlobalScope.asyncWithLifecycle(
         block: () -> T
 ) {
 
+    val lift = LifecycleCoroutineListener()
     val job = GlobalScope.launch(context) {
-        if (isActive) {
-            //也不知道为毛，这里若关闭log就会阻塞UI线程，难道执行block()太快了？？？
+        if (!lift.isDestroy && isActive) {
             YLogUtil.iTag("GlobalScope", "launch", Thread.currentThread().name)
             block()
         }
     }
-    lifecycleOwner.lifecycle.addObserver(LifecycleCoroutineListener(job))
+    lift.setJob(job)
+    lifecycleOwner.lifecycle.addObserver(lift)
 }
 
 fun <T> GlobalScope.then(context: CoroutineContext, block: () -> T) {
