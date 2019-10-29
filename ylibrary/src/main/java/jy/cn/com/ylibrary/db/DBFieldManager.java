@@ -61,7 +61,7 @@ public class DBFieldManager {
         sb.append(" (");
 
         for (DBFieldInfo it : list) {
-            if (it.isUpdateField() || it.isFilter()) {
+            if (it.isFilter()) {
                 continue;
             }
             sb.append(it.getName());
@@ -120,7 +120,7 @@ public class DBFieldManager {
             if (fie.isAnnotationPresent(Scope.class)) {
                 Scope scope = fie.getAnnotation(Scope.class);
                 //更新字段
-                if (scope.isUpdateField() && oldVersion <= scope.updateFieldVersion()) {
+                if (scope.isUpdateField() && oldVersion < scope.updateFieldVersion()) {
                     String typeStr;
                     if (int.class.equals(fie.getType())) {
                         typeStr = "INTEGER";
