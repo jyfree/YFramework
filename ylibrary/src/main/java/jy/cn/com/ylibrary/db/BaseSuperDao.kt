@@ -77,7 +77,7 @@ abstract class BaseSuperDao<T> {
      */
     @Synchronized
     fun insertOrUpdate(item: T) {
-        val tmpList = getListInfo()
+        val tmpList = getList()
         try {
             val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
@@ -107,7 +107,7 @@ abstract class BaseSuperDao<T> {
      */
     @Synchronized
     fun insertOrUpdate(dataList: List<T>) {
-        val tmpList = getListInfo()
+        val tmpList = getList()
 
         try {
             val db = DBManager.getInstance().openDatabase()
@@ -182,12 +182,25 @@ abstract class BaseSuperDao<T> {
      *
      * @return
      */
-    fun getListInfo(): ArrayList<T> {
+    private fun getList(): ArrayList<T> {
         val db = DBManager.getInstance().openDatabase()
         val cursor = db.query(tableName, null, null, null, null, null, null)
-        return queryList(db, cursor)
+        val list = queryList(db, cursor)
+        //加入内存缓存
+        DBCacheManager.instance.dbCache.putList(tableName, list)
+        return list
     }
 
+    /**
+     * 获取list集合（内存缓存）
+     */
+    fun getListInfo(): ArrayList<T> {
+        var list = DBCacheManager.instance.dbCache.getList(tableName)
+        if (list.isNullOrEmpty()) {
+            list = getList()
+        }
+        return list as ArrayList<T>
+    }
 
     /**
      * 获取list集合（自定义db和cursor）
