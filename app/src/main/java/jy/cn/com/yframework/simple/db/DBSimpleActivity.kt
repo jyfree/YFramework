@@ -30,7 +30,6 @@ class DBSimpleActivity : BaseAppCompatActivity() {
     override fun initClassTag(): Any = DBSimpleActivity::class.java.simpleName
 
     override fun initUI(savedInstanceState: Bundle?) {
-
     }
 
     fun onLoadDB(view: View) {
@@ -41,6 +40,8 @@ class DBSimpleActivity : BaseAppCompatActivity() {
             R.id.load_def -> requestDef()
             //子线程查询db
             R.id.load_thread -> requestThread()
+            //反射 插入&查询db
+            R.id.reflect -> insertAndQueryReflectDB()
         }
     }
 
@@ -72,5 +73,22 @@ class DBSimpleActivity : BaseAppCompatActivity() {
             }, this)
         }
         YLogUtil.i("子线程--全部--time", System.currentTimeMillis() - startTime)
+    }
+
+    private fun insertAndQueryReflectDB() {
+        val dbWrapper = DBWrapper(TestDao::class.java)
+        val testInfo = TestDao()
+        testInfo.savePath = "http//:www.baidu.com"
+        testInfo.connectionTime = 10
+        testInfo.id = 3
+        dbWrapper.insertOrUpdate(testInfo)
+
+        val startTime = System.currentTimeMillis()
+        val list = dbWrapper.getListInfo()
+        list.forEach {
+            YLogUtil.i("单条数据", it.id, it.savePath, it.connectionTime)
+        }
+        YLogUtil.iFormat("查询--用时%sms--数据:%s", System.currentTimeMillis() - startTime, list)
+
     }
 }

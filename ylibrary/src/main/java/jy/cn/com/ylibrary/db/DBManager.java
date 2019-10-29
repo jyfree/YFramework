@@ -5,22 +5,24 @@ import android.os.Build;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import jy.cn.com.ylibrary.util.YLogUtil;
+
 /**
  * Administrator
  * created at 2018/11/7 15:09
  * TODO:数据库管理类
  * 数据库框架性能对比：https://android.ctolib.com/AlexeyZatsepin-Android-ORM-benchmark.html
  */
-public class DatabaseManager {
+public class DBManager {
 
     private AtomicInteger mOpenCounter = new AtomicInteger();
-    private static DatabaseManager instance;
+    private static DBManager instance;
     private static BaseOpenHelper mDatabaseHelper;
     private SQLiteDatabase mDatabase;
 
     public static synchronized void initializeInstance(BaseOpenHelper helper) {
         if (instance == null) {
-            instance = new DatabaseManager();
+            instance = new DBManager();
             mDatabaseHelper = helper;
             //多线程读写
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -29,9 +31,9 @@ public class DatabaseManager {
         }
     }
 
-    public static synchronized DatabaseManager getInstance() {
+    public static synchronized DBManager getInstance() {
         if (instance == null) {
-            throw new IllegalStateException(DatabaseManager.class.getSimpleName() +
+            throw new IllegalStateException(DBManager.class.getSimpleName() +
                     " is not initialized, call initializeInstance(..) method first.");
         }
 
@@ -45,6 +47,8 @@ public class DatabaseManager {
             try {
                 mDatabase = mDatabaseHelper.getWritableDatabase();
             } catch (Exception e) {
+                e.printStackTrace();
+                YLogUtil.INSTANCE.e("打开数据库出错", e.getMessage());
                 mDatabase = mDatabaseHelper.getReadableDatabase();
             }
         }
@@ -56,7 +60,12 @@ public class DatabaseManager {
     public synchronized void closeDatabase() {
         if (mOpenCounter.decrementAndGet() == 0) {
             // Closing database
-            mDatabase.close();
+            try {
+                mDatabase.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+                YLogUtil.INSTANCE.e("关闭数据库出错", e.getMessage());
+            }
 
         }
     }

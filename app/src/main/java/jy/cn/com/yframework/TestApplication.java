@@ -9,7 +9,7 @@ import jy.cn.com.yframework.simple.loading.callback.ImageLoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.LoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
 import jy.cn.com.ylibrary.BaseApplication;
-import jy.cn.com.ylibrary.db.DatabaseManager;
+import jy.cn.com.ylibrary.db.DBManager;
 import jy.cn.com.ylibrary.helper.LogCatHelper;
 import jy.cn.com.ylibrary.imageload.ImageLoaderConfiguration;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
@@ -40,7 +40,7 @@ public class TestApplication extends BaseApplication {
             //初始化loading
             initLoadSir();
             //初始化数据库
-            DatabaseManager.initializeInstance(DBOpenHelper.getInstance(getApplicationContext()));
+            DBManager.initializeInstance(DBOpenHelper.getInstance(getApplicationContext()));
             //初始化cmd
             CMDMessageHandler.INSTANCE.register();
             //初始化imageLoad

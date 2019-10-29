@@ -4,11 +4,12 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import jy.cn.com.ylibrary.db.BaseOpenHelper;
+import jy.cn.com.ylibrary.db.DBFieldManager;
 
 /**
  * @Author Administrator
  * @Date 2019/10/23-18:12
- * @TODO
+ * @TODO 扩展数据库、创建|更新表
  */
 public class DBOpenHelper extends BaseOpenHelper {
 
@@ -30,7 +31,7 @@ public class DBOpenHelper extends BaseOpenHelper {
 
     @Override
     public void onCreateDB(SQLiteDatabase db) {
-
+        db.execSQL(DBFieldManager.createTable(TestDao.class));
     }
 
     @Override

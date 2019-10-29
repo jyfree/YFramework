@@ -31,14 +31,14 @@ abstract class BaseSuperDao<T> {
     @Synchronized
     fun insert(item: T) {
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 db.insert(tableName, null, getContentValues(item))
             }
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
     }
 
@@ -50,7 +50,7 @@ abstract class BaseSuperDao<T> {
     @Synchronized
     fun insert(dataList: ArrayList<T>) {
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 db.beginTransaction() // 手动设置开始事务
 
@@ -66,7 +66,7 @@ abstract class BaseSuperDao<T> {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
     }
 
@@ -79,7 +79,7 @@ abstract class BaseSuperDao<T> {
     fun insertOrUpdate(item: T) {
         val tmpList = getListInfo()
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 //db是否存在此数据
                 var isExist = false
@@ -98,7 +98,7 @@ abstract class BaseSuperDao<T> {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
     }
 
@@ -110,7 +110,7 @@ abstract class BaseSuperDao<T> {
         val tmpList = getListInfo()
 
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 db.beginTransaction() // 手动设置开始事务
 
@@ -140,7 +140,7 @@ abstract class BaseSuperDao<T> {
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
     }
 
@@ -155,7 +155,7 @@ abstract class BaseSuperDao<T> {
         var cursor: Cursor? = null
 
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             cursor = db.query(tableName, null, null, null, null, null, null)
 
             if (db.isOpen) {
@@ -171,7 +171,7 @@ abstract class BaseSuperDao<T> {
             e.printStackTrace()
         } finally {
             cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
         return map
 
@@ -183,7 +183,7 @@ abstract class BaseSuperDao<T> {
      * @return
      */
     fun getListInfo(): ArrayList<T> {
-        val db = DatabaseManager.getInstance().openDatabase()
+        val db = DBManager.getInstance().openDatabase()
         val cursor = db.query(tableName, null, null, null, null, null, null)
         return queryList(db, cursor)
     }
@@ -207,7 +207,7 @@ abstract class BaseSuperDao<T> {
             e.printStackTrace()
         } finally {
             cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
         return msgList
 
@@ -229,7 +229,7 @@ abstract class BaseSuperDao<T> {
             e.printStackTrace()
         } finally {
             cursor?.close()
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
         return t
     }
@@ -256,14 +256,14 @@ abstract class BaseSuperDao<T> {
     fun deleteAll() {
 
         try {
-            val db = DatabaseManager.getInstance().openDatabase()
+            val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 db.delete(tableName, null, null)
             }
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            DatabaseManager.getInstance().closeDatabase()
+            DBManager.getInstance().closeDatabase()
         }
 
     }
@@ -321,6 +321,10 @@ abstract class BaseSuperDao<T> {
 
     fun getBool(cursor: Cursor, name: String): Boolean {
         return cursor.getInt(getColumnIndex(cursor, name)) == 1
+    }
+
+    fun getDouble(cursor: Cursor, name: String): Double {
+        return cursor.getDouble(getColumnIndex(cursor, name))
     }
 
     private fun getColumnIndex(cursor: Cursor, name: String): Int {

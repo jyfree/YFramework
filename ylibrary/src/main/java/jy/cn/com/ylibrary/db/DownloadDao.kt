@@ -66,7 +66,7 @@ object DownloadDao : BaseDao<DownInfo>() {
 
     fun queryDownloadInfoByPath(path: String): DownInfo? {
 
-        val db = DatabaseManager.getInstance().openDatabase()
+        val db = DBManager.getInstance().openDatabase()
         val cursor = db.query(TABLE_NAME, null, "$COLUMN_NAME_URL = ?", arrayOf(path), null, null, null)
 
         return queryItem(db, cursor)
