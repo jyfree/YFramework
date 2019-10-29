@@ -198,6 +198,7 @@ abstract class BaseSuperDao<T> {
         var list = DBCacheManager.instance.dbCache.getList(tableName)
         if (list.isNullOrEmpty()) {
             list = getList()
+            DBCacheManager.instance.dbCache.putList(tableName, list)
         }
         return list as ArrayList<T>
     }
