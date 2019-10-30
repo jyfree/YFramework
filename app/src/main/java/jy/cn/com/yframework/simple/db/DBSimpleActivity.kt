@@ -85,7 +85,6 @@ class DBSimpleActivity : BaseAppCompatActivity() {
         val testInfo = TestDao()
         testInfo.savePath = "http//:www.baidu.com"
         testInfo.connectionTime = connectionTime
-        testInfo.id = 3
         testInfo.testFilter = "testFilter"
         testInfo.testUpdate = "testUpdate"
         testInfo.testUpdateTwo = "testUpdateTwo"

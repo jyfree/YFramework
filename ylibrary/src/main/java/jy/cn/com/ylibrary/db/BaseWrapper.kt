@@ -105,7 +105,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
 
     override fun updateItem(db: SQLiteDatabase, item: T) {
         val fields = subClassFields
-        var value: Any = ""
+        var value: Any? = ""
         var key: Any? = null
         for (fie in fields) {
             if (fie.isAnnotationPresent(Scope::class.java)) {
@@ -117,7 +117,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
                 }
             }
         }
-        db.update(tableName, getContentValues(item), "$key = ?", arrayOf(value.toString()))
+        db.update(tableName, getContentValues(item), "$key = ?", arrayOf(value?.toString()))
     }
 
 
