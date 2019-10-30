@@ -6,13 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import jy.cn.com.ylibrary.thread.QueueProcessingType;
-import jy.cn.com.ylibrary.thread.ThreadPoolFactory;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
 /**
@@ -22,8 +19,6 @@ import jy.cn.com.ylibrary.util.YLogUtil;
  */
 public class SharedPreferencesHelper {
     private final String TAG = "sp";
-    //线程池
-    private final Executor SYNC_EXECUTOR = ThreadPoolFactory.createExecutor(2, 2, QueueProcessingType.FIFO);
     //这个锁主要是为了锁住拷贝数据的过程，当进行数据拷贝的时候，不允许任何写入操作
     private final ReadWriteLock copyLock = new ReentrantReadWriteLock();
     //需要同步
@@ -64,7 +59,7 @@ public class SharedPreferencesHelper {
             YLogUtil.INSTANCE.iTag(TAG, "正在同步，取消reload");
             return;
         }
-        SYNC_EXECUTOR.execute(new ReloadTask(sharedPreferences));
+        SharedPreferencesManager.getInstance().submit(new ReloadTask(sharedPreferences));
     }
 
     /**
@@ -113,7 +108,7 @@ public class SharedPreferencesHelper {
             return;
         }
         //执行同步
-        SYNC_EXECUTOR.execute(new SyncTask(sharedPreferences));
+        SharedPreferencesManager.getInstance().submit(new SyncTask(sharedPreferences));
     }
 
     private class SyncTask implements Runnable {
