@@ -3,7 +3,12 @@ package jy.cn.com.ylibrary.db
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.google.gson.Gson
+import jy.cn.com.ylibrary.util.YConvertUtil
+import jy.cn.com.ylibrary.util.YLogUtil
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 /**
 
@@ -35,6 +40,8 @@ abstract class BaseSuperDao<T> {
             if (db.isOpen) {
                 db.insert(tableName, null, getContentValues(item))
             }
+            //加入缓存
+            addCache(item)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -63,6 +70,8 @@ abstract class BaseSuperDao<T> {
                 db.setTransactionSuccessful() // 设置事务处理成功，不设置会自动回滚不提交
                 db.endTransaction() // 处理完成
             }
+            //加入缓存
+            DBCacheManager.instance.dbCache.putList(tableName, dataList)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
@@ -78,14 +87,19 @@ abstract class BaseSuperDao<T> {
     @Synchronized
     fun insertOrUpdate(item: T) {
         val tmpList = getList()
+        //深拷贝数据
+        val cloneList = YConvertUtil.deepClone(Gson().toJson(tmpList), getSubClass())
+
         try {
             val db = DBManager.getInstance().openDatabase()
             if (db.isOpen) {
                 //db是否存在此数据
                 var isExist = false
-                for (tmpInfo in tmpList) {
-                    if (compareItem(item, tmpInfo)) {
+                for (position in 0 until tmpList.size) {
+                    if (compareItem(item, tmpList[position])) {
                         isExist = true
+                        //替换旧数据
+                        cloneList[position] = item
                         break
                     }
                 }
@@ -93,7 +107,11 @@ abstract class BaseSuperDao<T> {
                     updateItem(db, item)
                 } else {
                     db.insert(tableName, null, getContentValues(item))
+                    //加入拷贝集合
+                    cloneList.add(item)
                 }
+                //加入缓存
+                DBCacheManager.instance.dbCache.putList(tableName, cloneList)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -108,6 +126,8 @@ abstract class BaseSuperDao<T> {
     @Synchronized
     fun insertOrUpdate(dataList: List<T>) {
         val tmpList = getList()
+        //深拷贝数据
+        val cloneList = YConvertUtil.deepClone(Gson().toJson(tmpList), getSubClass())
 
         try {
             val db = DBManager.getInstance().openDatabase()
@@ -119,10 +139,12 @@ abstract class BaseSuperDao<T> {
 
                     var isExist = false//db是否存在此数据
 
-                    for (tmpInfo in tmpList) {
+                    for (position in 0 until tmpList.size) {
 
-                        if (compareItem(item, tmpInfo)) {
+                        if (compareItem(item, tmpList[position])) {
                             isExist = true
+                            //替换旧数据
+                            cloneList[position] = item
                             break
                         }
                     }
@@ -130,12 +152,16 @@ abstract class BaseSuperDao<T> {
                         updateItem(db, item)
                     } else {
                         db.insert(tableName, null, getContentValues(item))
+                        //加入拷贝集合
+                        cloneList.add(item)
                     }
                 }
 
                 db.setTransactionSuccessful() // 设置事务处理成功，不设置会自动回滚不提交
                 db.endTransaction() // 处理完成
 
+                //加入缓存
+                DBCacheManager.instance.dbCache.putList(tableName, cloneList)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -185,19 +211,34 @@ abstract class BaseSuperDao<T> {
     private fun getList(): ArrayList<T> {
         val db = DBManager.getInstance().openDatabase()
         val cursor = db.query(tableName, null, null, null, null, null, null)
-        val list = queryList(db, cursor)
-        //加入内存缓存
-        DBCacheManager.instance.dbCache.putList(tableName, list)
-        return list
+        return queryList(db, cursor)
     }
+
+    /**
+     * 插入缓存
+     */
+    private fun addCache(item: T) {
+        var list = DBCacheManager.instance.dbCache.getList(tableName)
+        if (null == list) {
+            list = ArrayList<T>()
+            list.add(item)
+            DBCacheManager.instance.dbCache.putList(tableName, list)
+        } else {
+            list as ArrayList<T>
+            list.add(item)
+        }
+    }
+
 
     /**
      * 获取list集合（内存缓存）
      */
     fun getListInfo(): ArrayList<T> {
         var list = DBCacheManager.instance.dbCache.getList(tableName)
+        YLogUtil.i("db缓存", list?.size)
         if (list.isNullOrEmpty()) {
             list = getList()
+            //加入内存缓存
             DBCacheManager.instance.dbCache.putList(tableName, list)
         }
         return list as ArrayList<T>
@@ -282,6 +323,7 @@ abstract class BaseSuperDao<T> {
 
     }
 
+    abstract fun getSubClass(): Class<T>
 
     /**
      * item转ContentValues

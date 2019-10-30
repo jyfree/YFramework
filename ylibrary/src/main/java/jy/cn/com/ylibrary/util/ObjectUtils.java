@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.widget.ProgressBar;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.HashMap;
 
 public class ObjectUtils {
     /**
@@ -89,14 +87,5 @@ public class ObjectUtils {
                 return method;
         }
         return null;
-    }
-
-    public static HashMap<String, Class<?>> getFieldNameAndType(Object object) {
-        HashMap<String, Class<?>> hashMap = new HashMap<>();
-        Field[] fields = object.getClass().getDeclaredFields();
-        for (Field fie : fields) {
-            hashMap.put(fie.getName(), fie.getType());
-        }
-        return hashMap;
     }
 }

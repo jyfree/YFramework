@@ -36,6 +36,8 @@ object DownloadDao : BaseDao<DownInfo>() {
     override val tableName: String
         get() = TABLE_NAME
 
+    override fun getSubClass(): Class<DownInfo> = DownInfo::class.java
+
     override fun getContentValues(item: DownInfo): ContentValues {
         val values = ContentValues()
         values.put(COLUMN_NAME_SAVE_PATH, item.savePath)

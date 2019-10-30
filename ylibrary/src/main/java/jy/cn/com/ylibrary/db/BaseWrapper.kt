@@ -12,10 +12,15 @@ import android.database.sqlite.SQLiteDatabase
  * @TODO 公共增删改查db
  */
 open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : BaseDao<T>() {
+
+
     override val tableName: String
         get() = subClass.simpleName
 
     private val subClassFields = subClass.declaredFields
+
+    override fun getSubClass(): Class<T> = subClass
+
 
     override fun getContentValues(item: T): ContentValues {
         val values = ContentValues()

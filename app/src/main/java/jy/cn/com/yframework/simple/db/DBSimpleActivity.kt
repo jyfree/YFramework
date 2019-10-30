@@ -57,10 +57,10 @@ class DBSimpleActivity : BaseAppCompatActivity() {
 
     private fun requestDef() {
         val startTime = System.currentTimeMillis()
-        for (i in 0..1000) {
+        for (i in 0..10000) {
             val itemStartTime = System.currentTimeMillis()
             DownloadDao.getListInfo()
-            YLogUtil.i("主线程--单次--time", System.currentTimeMillis() - itemStartTime)
+            YLogUtil.i("主线程--单次--time", System.currentTimeMillis() - itemStartTime, i)
         }
         YLogUtil.i("主线程--全部--time", System.currentTimeMillis() - startTime)
     }
@@ -75,15 +75,21 @@ class DBSimpleActivity : BaseAppCompatActivity() {
         YLogUtil.i("子线程--全部--time", System.currentTimeMillis() - startTime)
     }
 
+    var connectionTime = 0
+
     private fun insertAndQueryReflectDB() {
+
+        connectionTime++
+
         val dbWrapper = DBWrapper(TestDao::class.java)
         val testInfo = TestDao()
         testInfo.savePath = "http//:www.baidu.com"
-        testInfo.connectionTime = 10
+        testInfo.connectionTime = connectionTime
         testInfo.id = 3
         testInfo.testFilter = "testFilter"
         testInfo.testUpdate = "testUpdate"
         testInfo.testUpdateTwo = "testUpdateTwo"
+//        testInfo.url="测试地址"
         dbWrapper.insertOrUpdate(testInfo)
 
         val startTime = System.currentTimeMillis()
