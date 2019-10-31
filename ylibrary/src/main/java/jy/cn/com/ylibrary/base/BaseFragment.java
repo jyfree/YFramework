@@ -47,13 +47,14 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view, savedInstanceState);
-        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startFragmentTime);
+        YLogUtil.INSTANCE.dFormat("fragment创建：%s---时长：%s(ms)", initClassTag(), System.currentTimeMillis() - startFragmentTime);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ToastUtil.cancelToast();
+        YLogUtil.INSTANCE.dFormat("fragment销毁：%s", initClassTag());
     }
 
 

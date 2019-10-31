@@ -12,6 +12,7 @@ import jy.cn.com.yframework.simple.http.ApiSimpleActivity
 import jy.cn.com.yframework.simple.http.DownloadSimpleActivity
 import jy.cn.com.yframework.simple.http.MvpApiSimpleActivity
 import jy.cn.com.yframework.simple.http.bean.SendGiftVo
+import jy.cn.com.yframework.simple.lazy.LazySimpleActivity
 import jy.cn.com.yframework.simple.loading.LoadingSimpleActivity
 import jy.cn.com.yframework.simple.permission.PermissionSimpleActivity
 import jy.cn.com.yframework.simple.pic.PicSimpleActivity
@@ -70,6 +71,7 @@ class MainActivity : BaseActivity() {
             R.id.go_pic -> PicSimpleActivity.startAct(this)
             R.id.go_shadow -> SelectorSimpleActivity.startAct(this)
             R.id.go_db -> DBSimpleActivity.startAct(this)
+            R.id.go_lazy -> LazySimpleActivity.startAct(this)
         }
     }
 

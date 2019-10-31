@@ -36,7 +36,7 @@ public abstract class BaseFragmentActivity extends RxFragmentActivity implements
         setContentView(initLayoutID());
         BaseApplication.getInstance().addActivity(this);
         initUI(savedInstanceState);
-        YLogUtil.INSTANCE.d(initClassTag(), "启动时长(ms)", System.currentTimeMillis() - startActivityTime);
+        YLogUtil.INSTANCE.dFormat("activity创建：%s---时长：%s(ms)", initClassTag(), System.currentTimeMillis() - startActivityTime);
     }
 
 
@@ -53,6 +53,7 @@ public abstract class BaseFragmentActivity extends RxFragmentActivity implements
     protected void onDestroy() {
         super.onDestroy();
         ToastUtil.cancelToast();
+        YLogUtil.INSTANCE.dFormat("activity销毁：%s", initClassTag());
     }
 
     /**

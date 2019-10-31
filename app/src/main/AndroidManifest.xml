@@ -102,6 +102,10 @@
             android:name=".simple.db.DBSimpleActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".simple.lazy.LazySimpleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <!--**********************************************************************-->
 
 

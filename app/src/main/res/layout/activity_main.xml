@@ -138,6 +138,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="db示例" />
+
+        <Button
+            android:id="@+id/go_lazy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="lazy示例" />
     </LinearLayout>
 
 </ScrollView>

@@ -31,7 +31,7 @@ class PaySimpleActivity : BaseActivity() {
     override fun initUI(savedInstanceState: Bundle?) {
     }
 
-    override fun initClassTag(): Any = PaySimpleActivity::class.java
+    override fun initClassTag(): Any = PaySimpleActivity::class.java.simpleName
 
     private val sdkPay by lazy {
         val sdkPay = SDKPay(this, object : OnSocialSdkPayListener {
