@@ -11,42 +11,44 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!" />
+            android:text="Hello 我是渣渣框架"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/go_RxBus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="RxBus 示例" />
+            android:text="RxBus示例" />
 
         <Button
             android:id="@+id/go_Thread"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="Thread 示例" />
+            android:text="线程加锁示例" />
 
         <Button
             android:id="@+id/go_Loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="loading 示例" />
+            android:text="loading示例" />
 
         <Button
             android:id="@+id/go_api"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="api 示例" />
+            android:text="接口请求、图片加载示例" />
 
         <Button
             android:id="@+id/go_mvp_api"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="mvp api 示例" />
+            android:text="接口请求、图片加载示例(mvp)" />
 
         <Button
             android:id="@+id/go_download"
@@ -67,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="cmd 示例" />
+            android:text="cmd示例" />
 
         <Button
             android:id="@+id/go_bar"
@@ -144,14 +146,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="lazy示例" />
+            android:text="懒加载示例" />
 
         <Button
             android:id="@+id/go_lazy_state"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="go2Act"
-            android:text="lazy-state示例" />
+            android:text="懒加载示例(保存状态)" />
     </LinearLayout>
 
 </ScrollView>

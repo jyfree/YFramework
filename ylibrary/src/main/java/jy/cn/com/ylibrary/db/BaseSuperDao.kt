@@ -205,10 +205,11 @@ abstract class BaseSuperDao<T> {
 
     /**
      * 获取list集合
+     * 注意：此方法需要查询数据库，不建议主线程使用
      *
      * @return
      */
-    private fun getList(): ArrayList<T> {
+    fun getList(): ArrayList<T> {
         val db = DBManager.getInstance().openDatabase()
         val cursor = db.query(tableName, null, null, null, null, null, null)
         return queryList(db, cursor)
@@ -232,6 +233,7 @@ abstract class BaseSuperDao<T> {
 
     /**
      * 获取list集合（内存缓存）
+     * 注意：此方法因为强转ArrayList<T>比较耗时，不建议子线程或协程使用（子线程可能会阻塞，取消不了），推荐主线程使用
      */
     fun getListInfo(): ArrayList<T> {
         var list = DBCacheManager.instance.dbCache.getList(tableName)

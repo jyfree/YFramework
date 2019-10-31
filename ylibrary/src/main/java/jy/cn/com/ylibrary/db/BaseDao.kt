@@ -59,7 +59,7 @@ abstract class BaseDao<T> : BaseSuperDao<T>(), CoroutineRequest, ThreadRequest {
      */
     fun getListInfoToCoroutine(coroutineResultCallback: CoroutineResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
         requestCoroutine(coroutineResultCallback, lifecycleOwner) {
-            getListInfo()
+            getList()
         }
     }
 
@@ -110,7 +110,7 @@ abstract class BaseDao<T> : BaseSuperDao<T>(), CoroutineRequest, ThreadRequest {
      */
     fun getListInfoToThread(threadResultCallback: ThreadResultCallback<ArrayList<T>>, lifecycleOwner: LifecycleOwner) {
         requestThread(threadResultCallback, lifecycleOwner) {
-            getListInfo()
+            getList()
         }
     }
 
