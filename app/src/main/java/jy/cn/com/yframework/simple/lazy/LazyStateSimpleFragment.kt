@@ -3,7 +3,7 @@ package jy.cn.com.yframework.simple.lazy
 import android.os.Bundle
 import android.view.View
 import jy.cn.com.yframework.R
-import jy.cn.com.ylibrary.base.BaseLazyFragment
+import jy.cn.com.ylibrary.base.BaseLazyStateFragment
 import jy.cn.com.ylibrary.util.YLogUtil
 import kotlinx.android.synthetic.main.simple_lazy_fragment.*
 
@@ -11,14 +11,14 @@ import kotlinx.android.synthetic.main.simple_lazy_fragment.*
 
  * @Author Administrator
  * @Date 2019/10/31-13:37
- * @TODO 懒加载--不保存状态
+ * @TODO 懒加载--保存状态
  */
-class LazySimpleFragment : BaseLazyFragment() {
+class LazyStateSimpleFragment : BaseLazyStateFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(msg: String): LazySimpleFragment {
-            val lazyFragment = LazySimpleFragment()
+        fun newInstance(msg: String): LazyStateSimpleFragment {
+            val lazyFragment = LazyStateSimpleFragment()
             val bundle = Bundle()
             bundle.putString("msg", msg)
             lazyFragment.arguments = bundle
@@ -28,7 +28,7 @@ class LazySimpleFragment : BaseLazyFragment() {
 
     override fun initLayoutID(): Int = R.layout.simple_lazy_fragment
 
-    override fun initClassTag(): Any = LazySimpleFragment::class.java.simpleName
+    override fun initClassTag(): Any = LazyStateSimpleFragment::class.java.simpleName
 
     private var msg: String? = null
 
@@ -37,8 +37,17 @@ class LazySimpleFragment : BaseLazyFragment() {
         textView.text = msg
     }
 
-    override fun lazyLoad() {
-        YLogUtil.i("lazyLoad：$msg")
+    override fun onFirstTimeLaunched() {
+        YLogUtil.i("onFirstTimeLaunched：$msg")
+    }
+
+    override fun onSaveState(outState: Bundle?) {
+        outState?.putString("data", "保存状态$msg")
+    }
+
+    override fun onRestoreState(savedInstanceState: Bundle?) {
+        val data = savedInstanceState?.getString("data")
+        data?.let { textView.text = it }
     }
 
     override fun visibleToUser() {
