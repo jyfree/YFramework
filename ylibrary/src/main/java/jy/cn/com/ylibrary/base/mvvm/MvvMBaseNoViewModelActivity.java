@@ -12,7 +12,7 @@ import jy.cn.com.ylibrary.base.BaseAppCompatActivity;
  * @Date 2019/11/1-10:36
  * @TODO
  */
-public abstract class MvvMBaseNoModelActivity<DBinding extends ViewDataBinding> extends BaseAppCompatActivity {
+public abstract class MvvMBaseNoViewModelActivity<DBinding extends ViewDataBinding> extends BaseAppCompatActivity {
 
     protected DBinding dataBinding;
 

@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import jy.cn.com.yframework.R
 import jy.cn.com.yframework.databinding.SimpleMvvmNomodelActivityBinding
-import jy.cn.com.ylibrary.base.mvvm.MvvMBaseNoModelActivity
+import jy.cn.com.ylibrary.base.mvvm.MvvMBaseNoViewModelActivity
 import jy.cn.com.ylibrary.util.ActivityUtils
 import jy.cn.com.ylibrary.util.ToastUtil
 
@@ -14,7 +14,7 @@ import jy.cn.com.ylibrary.util.ToastUtil
  * @Date 2019/11/1-11:26
  * @TODO mvvm示例
  */
-class MvvMSimpleActivity : MvvMBaseNoModelActivity<SimpleMvvmNomodelActivityBinding>() {
+class MvvMSimpleActivity : MvvMBaseNoViewModelActivity<SimpleMvvmNomodelActivityBinding>() {
 
     companion object {
         fun startAct(context: Context) {

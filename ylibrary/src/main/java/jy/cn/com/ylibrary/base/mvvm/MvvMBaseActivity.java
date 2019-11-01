@@ -13,7 +13,7 @@ import jy.cn.com.ylibrary.base.viewmodel.BaseViewModel;
  * @Date 2019/11/1-11:06
  * @TODO
  */
-public abstract class MvvMBaseActivity<VM extends BaseViewModel, DBinding extends ViewDataBinding> extends MvvMBaseNoModelActivity<DBinding> {
+public abstract class MvvMBaseActivity<VM extends BaseViewModel, DBinding extends ViewDataBinding> extends MvvMBaseNoViewModelActivity<DBinding> {
 
     protected VM viewModel;
 
