@@ -28,7 +28,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
 
         for (fie in fields) {
             // 允许访问私有变量
-            fie.isAccessible = true
+//            fie.isAccessible = true
             var value = fie.get(item)
             if (value == null) {
                 value = ""
@@ -71,7 +71,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
 
         for (fie in fields) {
             // 允许访问私有变量
-            fie.isAccessible = true
+//            fie.isAccessible = true
             //解析注解
             if (fie.isAnnotationPresent(Scope::class.java)) {
                 val scope = fie.getAnnotation(Scope::class.java)

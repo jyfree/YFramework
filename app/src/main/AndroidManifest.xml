@@ -107,6 +107,14 @@
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity android:name=".simple.lazy.LazyStateSimpleActivity" />
+
+        <activity
+            android:name=".simple.mvvm.MvvMSimpleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".simple.http.MvvMApiSimpleActivity"
+            android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
 

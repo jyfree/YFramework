@@ -154,6 +154,20 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="懒加载示例(保存状态)" />
+
+        <Button
+            android:id="@+id/go_mvvm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="MVVM示例" />
+
+        <Button
+            android:id="@+id/go_mvvm_api"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="MVVM示例(api)" />
     </LinearLayout>
 
 </ScrollView>

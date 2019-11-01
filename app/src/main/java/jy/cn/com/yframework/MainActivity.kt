@@ -12,9 +12,11 @@ import jy.cn.com.yframework.simple.http.ApiSimpleActivity
 import jy.cn.com.yframework.simple.http.DownloadSimpleActivity
 import jy.cn.com.yframework.simple.http.MvpApiSimpleActivity
 import jy.cn.com.yframework.simple.http.bean.SendGiftVo
+import jy.cn.com.yframework.simple.http.MvvMApiSimpleActivity
 import jy.cn.com.yframework.simple.lazy.LazySimpleActivity
 import jy.cn.com.yframework.simple.lazy.LazyStateSimpleActivity
 import jy.cn.com.yframework.simple.loading.LoadingSimpleActivity
+import jy.cn.com.yframework.simple.mvvm.MvvMSimpleActivity
 import jy.cn.com.yframework.simple.permission.PermissionSimpleActivity
 import jy.cn.com.yframework.simple.pic.PicSimpleActivity
 import jy.cn.com.yframework.simple.rxbus.RxBusSimpleActivity
@@ -74,6 +76,8 @@ class MainActivity : BaseActivity() {
             R.id.go_db -> DBSimpleActivity.startAct(this)
             R.id.go_lazy -> LazySimpleActivity.startAct(this)
             R.id.go_lazy_state -> LazyStateSimpleActivity.startAct(this)
+            R.id.go_mvvm -> MvvMSimpleActivity.startAct(this)
+            R.id.go_mvvm_api -> MvvMApiSimpleActivity.startAct(this)
         }
     }
 

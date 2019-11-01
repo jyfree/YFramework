@@ -49,6 +49,10 @@ android {
     packagingOptions {
         exclude 'META-INF/proguard/coroutines.pro'
     }
+    //启用DataBinding
+    dataBinding {
+        enabled true
+    }
 }
 
 android.applicationVariants.all { variant ->

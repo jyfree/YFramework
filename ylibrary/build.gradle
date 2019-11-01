@@ -20,6 +20,10 @@ android {
         }
     }
 
+    //启用DataBinding
+    dataBinding {
+        enabled true
+    }
 }
 
 dependencies {
