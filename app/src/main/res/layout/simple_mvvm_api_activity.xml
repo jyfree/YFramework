@@ -27,5 +27,11 @@
             android:text="请求接口" />
 
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@{ViewModel.message}"
+            android:textSize="16sp" />
     </LinearLayout>
 </layout>
