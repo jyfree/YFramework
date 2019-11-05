@@ -1,8 +1,6 @@
 package jy.cn.com.yframework.simple.http.mvvm
 
 import android.databinding.ObservableField
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import jy.cn.com.ylibrary.base.mvvm.vm.BaseViewModel
 import jy.cn.com.ylibrary.util.YLogUtil
 
@@ -20,8 +18,6 @@ class MvvMApiSimpleViewModel : BaseViewModel<MvvMApiSimpleModel>() {
         YLogUtil.i("获取banner--showPlace", showPlace, mMode)
         loading.value = true
         val disposable = mMode?.getBanner(1)!!
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ it ->
                     YLogUtil.i("获取banner--成功", it)
                     loading.value = false

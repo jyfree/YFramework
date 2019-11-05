@@ -1,6 +1,8 @@
 package jy.cn.com.yframework.simple.mvvm
 
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import jy.cn.com.yframework.simple.http.api.ApiSimpleService
 import jy.cn.com.yframework.simple.http.bean.BannerInfoListVo
 import jy.cn.com.yframework.simple.http.bean.base.HttpRequest
@@ -21,5 +23,7 @@ class SharedModel : BaseModel<ApiSimpleService>(ApiSimpleService::class.java), B
     fun getBanner(showPlace: Int): Observable<BannerInfoListVo> {
         return serviceManager.getBanner(HttpRequest.obtainHttpRequest(HttpEntry("showPlace", showPlace)))
                 .compose(RxHelper.handleSingleResult())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
     }
 }
