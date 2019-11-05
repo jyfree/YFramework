@@ -2,6 +2,7 @@ package jy.cn.com.yframework.simple.http.mvvm
 
 import android.databinding.ObservableField
 import jy.cn.com.ylibrary.base.mvvm.vm.BaseViewModel
+import jy.cn.com.ylibrary.http.RxDoError
 import jy.cn.com.ylibrary.util.YLogUtil
 
 /**
@@ -23,6 +24,7 @@ class MvvMApiSimpleViewModel : BaseViewModel<MvvMApiSimpleModel>() {
                     loading.value = false
                     message.set(it.toString())
                 }, {
+                    RxDoError.onError(it)
                     loading.value = false
                     message.set("请求失败")
                 })

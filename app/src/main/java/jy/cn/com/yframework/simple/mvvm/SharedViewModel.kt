@@ -3,6 +3,7 @@ package jy.cn.com.yframework.simple.mvvm
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import jy.cn.com.ylibrary.base.mvvm.vm.BaseViewModel
+import jy.cn.com.ylibrary.http.RxDoError
 import jy.cn.com.ylibrary.util.YLogUtil
 
 
@@ -33,6 +34,7 @@ class SharedViewModel : BaseViewModel<SharedModel>() {
                     loading.value = false
                     setMessage(it.toString())
                 }, {
+                    RxDoError.onError(it)
                     loading.value = false
                     setMessage("请求失败")
                 })
