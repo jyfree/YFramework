@@ -108,7 +108,9 @@
             android:name=".simple.lazy.LazySimpleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
 
-        <activity android:name=".simple.lazy.LazyStateSimpleActivity" />
+        <activity
+            android:name=".simple.lazy.LazyStateSimpleActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
 
         <activity
             android:name=".simple.mvvm.MvvMSimpleActivity"
