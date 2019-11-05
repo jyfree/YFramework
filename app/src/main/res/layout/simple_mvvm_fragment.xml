@@ -4,34 +4,29 @@
     <data>
 
         <variable
-            name="test"
-            type="jy.cn.com.yframework.simple.http.mvvm.MvvMApiSimpleViewModel" />
+            name="sharedViewModel"
+            type="jy.cn.com.yframework.simple.mvvm.SharedViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="我是MVVM"
+            android:text="MvvM 之Fragment间通讯--two"
             android:textSize="20sp" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->test.getBanner(1)}"
-            android:text="请求接口" />
-
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:text="@{test.message}"
+            android:text="@{sharedViewModel.getMessage()}"
             android:textSize="16sp" />
+
     </LinearLayout>
 </layout>

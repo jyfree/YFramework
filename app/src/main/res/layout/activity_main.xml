@@ -168,6 +168,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="MVVM示例(api)" />
+
+        <Button
+            android:id="@+id/go_mvvm_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="MVVM示例(数据共享)" />
     </LinearLayout>
 
 </ScrollView>

@@ -1,11 +1,13 @@
 package jy.cn.com.yframework.simple.http
 
+import android.arch.lifecycle.Observer
 import android.content.Context
 import android.os.Bundle
 import jy.cn.com.yframework.R
 import jy.cn.com.yframework.databinding.SimpleMvvmApiActivityBinding
 import jy.cn.com.yframework.simple.http.mvvm.MvvMApiSimpleModel
 import jy.cn.com.yframework.simple.http.mvvm.MvvMApiSimpleViewModel
+import jy.cn.com.ylibrary.BR
 import jy.cn.com.ylibrary.base.contract.BaseContract
 import jy.cn.com.ylibrary.base.mvvm.MvvMBaseActivity
 import jy.cn.com.ylibrary.util.ActivityUtils
@@ -17,7 +19,6 @@ import jy.cn.com.ylibrary.util.ActivityUtils
  * @TODO
  */
 class MvvMApiSimpleActivity : MvvMBaseActivity<MvvMApiSimpleViewModel, SimpleMvvmApiActivityBinding>() {
-
     companion object {
         fun startAct(context: Context) {
             ActivityUtils.startActivity(context, MvvMApiSimpleActivity::class.java)
@@ -28,13 +29,16 @@ class MvvMApiSimpleActivity : MvvMBaseActivity<MvvMApiSimpleViewModel, SimpleMvv
 
     override fun initLayoutID(): Int = R.layout.simple_mvvm_api_activity
 
-    override fun initViewModel(): MvvMApiSimpleViewModel = MvvMApiSimpleViewModel()
+    override fun initViewModelClass(): Class<MvvMApiSimpleViewModel> = MvvMApiSimpleViewModel::class.java
+
+    override fun initViewModelId(): Int = BR.test
 
     override fun initModel(): BaseContract.BaseModel = MvvMApiSimpleModel()
 
     override fun initView(savedInstanceState: Bundle?) {
-
-        dataBinding.viewModel = viewModel
+        viewModel.loading.observe(this, Observer { show ->
+            show?.let { showPopWindowLoading(it) }
+        })
 
     }
 

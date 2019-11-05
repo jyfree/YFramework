@@ -115,6 +115,8 @@
         <activity
             android:name=".simple.http.MvvMApiSimpleActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".simple.mvvm.MvvMLazySimpleActivity" />
         <!--**********************************************************************-->
 
 

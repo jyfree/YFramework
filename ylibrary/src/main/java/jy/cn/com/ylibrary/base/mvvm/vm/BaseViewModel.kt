@@ -1,5 +1,6 @@
-package jy.cn.com.ylibrary.base.viewmodel
+package jy.cn.com.ylibrary.base.mvvm.vm
 
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -17,6 +18,10 @@ open class BaseViewModel<M : BaseContract.BaseModel> : ViewModel() {
      * 管理RxJava请求
      */
     private var compositeDisposable: CompositeDisposable? = null
+    /**
+     * 菊花
+     */
+    val loading = MutableLiveData<Boolean>()
 
     var mMode: M? = null
 

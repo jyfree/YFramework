@@ -51,6 +51,9 @@ dependencies {
 
     //kotlin 协程
     api rootProject.ext.kotlinCoroutines
+
+    //mvvm生命周期相关
+    api 'android.arch.lifecycle:extensions:1.1.1'
 }
 
 repositories {
