@@ -19,8 +19,10 @@ public class DBFieldManager {
         Field[] fields = subClass.getDeclaredFields();
         List<DBFieldInfo> list = new ArrayList<>();
         for (Field fie : fields) {
-            // 允许访问私有变量
-//            fie.setAccessible(true);
+            //过滤掉编译器自动生成的成员变量
+            if (fie.isSynthetic()) {
+                continue;
+            }
 
             boolean isPrimaryKey = false;
             boolean isAutoKey = false;
@@ -114,8 +116,10 @@ public class DBFieldManager {
 
         Field[] fields = subClass.getDeclaredFields();
         for (Field fie : fields) {
-            // 允许访问私有变量
-//            fie.setAccessible(true);
+            //过滤掉编译器自动生成的成员变量
+            if (fie.isSynthetic()) {
+                continue;
+            }
             //解析注解
             if (fie.isAnnotationPresent(Scope.class)) {
                 Scope scope = fie.getAnnotation(Scope.class);

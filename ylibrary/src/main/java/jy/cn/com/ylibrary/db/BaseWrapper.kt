@@ -27,8 +27,10 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         val fields = item.javaClass.declaredFields
 
         for (fie in fields) {
-            // 允许访问私有变量
-//            fie.isAccessible = true
+            //过滤掉编译器自动生成的成员变量
+            if (fie.isSynthetic) {
+                continue
+            }
             var value = fie.get(item)
             if (value == null) {
                 value = ""
@@ -70,8 +72,10 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         val subObject = subClass.newInstance()
 
         for (fie in fields) {
-            // 允许访问私有变量
-//            fie.isAccessible = true
+            //过滤掉编译器自动生成的成员变量
+            if (fie.isSynthetic) {
+                continue
+            }
             //解析注解
             if (fie.isAnnotationPresent(Scope::class.java)) {
                 val scope = fie.getAnnotation(Scope::class.java)

@@ -3,6 +3,7 @@ package jy.cn.com.yframework.simple.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import jy.cn.com.yframework.simple.db.bean.TestInfo;
 import jy.cn.com.ylibrary.db.BaseOpenHelper;
 import jy.cn.com.ylibrary.db.DBFieldManager;
 import jy.cn.com.ylibrary.util.YLogUtil;
@@ -33,13 +34,13 @@ public class DBOpenHelper extends BaseOpenHelper {
     @Override
     public void onCreateDB(SQLiteDatabase db) {
         YLogUtil.INSTANCE.i("创建数据库");
-        db.execSQL(DBFieldManager.createTable(TestDao.class));
+        db.execSQL(DBFieldManager.createTable(TestInfo.class));
     }
 
     @Override
     public void onUpgradeDB(SQLiteDatabase db, int oldVersion, int newVersion) {
         YLogUtil.INSTANCE.iFormat("更新数据库--oldVersion：%s--newVersion：%s", oldVersion, newVersion);
-        addField(db, oldVersion, TestDao.class);
+        addField(db, oldVersion, TestInfo.class);
     }
 
 }

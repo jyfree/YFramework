@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import jy.cn.com.yframework.R
+import jy.cn.com.yframework.simple.db.bean.TestInfo
 import jy.cn.com.ylibrary.base.BaseAppCompatActivity
 import jy.cn.com.ylibrary.coroutine.CoroutineResultCallback
 import jy.cn.com.ylibrary.db.DownloadDao
@@ -81,18 +82,18 @@ class DBSimpleActivity : BaseAppCompatActivity() {
 
         connectionTime++
 
-        val dbWrapper = DBWrapper(TestDao::class.java)
-        val testInfo = TestDao()
+
+        val testInfo = TestInfo()
         testInfo.savePath = "http//:www.baidu.com"
         testInfo.connectionTime = connectionTime
         testInfo.testFilter = "testFilter"
         testInfo.testUpdate = "testUpdate"
         testInfo.testUpdateTwo = "testUpdateTwo"
 //        testInfo.url="测试地址"
-        dbWrapper.insertOrUpdate(testInfo)
+        TestDao.getInstance().insertOrUpdate(testInfo)
 
         val startTime = System.currentTimeMillis()
-        val list = dbWrapper.getListInfo()
+        val list = TestDao.getInstance().getListInfo()
         list.forEach {
             YLogUtil.iFormat("单条数据--id：%s--savePath：%s--connectionTime：%s--testFilter：%s--testUpdate：%s--testUpdateTwo：%s",
                     it.id, it.savePath, it.connectionTime, it.testFilter, it.testUpdate, it.testUpdateTwo)

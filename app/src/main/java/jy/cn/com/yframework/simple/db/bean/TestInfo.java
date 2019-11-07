@@ -1,13 +1,13 @@
-package jy.cn.com.yframework.simple.db;
+package jy.cn.com.yframework.simple.db.bean;
 
 import jy.cn.com.ylibrary.db.Scope;
 
 /**
  * @Author Administrator
- * @Date 2019/10/28-13:59
+ * @Date 2019/11/7-15:27
  * @TODO
  */
-public class TestDao {
+public class TestInfo {
     @Scope(isPrimaryKey = true, isAutoKey = true)
     public int id;
     public String savePath;
