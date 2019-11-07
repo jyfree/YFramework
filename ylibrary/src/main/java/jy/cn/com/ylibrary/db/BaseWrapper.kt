@@ -49,7 +49,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
             }
             when {
                 Int::class.java == fie.type -> values.put(fie.name, value as Int)
-                Long::class.java == fie.type -> values.put(fie.name, value as Int)
+                Long::class.java == fie.type -> values.put(fie.name, value as Long)
                 Float::class.java == fie.type -> values.put(fie.name, value as Float)
                 String::class.java == fie.type -> values.put(fie.name, value as String)
                 Boolean::class.java == fie.type -> {
@@ -86,7 +86,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
             }
             when {
                 Int::class.java == fie.type -> fie.set(subObject, getInt(cursor, fie.name))
-                Long::class.java == fie.type -> fie.set(subObject, getInt(cursor, fie.name))
+                Long::class.java == fie.type -> fie.set(subObject, getLong(cursor, fie.name))
                 Float::class.java == fie.type -> fie.set(subObject, getFloat(cursor, fie.name))
                 String::class.java == fie.type -> fie.set(subObject, getString(cursor, fie.name))
                 Boolean::class.java == fie.type -> {
@@ -104,7 +104,12 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
     }
 
     override fun compareItem(item1: T, item2: T): Boolean {
-        return getValue(item1) == getValue(item2)
+        val value1 = getValue(item1)
+        val value2 = getValue(item2)
+        if (value1 == null || value2 == null) {
+            return false
+        }
+        return value1 == value2
     }
 
     override fun updateItem(db: SQLiteDatabase, item: T) {
