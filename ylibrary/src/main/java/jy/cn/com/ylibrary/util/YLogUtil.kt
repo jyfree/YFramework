@@ -12,12 +12,18 @@ object YLogUtil {
 
     const val SHOW_LOG = true
     private const val TAG = "YLogUtil"
+    private var level = LogLevel.ALL
 
     enum class LogLevel {
         DEBUG,
         INFO,
         WARN,
-        ERROR
+        ERROR,
+        ALL
+    }
+
+    fun setLogLevel(logLevel: LogLevel) {
+        level = logLevel
     }
 
     //*******************************Format方式*********************************************
@@ -166,11 +172,14 @@ object YLogUtil {
     private fun log(tag: String, traceElement: StackTraceElement, message: String, logLevel: LogLevel) {
         val msgFormat = "[ %s %s ]---类名：%s---方法名：%s---第%d行---信息---%s"
         val messageWithTime = String.format(Locale.CHINA, msgFormat, TimeUtil.logStr, logLevel.name, traceElement.fileName, traceElement.methodName, traceElement.lineNumber, message)
-        when (logLevel) {
-            YLogUtil.LogLevel.INFO -> Log.i(tag, messageWithTime)
-            YLogUtil.LogLevel.WARN -> Log.w(tag, messageWithTime)
-            YLogUtil.LogLevel.DEBUG -> Log.d(tag, messageWithTime)
-            YLogUtil.LogLevel.ERROR -> Log.e(tag, messageWithTime)
+        if (level == LogLevel.ALL || logLevel == level) {
+            when (logLevel) {
+                YLogUtil.LogLevel.INFO -> Log.i(tag, messageWithTime)
+                YLogUtil.LogLevel.WARN -> Log.w(tag, messageWithTime)
+                YLogUtil.LogLevel.DEBUG -> Log.d(tag, messageWithTime)
+                YLogUtil.LogLevel.ERROR -> Log.e(tag, messageWithTime)
+                else -> Log.i(tag, messageWithTime)
+            }
         }
     }
 
