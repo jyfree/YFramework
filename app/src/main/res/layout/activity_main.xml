@@ -175,6 +175,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="MVVM示例(数据共享)" />
+
+        <Button
+            android:id="@+id/go_aop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="aop示例" />
     </LinearLayout>
 
 </ScrollView>

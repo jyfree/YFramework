@@ -54,6 +54,9 @@ dependencies {
 
     //mvvm生命周期相关
     api 'android.arch.lifecycle:extensions:1.1.1'
+
+    //aspectjx aop
+    api 'org.aspectj:aspectjrt:1.8.9'
 }
 
 repositories {

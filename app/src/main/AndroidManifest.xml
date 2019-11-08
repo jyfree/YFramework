@@ -123,6 +123,10 @@
         <activity
             android:name=".simple.mvvm.MvvMLazySimpleActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
+
+        <activity
+            android:name=".simple.aspect.AspectSimpleActivity"
+            android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
 
