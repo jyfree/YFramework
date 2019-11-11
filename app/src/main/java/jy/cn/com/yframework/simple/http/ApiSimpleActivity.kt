@@ -27,8 +27,6 @@ class ApiSimpleActivity : BaseActivity() {
 
     private val simpleMode = ApiSimpleModel()
 
-    override fun initClassTag(): Any = ApiSimpleActivity::class.java.simpleName
-
     override fun initLayoutID(): Int = R.layout.simple_api_test_activity
 
     override fun initUI(savedInstanceState: Bundle?) {

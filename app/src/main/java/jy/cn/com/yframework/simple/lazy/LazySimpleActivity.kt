@@ -31,8 +31,6 @@ class LazySimpleActivity : BaseFragmentActivity() {
 
     override fun initLayoutID(): Int = R.layout.simple_lazy_activity
 
-    override fun initClassTag(): Any = LazySimpleActivity::class.java.simpleName
-
 
     private val list = ArrayList<Fragment>()
     private val title = arrayOf("Android", "iOS", "web", "winPhone")

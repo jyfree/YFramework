@@ -24,8 +24,6 @@ class SelectorSimpleActivity : BaseActivity() {
 
     override fun initLayoutID(): Int = R.layout.simple_selector_activity
 
-    override fun initClassTag(): Any = SelectorSimpleActivity::class.java.simpleName
-
     override fun initUI(savedInstanceState: Bundle?) {
         btn_Shadow.setShadow(R.color.colorAccent, R.color.colorPrimary)
         btn_BgColor.setBgColor(R.color.colorAccent, R.color.colorPrimary)

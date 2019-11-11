@@ -28,8 +28,6 @@ class DBSimpleActivity : BaseAppCompatActivity() {
 
     override fun initLayoutID(): Int = R.layout.simple_db_activity
 
-    override fun initClassTag(): Any = DBSimpleActivity::class.java.simpleName
-
     override fun initUI(savedInstanceState: Bundle?) {
     }
 

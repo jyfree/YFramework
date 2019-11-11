@@ -29,7 +29,6 @@ class CMDSimpleActivity : BaseActivity(), CMDMessageHandlerListener {
         CMDMessageHandler.setCMDMessageHandlerListener(this)
     }
 
-    override fun initClassTag(): Any = CMDSimpleActivity::class.java.simpleName
 
     override fun onDestroy() {
         super.onDestroy()

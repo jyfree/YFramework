@@ -39,7 +39,6 @@ class PicSimpleActivity : BaseActivity(), PicListener {
 
     }
 
-    override fun initClassTag(): Any = PicSimpleActivity::class.java.simpleName
 
     fun take(view: View) {
         when (view.id) {

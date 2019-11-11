@@ -22,8 +22,6 @@ class MvvMSimpleActivity : MvvMBaseNoViewModelActivity<SimpleMvvmNomodelActivity
         }
     }
 
-    override fun initClassTag(): Any = MvvMSimpleActivity::class.java.simpleName
-
     override fun initView(savedInstanceState: Bundle?) {
         dataBinding.listener = this
     }

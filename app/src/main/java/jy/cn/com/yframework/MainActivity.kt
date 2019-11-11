@@ -38,17 +38,11 @@ class MainActivity : BaseActivity() {
 
     private var receiverListener: CMDReceiverListener? = null
 
-    override fun initLayoutID(): Int {
-        return R.layout.activity_main
-    }
+    override fun initLayoutID(): Int = R.layout.activity_main
 
     override fun initUI(savedInstanceState: Bundle?) {
         receiverListener = CMDReceiverListener()
         startTimer()
-    }
-
-    override fun initClassTag(): Any {
-        return MainActivity::class.java.simpleName
     }
 
     override fun onDestroy() {

@@ -1,5 +1,8 @@
 package jy.cn.com.yframework;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import jy.cn.com.socialsdklibrary.SDKConfig;
 import jy.cn.com.yframework.simple.cmd.CMDMessageHandler;
 import jy.cn.com.yframework.simple.db.DBOpenHelper;
@@ -24,6 +27,12 @@ import jy.cn.com.ylibrary.util.YLogUtil;
  * @TODO
  */
 public class TestApplication extends BaseApplication {
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 
     @Override
     public void onCreate() {

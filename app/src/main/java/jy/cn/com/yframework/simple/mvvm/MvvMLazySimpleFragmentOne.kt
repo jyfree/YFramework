@@ -25,9 +25,6 @@ class MvvMLazySimpleFragmentOne : MvvMBaseLazyFragment<SharedViewModel, SimpleMv
 
     override fun initLayoutID(): Int = R.layout.simple_mvvm_api_fragment
 
-    override fun initClassTag(): Any = MvvMLazySimpleFragmentOne::class.java.simpleName
-
-
     override fun initView(savedInstanceState: Bundle?) {
         viewModel.loading.observe(this, Observer { show ->
             show?.let { showPopWindowLoading(it) }

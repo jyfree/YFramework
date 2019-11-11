@@ -13,7 +13,6 @@ import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.base.contract.BaseContract;
 import jy.cn.com.ylibrary.helper.LoadSirHelper;
 import jy.cn.com.ylibrary.util.ToastUtil;
-import jy.cn.com.ylibrary.util.YLogUtil;
 
 
 /**
@@ -23,19 +22,15 @@ import jy.cn.com.ylibrary.util.YLogUtil;
  */
 public abstract class BaseAppCompatActivity extends RxAppCompatActivity implements BaseContract.BaseView {
 
-    //启动时间
-    public long startActivityTime;
     private LoadSirHelper loadSirHelper = new LoadSirHelper();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        startActivityTime = System.currentTimeMillis();
         setContentView(initLayoutID());
         BaseApplication.getInstance().addActivity(this);
         initUI(savedInstanceState);
-        YLogUtil.INSTANCE.dFormat("activity创建：%s---时长：%s(ms)", initClassTag(), System.currentTimeMillis() - startActivityTime);
     }
 
 
@@ -44,8 +39,6 @@ public abstract class BaseAppCompatActivity extends RxAppCompatActivity implemen
         super.onDestroy();
         BaseApplication.getInstance().removeActivity(this);
         ToastUtil.cancelToast();
-        YLogUtil.INSTANCE.dFormat("activity销毁：%s", initClassTag());
-
     }
 
     /**
@@ -57,13 +50,6 @@ public abstract class BaseAppCompatActivity extends RxAppCompatActivity implemen
      * 初始化UI
      */
     protected abstract void initUI(@Nullable Bundle savedInstanceState);
-
-    /**
-     * 获取tag
-     *
-     * @return
-     */
-    protected abstract Object initClassTag();
 
 
     @NonNull

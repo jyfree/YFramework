@@ -25,8 +25,6 @@ class TimerSimpleActivity : BaseActivity() {
 
     override fun initLayoutID(): Int = R.layout.simple_timer_activity
 
-    override fun initClassTag(): Any = TimerSimpleActivity::class.java.simpleName
-
 
     override fun initUI(savedInstanceState: Bundle?) {
         btn_start1.isEnabled = true

@@ -6,6 +6,7 @@ import android.view.View
 import jy.cn.com.yframework.R
 import jy.cn.com.ylibrary.aspect.BehaviorTrace
 import jy.cn.com.ylibrary.aspect.CheckNetwork
+import jy.cn.com.ylibrary.aspect.RunTimeTrace
 import jy.cn.com.ylibrary.aspect.SingleClick
 import jy.cn.com.ylibrary.base.BaseActivity
 import jy.cn.com.ylibrary.util.ActivityUtils
@@ -28,9 +29,9 @@ class AspectSimpleActivity : BaseActivity() {
     override fun initLayoutID(): Int = R.layout.simple_aspect_activity
 
     override fun initUI(savedInstanceState: Bundle?) {
+
     }
 
-    override fun initClassTag(): Any = AspectSimpleActivity::class.java.simpleName
 
     @CheckNetwork
     fun onAspectNetwork(view: View) {
@@ -42,8 +43,19 @@ class AspectSimpleActivity : BaseActivity() {
         YLogUtil.i("用户行为统计")
     }
 
+    @RunTimeTrace
     @SingleClick
     fun onSingle(view: View) {
         YLogUtil.i("点击测试")
+        testTime()
+    }
+
+    @RunTimeTrace
+    fun testTime() {
+        sleep(10)
+    }
+
+    private fun sleep(millis: Long) {
+        Thread.sleep(millis)
     }
 }

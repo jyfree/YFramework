@@ -26,11 +26,6 @@ public class LoadingSimpleActivity extends BaseActivity {
         ActivityUtils.startActivity(context, LoadingSimpleActivity.class);
     }
 
-    @Override
-    protected Object initClassTag() {
-        return LoadingSimpleActivity.class.getSimpleName();
-    }
-
 
     @Override
     protected int initLayoutID() {

@@ -28,8 +28,6 @@ class LazySimpleFragment : BaseLazyFragment() {
 
     override fun initLayoutID(): Int = R.layout.simple_lazy_fragment
 
-    override fun initClassTag(): Any = LazySimpleFragment::class.java.simpleName
-
     private var msg: String? = null
 
     override fun initUI(view: View?, savedInstanceState: Bundle?) {

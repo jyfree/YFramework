@@ -15,7 +15,6 @@ import org.jetbrains.annotations.NotNull;
 import jy.cn.com.ylibrary.base.contract.BaseContract;
 import jy.cn.com.ylibrary.helper.LoadSirHelper;
 import jy.cn.com.ylibrary.util.ToastUtil;
-import jy.cn.com.ylibrary.util.YLogUtil;
 
 
 /**
@@ -25,16 +24,9 @@ import jy.cn.com.ylibrary.util.YLogUtil;
  */
 public abstract class BaseFragment extends RxFragment implements BaseContract.BaseView {
 
-    //启动时间
-    public long startFragmentTime;
     private LoadSirHelper loadSirHelper = new LoadSirHelper();
     protected View mView;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        startFragmentTime = System.currentTimeMillis();
-    }
 
     @Nullable
     @Override
@@ -47,14 +39,12 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initUI(view, savedInstanceState);
-        YLogUtil.INSTANCE.dFormat("fragment创建：%s---时长：%s(ms)", initClassTag(), System.currentTimeMillis() - startFragmentTime);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         ToastUtil.cancelToast();
-        YLogUtil.INSTANCE.dFormat("fragment销毁：%s", initClassTag());
     }
 
 
@@ -67,13 +57,6 @@ public abstract class BaseFragment extends RxFragment implements BaseContract.Ba
      * 初始化UI
      */
     protected abstract void initUI(View view, @Nullable Bundle savedInstanceState);
-
-    /**
-     * 获取tag
-     *
-     * @return
-     */
-    protected abstract Object initClassTag();
 
 
     @NonNull

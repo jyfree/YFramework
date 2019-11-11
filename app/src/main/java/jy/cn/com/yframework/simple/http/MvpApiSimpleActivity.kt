@@ -27,8 +27,6 @@ class MvpApiSimpleActivity : MvpBaseActivity<ApiSimplePresenter>(), ApiSimpleCon
         }
     }
 
-    override fun initClassTag(): Any = MvpApiSimpleActivity::class.java.simpleName
-
     override fun initPresenter(): ApiSimplePresenter = ApiSimplePresenter()
 
     override fun initModel(): BaseContract.BaseModel = ApiSimpleModel()

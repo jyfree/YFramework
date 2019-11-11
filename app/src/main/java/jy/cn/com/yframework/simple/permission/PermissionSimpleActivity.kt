@@ -34,7 +34,6 @@ class PermissionSimpleActivity : BaseActivity() {
 
     override fun initLayoutID(): Int = R.layout.simple_permission_activity
 
-    override fun initClassTag(): Any = PermissionSimpleActivity::class.java.simpleName
 
     override fun initUI(savedInstanceState: Bundle?) {
 

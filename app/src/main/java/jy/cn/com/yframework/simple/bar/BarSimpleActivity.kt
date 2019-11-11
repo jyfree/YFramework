@@ -33,8 +33,6 @@ class BarSimpleActivity : BaseActivity() {
         BarUtils.addMarginTopEqualStatusBarHeight(lLayout)
     }
 
-    override fun initClassTag(): Any = BarSimpleActivity::class.java.simpleName
-
     override fun getResources(): Resources = AdaptScreenUtils.adaptHeight(super.getResources(), Constants.SYSTEM_DESIGN_HEIGHT)
 
     override fun onDestroy() {

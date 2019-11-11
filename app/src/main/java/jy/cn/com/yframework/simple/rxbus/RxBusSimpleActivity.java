@@ -24,10 +24,6 @@ public class RxBusSimpleActivity extends BaseActivity {
         ActivityUtils.startActivity(context, RxBusSimpleActivity.class);
     }
 
-    @Override
-    protected Object initClassTag() {
-        return RxBusSimpleActivity.class.getSimpleName();
-    }
 
     @Override
     protected int initLayoutID() {

@@ -43,10 +43,6 @@ public class ThreadSimpleActivity extends BaseActivity {
         btnSendThread = findViewById(R.id.btnSendThread);
     }
 
-    @Override
-    protected Object initClassTag() {
-        return ThreadSimpleActivity.class.getSimpleName();
-    }
 
     public void threadClick(View view) {
         switch (view.getId()) {

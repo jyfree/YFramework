@@ -40,7 +40,6 @@ class ShareSimpleActivity : BaseActivity() {
         shareHelper.doResultIntent(intent)
     }
 
-    override fun initClassTag(): Any = ShareSimpleActivity::class.java.simpleName
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)

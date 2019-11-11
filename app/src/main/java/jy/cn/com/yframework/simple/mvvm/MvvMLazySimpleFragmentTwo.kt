@@ -25,8 +25,6 @@ class MvvMLazySimpleFragmentTwo : MvvMBaseLazyFragment<SharedViewModel, SimpleMv
 
     override fun initLayoutID(): Int = R.layout.simple_mvvm_fragment
 
-    override fun initClassTag(): Any = MvvMLazySimpleFragmentTwo::class.java.simpleName
-
 
     override fun initView(savedInstanceState: Bundle?) {
     }
@@ -37,7 +35,7 @@ class MvvMLazySimpleFragmentTwo : MvvMBaseLazyFragment<SharedViewModel, SimpleMv
 
     override fun initModel(): BaseContract.BaseModel = SharedModel()
 
-    override fun isShareData(): Boolean =true
+    override fun isShareData(): Boolean = true
 
     override fun lazyLoad() {
     }

@@ -31,8 +31,6 @@ class LoginSimpleActivity : BaseActivity() {
 
     }
 
-    override fun initClassTag(): Any = LoginSimpleActivity::class.java.simpleName
-
 
     private val sdkLogin by lazy {
         val sdkLogin = SDKLogin(this, object : OnSocialSdkLoginListener {

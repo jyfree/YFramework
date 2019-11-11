@@ -25,8 +25,6 @@ class MvvMApiSimpleActivity : MvvMBaseActivity<MvvMApiSimpleViewModel, SimpleMvv
         }
     }
 
-    override fun initClassTag(): Any = MvvMApiSimpleActivity::class.java.simpleName
-
     override fun initLayoutID(): Int = R.layout.simple_mvvm_api_activity
 
     override fun initViewModelClass(): Class<MvvMApiSimpleViewModel> = MvvMApiSimpleViewModel::class.java
