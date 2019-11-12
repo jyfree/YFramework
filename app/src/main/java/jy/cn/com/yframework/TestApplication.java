@@ -19,6 +19,7 @@ import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
 import jy.cn.com.ylibrary.loadsir.core.LoadSir;
 import jy.cn.com.ylibrary.selector.XSelector;
 import jy.cn.com.ylibrary.util.AppUtils;
+import jy.cn.com.ylibrary.util.CrashUtils;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
 /**
@@ -60,6 +61,8 @@ public class TestApplication extends BaseApplication {
             LogCatHelper.getInstance(this, "").start();
             //初始化颜色背景选择器
             XSelector.INSTANCE.init(this);
+            //初始化crash捕获
+            initCrashUtils();
         }
     }
 
@@ -96,5 +99,17 @@ public class TestApplication extends BaseApplication {
                 .wbRedirectUrl("https://api.weibo.com/oauth2/default.html")
                 .wbScope("statuses_to_me_read")
                 .build(this);
+    }
+
+    /**
+     * 初始化crash捕获
+     */
+    private void initCrashUtils() {
+        CrashUtils.init(new CrashUtils.OnCrashListener() {
+            @Override
+            public void onCrash(String crashInfo, Throwable e) {
+                AppUtils.INSTANCE.relaunchApp();
+            }
+        });
     }
 }
