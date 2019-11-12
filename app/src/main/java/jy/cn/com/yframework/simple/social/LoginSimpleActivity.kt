@@ -1,13 +1,18 @@
 package jy.cn.com.yframework.simple.social
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import jy.cn.com.socialsdklibrary.SDKLogin
 import jy.cn.com.socialsdklibrary.listener.OnSocialSdkLoginListener
+import jy.cn.com.yframework.Constants
 import jy.cn.com.yframework.R
 import jy.cn.com.ylibrary.base.BaseActivity
+import jy.cn.com.ylibrary.rxbus.RxBus
+import jy.cn.com.ylibrary.rxbus.Subscribe
+import jy.cn.com.ylibrary.rxbus.ThreadMode
 import jy.cn.com.ylibrary.util.ActivityUtils
 import jy.cn.com.ylibrary.util.YLogUtil
 
@@ -28,7 +33,7 @@ class LoginSimpleActivity : BaseActivity() {
     override fun initLayoutID(): Int = R.layout.simple_login_activity
 
     override fun initUI(savedInstanceState: Bundle?) {
-
+        RxBus.getDefault().register(this)
     }
 
 
@@ -75,6 +80,11 @@ class LoginSimpleActivity : BaseActivity() {
         sdkLogin.result2Activity(requestCode, resultCode, data)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        RxBus.getDefault().unregister(this)
+    }
+
     private fun showSDKProgress(show: Boolean) {
         sdkLogin.showProgressDialog(show)
     }
@@ -93,5 +103,26 @@ class LoginSimpleActivity : BaseActivity() {
     private fun wbLogin() {
         showSDKProgress(true)
         sdkLogin.wbLogin()
+    }
+
+    @SuppressLint("微信登录授权回调--成功")
+    @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_SUCCEED, threadMode = ThreadMode.MAIN)
+    fun rxBusWXLoginSucceed(code: String) {
+        YLogUtil.i("微信登录授权成功--code", code)
+        showSDKProgress(false)
+    }
+
+    @SuppressLint("微信登录授权回调--失败")
+    @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_FAIL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXLoginFail(errCode: Int) {
+        YLogUtil.i("微信登录授权失败--errCode", errCode)
+        showSDKProgress(false)
+    }
+
+    @SuppressLint("微信登录授权回调--取消")
+    @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_CANCEL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXLoginCancel() {
+        YLogUtil.i("微信登录授权取消")
+        showSDKProgress(false)
     }
 }

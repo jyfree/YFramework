@@ -1,14 +1,20 @@
 package jy.cn.com.yframework.simple.social
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import jy.cn.com.socialsdklibrary.constant.SDKShareType
+import jy.cn.com.yframework.Constants
 import jy.cn.com.yframework.R
 import jy.cn.com.yframework.simple.social.helper.ShareHelper
 import jy.cn.com.ylibrary.base.BaseActivity
+import jy.cn.com.ylibrary.rxbus.RxBus
+import jy.cn.com.ylibrary.rxbus.Subscribe
+import jy.cn.com.ylibrary.rxbus.ThreadMode
 import jy.cn.com.ylibrary.util.ActivityUtils
+import jy.cn.com.ylibrary.util.YLogUtil
 
 /**
 
@@ -37,6 +43,7 @@ class ShareSimpleActivity : BaseActivity() {
     override fun initLayoutID(): Int = R.layout.simple_share_activity
 
     override fun initUI(savedInstanceState: Bundle?) {
+        RxBus.getDefault().register(this)
         shareHelper.doResultIntent(intent)
     }
 
@@ -49,6 +56,11 @@ class ShareSimpleActivity : BaseActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         shareHelper.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        RxBus.getDefault().unregister(this)
     }
 
     fun onClickShare(view: View) {
@@ -71,5 +83,23 @@ class ShareSimpleActivity : BaseActivity() {
      */
     private fun toShare(type: Int) {
         shareHelper.shareMsg(type)
+    }
+
+    @SuppressLint("微信分享回调--成功")
+    @Subscribe(code = Constants.RxBus.CODE_WX_SHARE_SUCCESS, threadMode = ThreadMode.MAIN)
+    fun rxBusWXShareSucceed() {
+        YLogUtil.i("微信分享--成功")
+    }
+
+    @SuppressLint("微信分享回调--失败")
+    @Subscribe(code = Constants.RxBus.CODE_WX_SHARE_FAIL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXShareFail(errCode: Int) {
+        YLogUtil.i("微信分享--失败--errCode", errCode)
+    }
+
+    @SuppressLint("微信分享回调--取消")
+    @Subscribe(code = Constants.RxBus.CODE_WX_SHARE_CANCEL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXShareCancel() {
+        YLogUtil.i("微信分享--取消")
     }
 }

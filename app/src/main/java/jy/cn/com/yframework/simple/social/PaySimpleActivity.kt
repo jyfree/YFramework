@@ -1,14 +1,19 @@
 package jy.cn.com.yframework.simple.social
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import jy.cn.com.socialsdklibrary.SDKPay
 import jy.cn.com.socialsdklibrary.listener.OnSocialSdkPayListener
 import jy.cn.com.socialsdklibrary.wx.WXPayBean
+import jy.cn.com.yframework.Constants
 import jy.cn.com.yframework.R
 import jy.cn.com.yframework.simple.http.bean.WXPayVo
 import jy.cn.com.ylibrary.base.BaseActivity
+import jy.cn.com.ylibrary.rxbus.RxBus
+import jy.cn.com.ylibrary.rxbus.Subscribe
+import jy.cn.com.ylibrary.rxbus.ThreadMode
 import jy.cn.com.ylibrary.util.ActivityUtils
 import jy.cn.com.ylibrary.util.YLogUtil
 
@@ -29,6 +34,7 @@ class PaySimpleActivity : BaseActivity() {
     override fun initLayoutID(): Int = R.layout.simple_pay_activity
 
     override fun initUI(savedInstanceState: Bundle?) {
+        RxBus.getDefault().register(this)
     }
 
     private val sdkPay by lazy {
@@ -72,6 +78,11 @@ class PaySimpleActivity : BaseActivity() {
         showSDKProgress(false)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        RxBus.getDefault().unregister(this)
+    }
+
     private fun showSDKProgress(show: Boolean) {
         sdkPay.showProgressDialog(show)
     }
@@ -97,5 +108,26 @@ class PaySimpleActivity : BaseActivity() {
         wxPayBean.timeStamp = "1570526872"//wxPayVo.timeStamp
         wxPayBean.sign = "0B47048F589697A9D1A467B8B2EBF80A"//wxPayVo.sign
         sdkPay.wxPay(wxPayBean)
+    }
+
+    @SuppressLint("微信支付回调--成功")
+    @Subscribe(code = Constants.RxBus.CODE_WX_PAY_SUCCESS, threadMode = ThreadMode.MAIN)
+    fun rxBusWXPaySucceed() {
+        showSDKProgress(false)
+        YLogUtil.i("微信支付--成功")
+    }
+
+    @SuppressLint("微信支付回调--失败")
+    @Subscribe(code = Constants.RxBus.CODE_WX_PAY_FAIL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXPayFail(errCode: Int) {
+        showSDKProgress(false)
+        YLogUtil.i("微信支付--失败--errCode", errCode)
+    }
+
+    @SuppressLint("微信支付回调--取消")
+    @Subscribe(code = Constants.RxBus.CODE_WX_PAY_CANCEL, threadMode = ThreadMode.MAIN)
+    fun rxBusWXPayCancel() {
+        showSDKProgress(false)
+        YLogUtil.i("微信支付--取消")
     }
 }
