@@ -57,33 +57,11 @@ public class SDKLoginManager {
     }
 
 
-    public void behavior(Activity activity, Intent intent, Bundle savedInstanceState) {
+    public void behavior(Activity activity, Bundle savedInstanceState) {
 
-        if (intent == null) {
-            SDKLogUtil.INSTANCE.e("behavior intent is null");
-            onDestroy(activity);
-            return;
-        }
-        if (intent.getExtras() == null) {
-            SDKLogUtil.INSTANCE.e("behavior extras is null");
-            onDestroy(activity);
-            return;
-        }
         if (savedInstanceState == null) {
             initSdkLogin(activity);
             showSDKProgress(true);
-            int loginType = intent.getIntExtra(LOGIN_TYPE, 0);
-            switch (loginType) {
-                case SDKLoginType.TYPE_QQ:
-                    qqLogin();
-                    break;
-                case SDKLoginType.TYPE_WB:
-                    wbLogin();
-                    break;
-                case SDKLoginType.TYPE_WX:
-                    wxLogin();
-                    break;
-            }
         }
     }
 
@@ -122,6 +100,33 @@ public class SDKLoginManager {
                 }
             }
         });
+    }
+
+    public void checkLogin(Activity activity, Intent intent) {
+
+        if (intent == null) {
+            SDKLogUtil.INSTANCE.e("checkLogin intent is null");
+            onDestroy(activity);
+            return;
+        }
+        if (intent.getExtras() == null) {
+            SDKLogUtil.INSTANCE.e("checkLogin extras is null");
+            onDestroy(activity);
+            return;
+        }
+
+        int loginType = intent.getIntExtra(LOGIN_TYPE, 0);
+        switch (loginType) {
+            case SDKLoginType.TYPE_QQ:
+                qqLogin();
+                break;
+            case SDKLoginType.TYPE_WB:
+                wbLogin();
+                break;
+            case SDKLoginType.TYPE_WX:
+                wxLogin();
+                break;
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

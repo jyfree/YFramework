@@ -13,6 +13,7 @@ import jy.cn.com.yframework.Constants;
 import jy.cn.com.ylibrary.rxbus.RxBus;
 import jy.cn.com.ylibrary.rxbus.Subscribe;
 import jy.cn.com.ylibrary.rxbus.ThreadMode;
+import jy.cn.com.ylibrary.util.HandlerUtil;
 
 /**
  * @Author Administrator
@@ -26,10 +27,23 @@ public class SDKLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //不接受触摸屏事件
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        if (savedInstanceState == null) {
-            RxBus.getDefault().register(this);
-            ExtLogin.getInstance().getSDKLoginManager().behavior(this, getIntent(), savedInstanceState);
-        }
+        RxBus.getDefault().register(this);
+        ExtLogin.getInstance().getSDKLoginManager().behavior(this, savedInstanceState);
+        initCompleteTime();
+    }
+
+    private void initCompleteTime() {
+        getWindow().getDecorView().post(new Runnable() {
+            @Override
+            public void run() {
+                HandlerUtil.INSTANCE.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ExtLogin.getInstance().getSDKLoginManager().checkLogin(SDKLoginActivity.this, getIntent());
+                    }
+                });
+            }
+        });
     }
 
     @Override
