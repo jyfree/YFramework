@@ -21,11 +21,13 @@ abstract class ExtWXPayEntryActivity : SDKWXPayEntryActivity() {
     override fun payCancel() {
         //TODO 取消支付
         YLogUtil.i("微信支付--取消")
+        RxBus.getDefault().send(Constants.RxBus.CODE_WX_PAY_CANCEL)
     }
 
     override fun payFail(errCode: Int) {
         //TODO 支付失败 errCode
-        YLogUtil.e("微信支付--失败--code", errCode)
+        YLogUtil.e("微信支付--失败--errCode", errCode)
+        RxBus.getDefault().send(Constants.RxBus.CODE_WX_PAY_FAIL, errCode)
     }
 
 

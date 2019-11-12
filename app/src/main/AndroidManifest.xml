@@ -127,6 +127,15 @@
         <activity
             android:name=".simple.aspect.AspectSimpleActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".simple.social.ExtLoginSimpleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".simple.social.ext.login.SDKLoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Transparent"/>
         <!--**********************************************************************-->
 
 

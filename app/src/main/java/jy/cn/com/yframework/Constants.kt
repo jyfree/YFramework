@@ -22,9 +22,17 @@ object Constants {
     }
 
     object RxBus {
-        const val CODE_REQUEST_WX_LOGIN = 666//请求微信登录
-        const val CODE_WX_SHARE_SUCCESS = 667//微信分享成功
-        const val CODE_WX_PAY_SUCCESS = 667//微信支付成功
+        const val CODE_WX_LOGIN_AUTH_SUCCEED = 666//微信登录授权--成功
+        const val CODE_WX_LOGIN_AUTH_CANCEL = 667//微信登录授权--取消
+        const val CODE_WX_LOGIN_AUTH_FAIL = 668//微信登录授权--失败
+
+        const val CODE_WX_SHARE_SUCCESS = 669//微信分享--成功
+        const val CODE_WX_SHARE_CANCEL = 670//微信分享--取消
+        const val CODE_WX_SHARE_FAIL = 671//微信分享--失败
+
+        const val CODE_WX_PAY_SUCCESS = 672//微信支付--成功
+        const val CODE_WX_PAY_CANCEL = 673//微信支付--取消
+        const val CODE_WX_PAY_FAIL = 674//微信支付--失败
 
     }
 

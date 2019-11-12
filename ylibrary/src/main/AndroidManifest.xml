@@ -4,11 +4,13 @@
     <application>
         <activity
             android:name=".acp.AcpActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Transparent" />
 
         <activity
             android:name=".pic.PicActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/Theme.Transparent" />
     </application>

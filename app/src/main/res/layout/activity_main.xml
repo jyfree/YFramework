@@ -93,6 +93,13 @@
             android:text="登录示例" />
 
         <Button
+            android:id="@+id/go_login_ext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="登录示例(二次封装)" />
+
+        <Button
             android:id="@+id/go_pay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

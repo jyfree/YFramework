@@ -23,6 +23,7 @@ import jy.cn.com.yframework.simple.permission.PermissionSimpleActivity
 import jy.cn.com.yframework.simple.pic.PicSimpleActivity
 import jy.cn.com.yframework.simple.rxbus.RxBusSimpleActivity
 import jy.cn.com.yframework.simple.selector.SelectorSimpleActivity
+import jy.cn.com.yframework.simple.social.ExtLoginSimpleActivity
 import jy.cn.com.yframework.simple.social.LoginSimpleActivity
 import jy.cn.com.yframework.simple.social.PaySimpleActivity
 import jy.cn.com.yframework.simple.social.ShareSimpleActivity
@@ -63,6 +64,7 @@ class MainActivity : BaseActivity() {
             R.id.go_bar -> BarSimpleActivity.startAct(this)
             R.id.go_share -> ShareSimpleActivity.startAct(this)
             R.id.go_login -> LoginSimpleActivity.startAct(this)
+            R.id.go_login_ext -> ExtLoginSimpleActivity.startAct(this)
             R.id.go_pay -> PaySimpleActivity.startAct(this)
             R.id.go_timer -> TimerSimpleActivity.startAct(this)
             R.id.go_permission -> PermissionSimpleActivity.startAct(this)

@@ -101,7 +101,7 @@ public abstract class SDKWXEntryActivity extends Activity implements IWXAPIEvent
     public abstract void authCancel();
 
     //登录授权失败
-    public abstract void authFail(int code);
+    public abstract void authFail(int errCode);
 
     //分享成功
     public abstract void shareSucceed();
@@ -110,5 +110,5 @@ public abstract class SDKWXEntryActivity extends Activity implements IWXAPIEvent
     public abstract void shareCancel();
 
     //分享失败
-    public abstract void shareFail(int code);
+    public abstract void shareFail(int errCode);
 }
