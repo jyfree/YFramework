@@ -1,6 +1,6 @@
-@[TOC](YFramework渣渣框架)
+@[TOC](YFramework(渣渣)框架)
 
-# 欢迎使用YFramework渣渣框架
+# 欢迎使用YFramework(渣渣)框架
 
 
 ## 主要功能
