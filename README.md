@@ -12,9 +12,10 @@ YFramework是使用kotlin&Java混合编写的，主要包括以下功能：
  3. 封装**权限、拍照、图库**访问
  4. 集成第三方**分享、支付、登录**功能
  5. 注解式**DB**、并支持**协程，子线程**访问
- 6. 使用主流的**RxJava2、retrofit2、RxBus**
- 7. 封装view圆角变色 **selector库**
+ 6. 使用主流的**RxJava2、retrofit2、RxBus、glide**框架
+ 7. 封装view圆角、变色等功能的 **selector库**
  8. 封装**sp**，使用内存缓存，子线程存储sp
+ 9. **cmd**全局通知注解
 
 
 ## 如何使用？O(∩_∩)O哈哈~比较懒不想写
