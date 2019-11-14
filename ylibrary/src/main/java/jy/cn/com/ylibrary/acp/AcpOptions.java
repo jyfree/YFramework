@@ -15,6 +15,7 @@ public class AcpOptions {
     private String[] permissions;
     private boolean dialogCancelable;
     private boolean dialogCanceledOnTouchOutside;
+    private boolean canShowDeniedDialog;
 
     private AcpOptions(Builder builder) {
         rationalMessage = builder.rationalMessage;
@@ -25,6 +26,7 @@ public class AcpOptions {
         permissions = builder.permissions;
         dialogCancelable = builder.dialogCancelable;
         dialogCanceledOnTouchOutside = builder.dialogCanceledOnTouchOutside;
+        canShowDeniedDialog = builder.canShowDeniedDialog;
     }
 
     public String getRationalMessage() {
@@ -59,6 +61,10 @@ public class AcpOptions {
         return dialogCanceledOnTouchOutside;
     }
 
+    public boolean isCanShowDeniedDialog() {
+        return canShowDeniedDialog;
+    }
+
     public static Builder beginBuilder() {
         return new Builder();
     }
@@ -79,6 +85,7 @@ public class AcpOptions {
         private String[] permissions;
         private boolean dialogCancelable = false;
         private boolean dialogCanceledOnTouchOutside = false;
+        private boolean canShowDeniedDialog = true;
 
         /**
          * 申请权限理由框提示语
@@ -153,6 +160,11 @@ public class AcpOptions {
 
         public Builder setDialogCanceledOnTouchOutside(boolean dialogCanceledOnTouchOutside) {
             this.dialogCanceledOnTouchOutside = dialogCanceledOnTouchOutside;
+            return this;
+        }
+
+        public Builder setCanShowDeniedDialog(boolean canShowDeniedDialog) {
+            this.canShowDeniedDialog = canShowDeniedDialog;
             return this;
         }
 

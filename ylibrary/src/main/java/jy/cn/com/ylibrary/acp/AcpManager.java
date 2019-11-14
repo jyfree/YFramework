@@ -208,7 +208,10 @@ public class AcpManager {
      * @param permissions
      */
     private void showDeniedDialog(final Activity activity, final List<String> permissions) {
-        if (permissionOptions == null) return;
+        if (permissionOptions == null || !permissionOptions.isCanShowDeniedDialog()) {
+            onDestroy(activity);
+            return;
+        }
         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                 .setMessage(permissionOptions.getDeniedMessage())
                 .setNegativeButton(permissionOptions.getDeniedCloseBtn(), new DialogInterface.OnClickListener() {

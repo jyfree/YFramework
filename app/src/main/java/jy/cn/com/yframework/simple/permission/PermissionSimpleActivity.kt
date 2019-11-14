@@ -70,7 +70,7 @@ class PermissionSimpleActivity : BaseActivity() {
     private fun requestSdcard() {
         Acp.getInstance().acpManager
                 .setShowRational(false)
-                .setAcPermissionOptions(AcpOptions.beginBuilder().setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE).build())
+                .setAcPermissionOptions(AcpOptions.beginBuilder().setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE).setCanShowDeniedDialog(false).build())
                 .setAcPermissionListener(object : AcpListener {
                     override fun onDenied(permissions: MutableList<String>?) {
                         YLogUtil.e("权限申请--拒绝", permissions?.toString())
