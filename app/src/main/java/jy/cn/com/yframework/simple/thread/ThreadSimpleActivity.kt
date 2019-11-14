@@ -46,8 +46,9 @@ class ThreadSimpleActivity : BaseActivity() {
             }
             R.id.btnSendThread -> {
                 if (null == threadCondition) return
-                textView1.text = "发送通知--继续执行线程"
+                btnSendThread.isEnabled = false
                 threadCondition?.signal()
+                textView1.text = "收到通知--继续执行线程"
             }
         }
     }
@@ -55,10 +56,11 @@ class ThreadSimpleActivity : BaseActivity() {
     private fun startThread() {
         threadCondition = ThreadCondition()
         threadCondition?.setCall {
+            Thread.sleep(5000)
             HandlerUtil.runOnUiThread(Runnable {
                 btnStartThread.isEnabled = true
                 btnSendThread.isEnabled = true
-                textView1.text = "执行线程"
+                textView1.text = "执行线程结束"
             })
         }
         threadCondition?.start()
