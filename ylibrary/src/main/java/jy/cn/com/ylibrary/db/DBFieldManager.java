@@ -19,6 +19,7 @@ public class DBFieldManager {
         Field[] fields = subClass.getDeclaredFields();
         List<DBFieldInfo> list = new ArrayList<>();
         for (Field fie : fields) {
+            fie.setAccessible(true);
             //过滤掉编译器自动生成的成员变量
             if (fie.isSynthetic()) {
                 continue;
@@ -116,6 +117,7 @@ public class DBFieldManager {
 
         Field[] fields = subClass.getDeclaredFields();
         for (Field fie : fields) {
+            fie.setAccessible(true);
             //过滤掉编译器自动生成的成员变量
             if (fie.isSynthetic()) {
                 continue;

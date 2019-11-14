@@ -50,7 +50,7 @@ public class TestApplication extends BaseApplication {
             //初始化loading
             initLoadSir();
             //初始化数据库
-            DBManager.initializeInstance(DBOpenHelper.getInstance(getApplicationContext()));
+            DBManager.initializeInstance(DBOpenHelper.Companion.getInstance(getApplicationContext()));
             //初始化cmd
             CMDMessageHandler.INSTANCE.register();
             //初始化imageLoad

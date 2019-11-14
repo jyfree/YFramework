@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import jy.cn.com.socialsdklibrary.constant.SDKLoginType
 import jy.cn.com.socialsdklibrary.listener.OnSocialSdkLoginListener
+import jy.cn.com.socialsdklibrary.wx.WXListener
 import jy.cn.com.yframework.R
 import jy.cn.com.yframework.simple.social.ext.login.ExtLogin
 import jy.cn.com.ylibrary.base.BaseActivity
@@ -40,7 +41,7 @@ class ExtLoginSimpleActivity : BaseActivity() {
     }
 
     private fun request(loginType: Int) {
-        ExtLogin.getInstance().sdkLoginManager.setLoginListener(object : OnSocialSdkLoginListener {
+        ExtLogin.instance.sdkLoginManager.setLoginListener(object : OnSocialSdkLoginListener {
             override fun loginAuthSuccess(type: Int, token: String?, info: String?) {
                 YLogUtil.i("登录授权成功--类型：", type, "token", token, "info", info)
             }
@@ -52,6 +53,8 @@ class ExtLoginSimpleActivity : BaseActivity() {
             override fun loginCancel(type: Int) {
                 YLogUtil.i("取消登录--类型：", type)
             }
-        }).setWXListener { YLogUtil.e("未安装微信") }.request(this, loginType)
+        }).setWXListener(WXListener {
+            YLogUtil.e("未安装微信")
+        }).request(this, loginType)
     }
 }

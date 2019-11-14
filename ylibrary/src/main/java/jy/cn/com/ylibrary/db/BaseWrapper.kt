@@ -27,6 +27,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         val fields = item.javaClass.declaredFields
 
         for (fie in fields) {
+            fie.isAccessible = true
             //过滤掉编译器自动生成的成员变量
             if (fie.isSynthetic) {
                 continue
@@ -72,6 +73,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         val subObject = subClass.newInstance()
 
         for (fie in fields) {
+            fie.isAccessible = true
             //过滤掉编译器自动生成的成员变量
             if (fie.isSynthetic) {
                 continue
@@ -117,6 +119,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         var value: Any? = ""
         var key: Any? = null
         for (fie in fields) {
+            fie.isAccessible = true
             if (fie.isAnnotationPresent(Scope::class.java)) {
                 val scope = fie.getAnnotation(Scope::class.java)
                 if (scope.isCompareField) {
@@ -134,6 +137,7 @@ open class BaseWrapper<T : Any> constructor(private var subClass: Class<T>) : Ba
         val fields = item1.javaClass.declaredFields
         var value: Any? = null
         for (fie in fields) {
+            fie.isAccessible = true
             if (fie.isAnnotationPresent(Scope::class.java)) {
                 val scope = fie.getAnnotation(Scope::class.java)
                 if (scope.isCompareField) {
