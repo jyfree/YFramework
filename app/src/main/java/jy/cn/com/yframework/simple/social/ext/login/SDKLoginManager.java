@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.tencent.mm.opensdk.modelbase.BaseResp;
-
 import jy.cn.com.socialsdklibrary.SDKLogin;
 import jy.cn.com.socialsdklibrary.constant.SDKLoginType;
 import jy.cn.com.socialsdklibrary.listener.OnSocialSdkLoginListener;
@@ -133,31 +131,25 @@ public class SDKLoginManager {
         sdkLogin.result2Activity(requestCode, resultCode, data);
     }
 
-    /**
-     * 微信登录回调
-     *
-     * @param errCode
-     * @param message
-     */
-    public void onActivityResultToWX(Activity activity, int errCode, String message) {
-        switch (errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                if (loginListener != null) {
-                    loginListener.loginAuthSuccess(SDKLoginType.TYPE_WX, "", message);
-                }
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                if (loginListener != null) {
-                    loginListener.loginCancel(SDKLoginType.TYPE_WX);
-                }
-                break;
-            default:
-                if (loginListener != null) {
-                    loginListener.loginFail(SDKLoginType.TYPE_WX, "错误码：" + errCode);
-                }
-                break;
-        }
+    public void onResultToWXAuthSuccess(Activity activity, String message) {
         onDestroy(activity);
+        if (loginListener != null) {
+            loginListener.loginAuthSuccess(SDKLoginType.TYPE_WX, "", message);
+        }
+    }
+
+    public void onResultToWXAuthCancel(Activity activity) {
+        onDestroy(activity);
+        if (loginListener != null) {
+            loginListener.loginCancel(SDKLoginType.TYPE_WX);
+        }
+    }
+
+    public void onResultToWXAuthFail(Activity activity, int errCode) {
+        onDestroy(activity);
+        if (loginListener != null) {
+            loginListener.loginFail(SDKLoginType.TYPE_WX, "错误码：" + errCode);
+        }
     }
 
     private void qqLogin() {

@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.WindowManager;
 
-import com.tencent.mm.opensdk.modelbase.BaseResp;
-
 import jy.cn.com.yframework.Constants;
 import jy.cn.com.ylibrary.rxbus.RxBus;
 import jy.cn.com.ylibrary.rxbus.Subscribe;
@@ -61,18 +59,18 @@ public class SDKLoginActivity extends AppCompatActivity {
     @SuppressLint("微信登录授权回调--成功")
     @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_SUCCEED, threadMode = ThreadMode.MAIN)
     public void rxBusWXLoginSucceed(String code) {
-        ExtLogin.getInstance().getSDKLoginManager().onActivityResultToWX(this, BaseResp.ErrCode.ERR_OK, code);
+        ExtLogin.getInstance().getSDKLoginManager().onResultToWXAuthSuccess(this, code);
     }
 
     @SuppressLint("微信登录授权回调--失败")
     @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_FAIL, threadMode = ThreadMode.MAIN)
     public void rxBusWXLoginFail(int errCode) {
-        ExtLogin.getInstance().getSDKLoginManager().onActivityResultToWX(this, errCode, "");
+        ExtLogin.getInstance().getSDKLoginManager().onResultToWXAuthFail(this, errCode);
     }
 
     @SuppressLint("微信登录授权回调--取消")
     @Subscribe(code = Constants.RxBus.CODE_WX_LOGIN_AUTH_CANCEL, threadMode = ThreadMode.MAIN)
     public void rxBusWXLoginCancel() {
-        ExtLogin.getInstance().getSDKLoginManager().onActivityResultToWX(this, BaseResp.ErrCode.ERR_USER_CANCEL, "");
+        ExtLogin.getInstance().getSDKLoginManager().onResultToWXAuthCancel(this);
     }
 }
