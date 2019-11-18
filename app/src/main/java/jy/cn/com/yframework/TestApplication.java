@@ -108,6 +108,7 @@ public class TestApplication extends BaseApplication {
         CrashUtils.init(new CrashUtils.OnCrashListener() {
             @Override
             public void onCrash(String crashInfo, Throwable e) {
+                YLogUtil.INSTANCE.eFormat("重启APP，异常信息：%s", crashInfo);
                 AppUtils.INSTANCE.relaunchApp();
             }
         });

@@ -43,12 +43,12 @@ public class BaseApplication extends Application {
     /**
      * 添加Activity到容器中
      *
-     * @param activity
+     * @param activity activity对象
      */
     @SuppressWarnings("unchecked")
     public synchronized void addActivity(Activity activity) {
         for (int i = 0; i < activityList.size(); i++) {
-            if (((Activity) activityList.get(i)).getLocalClassName().equals(activity.getLocalClassName())) {
+            if ((activityList.get(i)).getLocalClassName().equals(activity.getLocalClassName())) {
                 activityList.remove(i);
                 break;
             }
@@ -59,7 +59,7 @@ public class BaseApplication extends Application {
     /**
      * activity被销毁时，从activityList中移除
      *
-     * @param activity
+     * @param activity activity对象
      */
     public synchronized void removeActivity(Activity activity) {
         if (activityList.size() != 0 && activity != null) {
@@ -76,7 +76,7 @@ public class BaseApplication extends Application {
      */
     public synchronized void clearActivities() {
         if (activityList.size() != 0) {
-            Activity activity = null;
+            Activity activity;
             Iterator<Activity> iterator = activityList.iterator();
             while (iterator.hasNext()) {
                 activity = iterator.next();
@@ -93,7 +93,7 @@ public class BaseApplication extends Application {
      */
     public synchronized void clearActivitiesExitsThis(String activityString) {
         if (activityList.size() != 0) {
-            Activity activity = null;
+            Activity activity;
             Iterator<Activity> iterator = activityList.iterator();
             while (iterator.hasNext()) {
                 activity = iterator.next();
@@ -108,11 +108,11 @@ public class BaseApplication extends Application {
     /**
      * 移除activityString
      *
-     * @param activityString
+     * @param activityString activity路径
      */
     public synchronized void removeActivityThis(String activityString) {
         if (activityList.size() != 0) {
-            Activity activity = null;
+            Activity activity;
             @SuppressWarnings("unchecked")
             Iterator<Activity> iterator = activityList.iterator();
             while (iterator.hasNext()) {
@@ -131,10 +131,12 @@ public class BaseApplication extends Application {
 
     /**
      * 除activityString外的activity都finish
+     *
+     * @param activityString activity路径
      */
     public synchronized void removeActivityUnThisOther(String activityString) {
         if (activityList.size() != 0) {
-            Activity activity = null;
+            Activity activity;
             @SuppressWarnings("unchecked")
             Iterator<Activity> iterator = activityList.iterator();
             while (iterator.hasNext()) {
@@ -153,7 +155,7 @@ public class BaseApplication extends Application {
     /**
      * 判断activity是否finish
      *
-     * @param activity
+     * @param activity activity对象
      * @return
      */
     public synchronized boolean activityIsRun(Activity activity) {
@@ -161,13 +163,7 @@ public class BaseApplication extends Application {
 
             if (activityList.contains(activity)) {
 
-                if (!activity.isFinishing()) {
-
-                    return true;
-                } else {
-
-                    return false;
-                }
+                return !activity.isFinishing();
             }
 
         }
@@ -177,25 +173,17 @@ public class BaseApplication extends Application {
     /**
      * 判断activity是否finish
      *
-     * @param activityString com.jj.shows.MainActivity
+     * @param activityString activity路径，如：com.jj.shows.MainActivity
      * @return
      */
     public synchronized boolean activityIsRun(String activityString) {
         if (activityList.size() != 0) {
 
-            Activity activity = null;
-            @SuppressWarnings("unchecked")
-            Iterator<Activity> iterator = activityList.iterator();
-            while (iterator.hasNext()) {
-                activity = iterator.next();
+            Activity activity;
+            for (Activity anActivityList : activityList) {
+                activity = anActivityList;
                 if (activity.toString().contains(activityString)) {
-                    if (!activity.isFinishing()) {
-
-                        return true;
-                    } else {
-
-                        return false;
-                    }
+                    return !activity.isFinishing();
                 }
 
             }
