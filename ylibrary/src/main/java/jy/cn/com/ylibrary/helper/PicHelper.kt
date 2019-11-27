@@ -8,7 +8,6 @@ import jy.cn.com.ylibrary.acp.AcpOptions
 import jy.cn.com.ylibrary.pic.Pic
 import jy.cn.com.ylibrary.pic.PicListener
 import jy.cn.com.ylibrary.pic.PicOptions
-import jy.cn.com.ylibrary.util.ToastUtil
 import jy.cn.com.ylibrary.util.YLogUtil
 
 /**
@@ -31,7 +30,6 @@ object PicHelper {
                 .setAcPermissionListener(object : AcpListener {
                     override fun onDenied(permissions: MutableList<String>?) {
                         YLogUtil.e("权限申请--拒绝", permissions?.toString())
-                        ToastUtil.showToast(context, "权限申请--拒绝" + permissions?.toString())
                     }
 
                     override fun onGranted() {

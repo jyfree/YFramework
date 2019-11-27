@@ -77,7 +77,9 @@ public class AcpManager {
      * 检查权限
      */
     private void checkSelfPermission(Context context, Activity acpActivity) {
-        if (permissionOptions == null) return;
+        if (permissionOptions == null) {
+            throw new IllegalArgumentException("AcpOptions is null...");
+        }
         AcpConstant.deniedPermissionList.clear();
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             YLogUtil.INSTANCE.iTag(TAG, "Build.VERSION.SDK_INT < Build.VERSION_CODES.M");
@@ -187,7 +189,9 @@ public class AcpManager {
      * @param permissions
      */
     private void showRationalDialog(final Activity activity, final String[] permissions) {
-        if (permissionOptions == null) return;
+        if (permissionOptions == null) {
+            throw new IllegalArgumentException("AcpOptions is null...");
+        }
         AlertDialog alertDialog = new AlertDialog.Builder(activity)
                 .setMessage(permissionOptions.getRationalMessage())
                 .setPositiveButton(permissionOptions.getRationalBtn(), new DialogInterface.OnClickListener() {
@@ -208,7 +212,10 @@ public class AcpManager {
      * @param permissions
      */
     private void showDeniedDialog(final Activity activity, final List<String> permissions) {
-        if (permissionOptions == null || !permissionOptions.isCanShowDeniedDialog()) {
+        if (permissionOptions == null) {
+            throw new IllegalArgumentException("AcpOptions is null...");
+        }
+        if (!permissionOptions.isCanShowDeniedDialog()) {
             onDestroy(activity);
             return;
         }

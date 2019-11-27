@@ -28,9 +28,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
      * 显示ProgressDialog
      */
     override fun onSubscribe(d: Disposable) {
-        if (mSubscriberOnNextListener.get() != null) {
-            mSubscriberOnNextListener.get()!!.onStart()
-        }
+        mSubscriberOnNextListener.get()?.onStart()
         mDownInfo.setState(DownState.START)
     }
 
@@ -38,9 +36,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
      * 完成，隐藏ProgressDialog
      */
     override fun onComplete() {
-        if (mSubscriberOnNextListener.get() != null) {
-            mSubscriberOnNextListener.get()!!.onComplete(mDownInfo)
-        }
+        mSubscriberOnNextListener.get()?.onComplete(mDownInfo)
         HttpDownManager.remove(mDownInfo)
         mDownInfo.setState(DownState.FINISH)
         DownloadDao.insertOrUpdate(mDownInfo)
@@ -51,9 +47,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
      * 隐藏ProgressDialog
      */
     override fun onError(e: Throwable) {
-        if (mSubscriberOnNextListener.get() != null) {
-            mSubscriberOnNextListener.get()!!.onError(e)
-        }
+        mSubscriberOnNextListener.get()?.onError(e)
         HttpDownManager.remove(mDownInfo)
         mDownInfo.setState(DownState.ERROR)
         DownloadDao.insertOrUpdate(mDownInfo)
@@ -64,9 +58,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
      * @param t 创建Subscriber时的泛型类型
      */
     override fun onNext(t: T) {
-        if (mSubscriberOnNextListener.get() != null) {
-            mSubscriberOnNextListener.get()!!.onNext(t)
-        }
+        mSubscriberOnNextListener.get()?.onNext(t)
     }
 
     override fun update(read: Long, count: Long, done: Boolean) {
@@ -83,7 +75,7 @@ class ProgressDownSubscriber<T>(var mDownInfo: DownInfo, val handler: Handler) :
             /*如果暂停或者停止状态延迟，不需要继续发送回调，影响显示*/
             if (mDownInfo.getState() === DownState.PAUSE || mDownInfo.getState() === DownState.STOP) return@Runnable
             mDownInfo.setState(DownState.DOWN)
-            mSubscriberOnNextListener.get()!!.updateProgress(mDownInfo.readLength, mDownInfo.countLength)
+            mSubscriberOnNextListener.get()?.updateProgress(mDownInfo.readLength, mDownInfo.countLength)
         })
     }
 }

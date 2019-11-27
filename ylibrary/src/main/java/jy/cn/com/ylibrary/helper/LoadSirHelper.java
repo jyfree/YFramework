@@ -39,7 +39,10 @@ public class LoadSirHelper {
 
 
     private void initPopupWindowLoading(Context context) {
-        if (customPopWindow == null && loadSir.getResLayoutIdOfPopWindow() != LoadSir.EMPTY_LAYOUT) {
+        if (loadSir.getResLayoutIdOfPopWindow() == LoadSir.EMPTY_LAYOUT) {
+            throw new IllegalArgumentException("LayoutId no found...");
+        }
+        if (customPopWindow == null) {
             Pair<Integer, Integer> screenResolution = ScreenResolution.getResolution(context);
             customPopWindow = new CustomPopWindow.PopupWindowBuilder(context).setView(loadSir.getResLayoutIdOfPopWindow())
                     .size(screenResolution.first, screenResolution.second)
@@ -91,7 +94,7 @@ public class LoadSirHelper {
 
     public void showLoading(Object target, boolean flag) {
         if (loadSir.getLoadingCallbackClass() == null) {
-            return;
+            throw new IllegalArgumentException("LoadingCallbackClass no found...");
         }
         if (loadService == null) {
             loadService = loadSir.register(target);
