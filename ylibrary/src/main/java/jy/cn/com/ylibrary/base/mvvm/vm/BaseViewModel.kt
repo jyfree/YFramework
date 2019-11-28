@@ -23,9 +23,9 @@ open class BaseViewModel<M : BaseContract.BaseModel> : ViewModel() {
      */
     val loading = MutableLiveData<Boolean>()
 
-    var mMode: M? = null
+    lateinit var mMode: M
 
-    fun attachMode(mode: M?) {
+    fun attachMode(mode: M) {
         mMode = mode
     }
 

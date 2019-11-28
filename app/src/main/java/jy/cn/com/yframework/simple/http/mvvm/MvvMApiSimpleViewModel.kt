@@ -18,7 +18,7 @@ class MvvMApiSimpleViewModel : BaseViewModel<MvvMApiSimpleModel>() {
     fun getBanner(showPlace: Int) {
         YLogUtil.i("获取banner--showPlace", showPlace, mMode)
         loading.value = true
-        val disposable = mMode?.getBanner(1)!!
+        val disposable = mMode.getBanner(1)
                 .subscribe({ it ->
                     YLogUtil.i("获取banner--成功", it)
                     loading.value = false

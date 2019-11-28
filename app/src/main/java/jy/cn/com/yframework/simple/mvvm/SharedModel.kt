@@ -6,7 +6,6 @@ import io.reactivex.schedulers.Schedulers
 import jy.cn.com.yframework.simple.http.api.ApiSimpleService
 import jy.cn.com.yframework.simple.http.bean.BannerInfoListVo
 import jy.cn.com.yframework.simple.http.bean.base.HttpRequest
-import jy.cn.com.ylibrary.base.contract.BaseContract
 import jy.cn.com.ylibrary.base.model.BaseModel
 import jy.cn.com.ylibrary.http.RxHelper
 import jy.cn.com.ylibrary.http.bean.HttpEntry
@@ -17,7 +16,7 @@ import jy.cn.com.ylibrary.http.bean.HttpEntry
  * @Date 2019/11/4-15:42
  * @TODO
  */
-class SharedModel : BaseModel<ApiSimpleService>(ApiSimpleService::class.java), BaseContract.BaseModel {
+class SharedModel : BaseModel<ApiSimpleService>(ApiSimpleService::class.java) {
 
 
     fun getBanner(showPlace: Int): Observable<BannerInfoListVo> {
