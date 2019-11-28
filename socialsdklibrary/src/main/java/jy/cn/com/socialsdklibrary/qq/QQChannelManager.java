@@ -81,21 +81,21 @@ public class QQChannelManager {
     private IUiListener loginListener = new BaseUIListener() {
         @Override
         protected void doComplete(JSONObject values) {
-            SDKLogUtil.INSTANCE.i("QQ登录授权--成功--AuthorSwitch_SDK:", values);
+            SDKLogUtil.i("QQ登录授权--成功--AuthorSwitch_SDK:", values);
             initOpenidAndToken(values);
         }
 
         @Override
         public void onError(UiError e) {
             super.onError(e);
-            SDKLogUtil.INSTANCE.e("QQ登录授权--失败--errorCode", e.errorCode, "errorMessage", e.errorMessage);
+            SDKLogUtil.e("QQ登录授权--失败--errorCode", e.errorCode, "errorMessage", e.errorMessage);
             qqLoginListener.loginFail(SDKLoginType.TYPE_QQ, e.errorMessage);
         }
 
         @Override
         public void onCancel() {
             super.onCancel();
-            SDKLogUtil.INSTANCE.i("QQ登录授权--取消");
+            SDKLogUtil.i("QQ登录授权--取消");
             qqLoginListener.loginCancel(SDKLoginType.TYPE_QQ);
         }
     };
@@ -113,12 +113,12 @@ public class QQChannelManager {
 
                 qqLoginListener.loginAuthSuccess(SDKLoginType.TYPE_QQ, token, openId);
             } else {
-                SDKLogUtil.INSTANCE.e("QQ登录授权--授权数据为空");
+                SDKLogUtil.e("QQ登录授权--授权数据为空");
                 qqLoginListener.loginFail(SDKLoginType.TYPE_QQ, "授权数据为空");
             }
         } catch (Exception e) {
             e.printStackTrace();
-            SDKLogUtil.INSTANCE.e("QQ登录授权--解析授权信息失败");
+            SDKLogUtil.e("QQ登录授权--解析授权信息失败");
             qqLoginListener.loginFail(SDKLoginType.TYPE_QQ, "解析授权失败");
         }
     }

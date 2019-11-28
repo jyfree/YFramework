@@ -46,7 +46,7 @@ public class SDKLogin {
                 mProgressDialog.dismiss();
             }
         } catch (Exception e) {
-            SDKLogUtil.INSTANCE.e(e.getMessage());
+            SDKLogUtil.e(e.getMessage());
         }
     }
 

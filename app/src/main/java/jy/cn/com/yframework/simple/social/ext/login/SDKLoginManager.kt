@@ -8,8 +8,8 @@ import android.os.Bundle
 import jy.cn.com.socialsdklibrary.SDKLogin
 import jy.cn.com.socialsdklibrary.constant.SDKLoginType
 import jy.cn.com.socialsdklibrary.listener.OnSocialSdkLoginListener
-import jy.cn.com.socialsdklibrary.util.SDKLogUtil
 import jy.cn.com.socialsdklibrary.wx.WXListener
+import jy.cn.com.ylibrary.util.YLogUtil
 
 
 /**
@@ -89,12 +89,12 @@ class SDKLoginManager {
     fun checkLogin(activity: Activity, intent: Intent?) {
 
         if (intent == null) {
-            SDKLogUtil.e("checkLogin intent is null")
+            YLogUtil.e("checkLogin intent is null")
             onDestroy(activity)
             return
         }
         if (intent.extras == null) {
-            SDKLogUtil.e("checkLogin extras is null")
+            YLogUtil.e("checkLogin extras is null")
             onDestroy(activity)
             return
         }

@@ -139,21 +139,21 @@ public class QQShareManager extends QQChannelManager {
     private IUiListener shareListener = new BaseUIListener() {
         @Override
         protected void doComplete(JSONObject values) {
-            SDKLogUtil.INSTANCE.i("QQ分享授权--成功--AuthorSwitch_SDK:", values);
+            SDKLogUtil.i("QQ分享授权--成功--AuthorSwitch_SDK:", values);
             qqShareListener.shareSuccess(shareType);
         }
 
         @Override
         public void onError(UiError e) {
             super.onError(e);
-            SDKLogUtil.INSTANCE.e("QQ分享授权--失败--errorCode", e.errorCode, "errorMessage", e.errorMessage);
+            SDKLogUtil.e("QQ分享授权--失败--errorCode", e.errorCode, "errorMessage", e.errorMessage);
             qqShareListener.shareFail(shareType, e.errorMessage);
         }
 
         @Override
         public void onCancel() {
             super.onCancel();
-            SDKLogUtil.INSTANCE.i("QQ分享授权--取消");
+            SDKLogUtil.i("QQ分享授权--取消");
             qqShareListener.shareCancel(shareType);
         }
     };

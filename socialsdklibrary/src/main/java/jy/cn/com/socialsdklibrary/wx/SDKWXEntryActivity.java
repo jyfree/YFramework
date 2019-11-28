@@ -45,7 +45,7 @@ public abstract class SDKWXEntryActivity extends Activity implements IWXAPIEvent
 
     @Override
     public void onReq(BaseReq baseReq) {
-        SDKLogUtil.INSTANCE.i("微信登录|分享授权--onReq--openId", baseReq.openId);
+        SDKLogUtil.i("微信登录|分享授权--onReq--openId", baseReq.openId);
     }
 
     @Override
@@ -61,7 +61,7 @@ public abstract class SDKWXEntryActivity extends Activity implements IWXAPIEvent
 
 
     private void handleRespLogin(SendAuth.Resp resp) {
-        SDKLogUtil.INSTANCE.i("微信登录授权--onResp", "errCode", resp.errCode, "errStr", resp.errStr, "state", resp.state);
+        SDKLogUtil.i("微信登录授权--onResp", "errCode", resp.errCode, "errStr", resp.errStr, "state", resp.state);
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 authSucceed(resp.code);
@@ -78,7 +78,7 @@ public abstract class SDKWXEntryActivity extends Activity implements IWXAPIEvent
     }
 
     private void handleRespShare(BaseResp resp) {
-        SDKLogUtil.INSTANCE.i("微信分享授权--onResp", "errCode", resp.errCode, "errStr", resp.errStr, "transaction", resp.transaction);
+        SDKLogUtil.i("微信分享授权--onResp", "errCode", resp.errCode, "errStr", resp.errStr, "transaction", resp.transaction);
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 shareSucceed();

@@ -220,19 +220,19 @@ public class WBShareManager implements WbShareCallback {
 
     @Override
     public void onWbShareSuccess() {
-        SDKLogUtil.INSTANCE.i("微博分享授权--成功");
+        SDKLogUtil.i("微博分享授权--成功");
         listener.shareSuccess(SDKShareType.TYPE_WB);
     }
 
     @Override
     public void onWbShareCancel() {
-        SDKLogUtil.INSTANCE.i("微博分享授权--取消");
+        SDKLogUtil.i("微博分享授权--取消");
         listener.shareCancel(SDKShareType.TYPE_WB);
     }
 
     @Override
     public void onWbShareFail() {
-        SDKLogUtil.INSTANCE.e("微博分享授权--失败");
+        SDKLogUtil.e("微博分享授权--失败");
         listener.shareFail(SDKShareType.TYPE_WB, "分享失败");
     }
 }

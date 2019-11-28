@@ -37,14 +37,14 @@ public abstract class SDKWXPayEntryActivity extends Activity implements IWXAPIEv
 
     @Override
     public void onReq(BaseReq req) {
-        SDKLogUtil.INSTANCE.i("微信支付授权--onReq--openId", req.openId);
+        SDKLogUtil.i("微信支付授权--onReq--openId", req.openId);
         finish();
     }
 
 
     @Override
     public void onResp(BaseResp resp) {
-        SDKLogUtil.INSTANCE.i("微信支付授权--onResp，errCode:", resp.errCode, "openid：", resp.openId, "type:", resp.getType());
+        SDKLogUtil.i("微信支付授权--onResp，errCode:", resp.errCode, "openid：", resp.openId, "type:", resp.getType());
 
         //支付成功
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {

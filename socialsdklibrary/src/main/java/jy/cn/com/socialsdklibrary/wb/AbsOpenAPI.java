@@ -85,7 +85,7 @@ public abstract class AbsOpenAPI {
                 || null == params
                 || TextUtils.isEmpty(httpMethod)
                 || null == listener) {
-            SDKLogUtil.INSTANCE.e(TAG, "Argument error!");
+            SDKLogUtil.e(TAG, "Argument error!");
             return;
         }
 
@@ -106,7 +106,7 @@ public abstract class AbsOpenAPI {
                 || TextUtils.isEmpty(url)
                 || null == params
                 || TextUtils.isEmpty(httpMethod)) {
-            SDKLogUtil.INSTANCE.e(TAG, "Argument error!");
+            SDKLogUtil.e(TAG, "Argument error!");
             return "";
         }
 

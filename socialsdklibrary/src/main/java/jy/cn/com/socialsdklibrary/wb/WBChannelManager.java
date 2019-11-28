@@ -98,32 +98,32 @@ public class WBChannelManager {
         @Override
         public void onSuccess(Oauth2AccessToken oauth2AccessToken) {
 
-            SDKLogUtil.INSTANCE.i("微博登录授权--成功", oauth2AccessToken);
+            SDKLogUtil.i("微博登录授权--成功", oauth2AccessToken);
             //从这里获取用户输入的 电话号码信息
 //            String phoneNum = oauth2AccessToken.getPhoneNum();
             if (oauth2AccessToken.isSessionValid()) {
 
-                SDKLogUtil.INSTANCE.i("微博登录授权--成功--session有效", oauth2AccessToken.getToken());
+                SDKLogUtil.i("微博登录授权--成功--session有效", oauth2AccessToken.getToken());
 
                 listener.loginAuthSuccess(SDKLoginType.TYPE_WB, oauth2AccessToken.getToken(), oauth2AccessToken.getUid());
                 // 保存 Token 到 SharedPreferences
                 if (mContext == null) return;
                 AccessTokenKeeper.writeAccessToken(mContext, oauth2AccessToken);
             } else {
-                SDKLogUtil.INSTANCE.e("微博登录授权--成功--session失效", oauth2AccessToken.getToken());
+                SDKLogUtil.e("微博登录授权--成功--session失效", oauth2AccessToken.getToken());
                 listener.loginFail(SDKLoginType.TYPE_WB, "session失效");
             }
         }
 
         @Override
         public void cancel() {
-            SDKLogUtil.INSTANCE.i("微博登录授权--取消");
+            SDKLogUtil.i("微博登录授权--取消");
             listener.loginCancel(SDKLoginType.TYPE_WB);
         }
 
         @Override
         public void onFailure(WbConnectErrorMessage wbConnectErrorMessage) {
-            SDKLogUtil.INSTANCE.e("微博登录授权--失败--errorCode", wbConnectErrorMessage.getErrorCode(), "errorMessage", wbConnectErrorMessage.getErrorMessage());
+            SDKLogUtil.e("微博登录授权--失败--errorCode", wbConnectErrorMessage.getErrorCode(), "errorMessage", wbConnectErrorMessage.getErrorMessage());
             listener.loginFail(SDKLoginType.TYPE_WB, wbConnectErrorMessage.getErrorMessage());
         }
 
@@ -148,7 +148,7 @@ public class WBChannelManager {
         public void onComplete(String response) {
             if (!TextUtils.isEmpty(response)) {
 
-                SDKLogUtil.INSTANCE.i("wb--RequestListener", response);
+                SDKLogUtil.i("wb--RequestListener", response);
                 // 调用 User#parse 将JSON串解析成User对象
                 User user = User.parse(response);
                 if (user != null) {
@@ -162,7 +162,7 @@ public class WBChannelManager {
 
         @Override
         public void onWeiboException(WeiboException e) {
-            SDKLogUtil.INSTANCE.e("wb--RequestListener", e.getMessage());
+            SDKLogUtil.e("wb--RequestListener", e.getMessage());
             ErrorInfo info = ErrorInfo.parse(e.getMessage());
             if (info == null || mContext == null) return;
             Toast.makeText(mContext, info.toString(), Toast.LENGTH_LONG).show();

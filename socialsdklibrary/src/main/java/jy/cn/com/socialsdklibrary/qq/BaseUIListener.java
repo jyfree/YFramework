@@ -21,24 +21,24 @@ public class BaseUIListener implements IUiListener {
         try {
             doComplete((JSONObject) response);
         } catch (Exception e) {
-            SDKLogUtil.INSTANCE.e(e.getMessage());
+            SDKLogUtil.e(e.getMessage());
         }
     }
 
     protected void doComplete(JSONObject values) {
 
-        SDKLogUtil.INSTANCE.i("qq回调--doComplete", values);
+        SDKLogUtil.i("qq回调--doComplete", values);
     }
 
     @Override
     public void onError(UiError e) {
 
-        SDKLogUtil.INSTANCE.e("qq回调--onError", e.errorCode, e.errorDetail, e.errorMessage);
+        SDKLogUtil.e("qq回调--onError", e.errorCode, e.errorDetail, e.errorMessage);
     }
 
     @Override
     public void onCancel() {
-        SDKLogUtil.INSTANCE.i("qq回调--onCancel");
+        SDKLogUtil.i("qq回调--onCancel");
     }
 
 

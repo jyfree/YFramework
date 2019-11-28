@@ -61,18 +61,18 @@ public class WXPayManager {
                 String entity = genProductArgs();
                 byte[] buf = HttpUtil.httpPost(url, entity);
 
-                SDKLogUtil.INSTANCE.i("wxPay--localPayTask", buf);
+                SDKLogUtil.i("wxPay--localPayTask", buf);
 
                 if (buf == null) return;
                 final String content = new String(buf);
 
-                SDKLogUtil.INSTANCE.i("wxPay--localPayTask", "entity", entity, "content", content);
+                SDKLogUtil.i("wxPay--localPayTask", "entity", entity, "content", content);
 
                 SDKThreadManager.getMainHandler().post(new Runnable() {
                     @Override
                     public void run() {
                         resultUnifiedOrder = decodeXml(content);
-                        SDKLogUtil.INSTANCE.d("wxPay--localPayTask", "resultUnifiedOrder", resultUnifiedOrder);
+                        SDKLogUtil.d("wxPay--localPayTask", "resultUnifiedOrder", resultUnifiedOrder);
                         prePay();
                         pay();
                     }
@@ -115,7 +115,7 @@ public class WXPayManager {
 
         String packageSign = MD5Util.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 
-        SDKLogUtil.INSTANCE.i("wxPay--genPackageSign", packageSign);
+        SDKLogUtil.i("wxPay--genPackageSign", packageSign);
 
         return packageSign;
     }
@@ -141,7 +141,7 @@ public class WXPayManager {
 
         String appSign = MD5Util.getMessageDigest(sb.toString().getBytes()).toUpperCase();
 
-        SDKLogUtil.INSTANCE.i("wxPay--genAppSign", appSign, params.size());
+        SDKLogUtil.i("wxPay--genAppSign", appSign, params.size());
 
         return appSign;
     }
@@ -164,7 +164,7 @@ public class WXPayManager {
         }
         sb.append("</xml>");
 
-        SDKLogUtil.INSTANCE.i("wxPay--toXml", sb.toString());
+        SDKLogUtil.i("wxPay--toXml", sb.toString());
         return sb.toString();
     }
 
@@ -203,7 +203,7 @@ public class WXPayManager {
 
             return xml;
         } catch (Exception e) {
-            SDKLogUtil.INSTANCE.e("wxPay--decodeXml", e.toString());
+            SDKLogUtil.e("wxPay--decodeXml", e.toString());
         }
         return null;
 
@@ -275,7 +275,7 @@ public class WXPayManager {
             return new String(xmlString.getBytes(), "ISO8859-1");
 
         } catch (Exception e) {
-            SDKLogUtil.INSTANCE.e("wxPay--genProductArgs", "genProductArgs fail, ex = ", e.getMessage());
+            SDKLogUtil.e("wxPay--genProductArgs", "genProductArgs fail, ex = ", e.getMessage());
             return null;
         }
 

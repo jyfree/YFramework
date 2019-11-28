@@ -45,7 +45,7 @@ public class SDKPay {
                 mProgressDialog.dismiss();
             }
         } catch (Exception e) {
-            SDKLogUtil.INSTANCE.e(e.getMessage());
+            SDKLogUtil.e(e.getMessage());
         }
     }
 

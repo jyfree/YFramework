@@ -72,17 +72,17 @@ public class AliPayManager {
 
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        SDKLogUtil.INSTANCE.i("支付宝支付--成功--状态码", resultStatus, "响应结果", payResult);
+                        SDKLogUtil.i("支付宝支付--成功--状态码", resultStatus, "响应结果", payResult);
                         mPay.payListener.paySuccess(SDKPayType.TYPE_ALI, "");
                     } else {
                         //取消支付
                         if (TextUtils.equals(resultStatus, "6001")) {
-                            SDKLogUtil.INSTANCE.i("支付宝支付--取消--状态码", resultStatus, "响应结果", payResult);
+                            SDKLogUtil.i("支付宝支付--取消--状态码", resultStatus, "响应结果", payResult);
                             mPay.payListener.payCancel(SDKPayType.TYPE_ALI);
                         }
                         //支付失败
                         else {
-                            SDKLogUtil.INSTANCE.e("支付宝支付--失败--状态码", resultStatus, "响应结果", payResult);
+                            SDKLogUtil.e("支付宝支付--失败--状态码", resultStatus, "响应结果", payResult);
                             mPay.payListener.payFail(SDKPayType.TYPE_ALI, resultStatus);
                         }
 
@@ -108,7 +108,7 @@ public class AliPayManager {
                     break;
                 }
                 case SDK_CHECK_FLAG: {
-                    SDKLogUtil.INSTANCE.i("检查结果为：", msg.obj);
+                    SDKLogUtil.i("检查结果为：", msg.obj);
                     break;
                 }
                 default:
@@ -129,9 +129,9 @@ public class AliPayManager {
         // 对订单做RSA 签名
         String sign = payBean.getSign();//sign(orderInfo);
 
-        SDKLogUtil.INSTANCE.i("服务器sign", payBean.getSign());
-//        SDKLogUtil.INSTANCE.i("客户端sign=" + sign(orderInfo));
-        SDKLogUtil.INSTANCE.i("orderInfo", orderInfo);
+        SDKLogUtil.i("服务器sign", payBean.getSign());
+//        SDKLogUtil.i("客户端sign=" + sign(orderInfo));
+        SDKLogUtil.i("orderInfo", orderInfo);
         try {
             // 仅需对sign 做URL编码
             sign = URLEncoder.encode(sign, "UTF-8");
@@ -152,7 +152,7 @@ public class AliPayManager {
      */
     public void pay(String payInfo) {
         start(payInfo);
-        SDKLogUtil.INSTANCE.i("payInfo", payInfo);
+        SDKLogUtil.i("payInfo", payInfo);
     }
 
     private void start(final String dataInfo) {
@@ -164,7 +164,7 @@ public class AliPayManager {
                 PayTask aliPay = new PayTask((Activity) context);
                 // 调用支付接口，获取支付结果
                 Map<String, String> result = aliPay.payV2(dataInfo, true);
-                SDKLogUtil.INSTANCE.i("msp", result.toString());
+                SDKLogUtil.i("msp", result.toString());
 
                 Message msg = new Message();
                 msg.what = SDK_PAY_FLAG;
