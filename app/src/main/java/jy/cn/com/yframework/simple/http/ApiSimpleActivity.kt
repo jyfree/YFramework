@@ -8,7 +8,7 @@ import jy.cn.com.yframework.simple.http.bean.SendGiftVo
 import jy.cn.com.yframework.simple.http.mvp.ApiSimpleModel
 import jy.cn.com.ylibrary.base.BaseActivity
 import jy.cn.com.ylibrary.http.RxObserver
-import jy.cn.com.ylibrary.imageload.setImageDefaultLoadIconUrl
+import jy.cn.com.ylibrary.glide.setImageDefaultLoadIconUrl
 import jy.cn.com.ylibrary.util.ActivityUtils
 import kotlinx.android.synthetic.main.simple_api_test_activity.*
 

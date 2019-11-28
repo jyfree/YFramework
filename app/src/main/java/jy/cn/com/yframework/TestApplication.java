@@ -14,7 +14,7 @@ import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
 import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.db.DBManager;
 import jy.cn.com.ylibrary.helper.LogCatHelper;
-import jy.cn.com.ylibrary.imageload.ImageLoaderConfiguration;
+import jy.cn.com.ylibrary.glide.ImageLoaderConfiguration;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
 import jy.cn.com.ylibrary.loadsir.core.LoadSir;
 import jy.cn.com.ylibrary.selector.XSelector;
@@ -54,7 +54,7 @@ public class TestApplication extends BaseApplication {
             //初始化cmd
             CMDMessageHandler.INSTANCE.register();
             //初始化imageLoad
-            ImageLoaderConfiguration.getInstance().initImageResId(R.drawable.load_default_image, R.drawable.load_default_image, R.drawable.load_default_image);
+            ImageLoaderConfiguration.Companion.getInstance().initImageResId(R.drawable.load_default_image, R.drawable.load_default_image, R.drawable.load_default_image);
             //初始化社会化SDK
             initSocialSDK();
             //将logcat保存到文件
