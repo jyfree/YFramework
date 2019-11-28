@@ -13,7 +13,7 @@ import jy.cn.com.ylibrary.util.YLogUtil
  * @Date 2019/10/23-18:12
  * @TODO 扩展数据库、创建|更新表
  */
-class DBOpenHelper internal constructor(context: Context) : BaseOpenHelper(context, VERSION) {
+class DBOpenHelper internal constructor(context: Context) : BaseOpenHelper(context, DB_NAME, VERSION) {
 
 
     override fun onCreateDB(db: SQLiteDatabase) {
@@ -29,6 +29,8 @@ class DBOpenHelper internal constructor(context: Context) : BaseOpenHelper(conte
     companion object {
 
         private const val VERSION = 3
+
+        private const val DB_NAME = "app.db"
 
         private var instance: DBOpenHelper? = null
 
