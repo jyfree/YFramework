@@ -135,7 +135,11 @@
             android:name=".simple.social.ext.login.SDKLoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Transparent"/>
+            android:theme="@style/Theme.Transparent" />
+
+        <activity
+            android:name=".simple.apt.AptSimpleActivity"
+            android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
 

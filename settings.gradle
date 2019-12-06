@@ -1,1 +1,1 @@
-include ':app', ':ylibrary', ':socialsdklibrary'
+include ':app', ':ylibrary', ':socialsdklibrary', ':aptlibrary'

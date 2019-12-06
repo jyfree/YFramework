@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
+import jy.cn.com.yframework.simple.apt.AptSimpleActivity
 import jy.cn.com.yframework.simple.aspect.AspectSimpleActivity
 import jy.cn.com.yframework.simple.bar.BarSimpleActivity
 import jy.cn.com.yframework.simple.cmd.CMDSimpleActivity
@@ -78,6 +79,7 @@ class MainActivity : BaseActivity() {
             R.id.go_mvvm_api -> MvvMApiSimpleActivity.startAct(this)
             R.id.go_mvvm_fragment -> MvvMLazySimpleActivity.startAct(this)
             R.id.go_aop -> AspectSimpleActivity.startAct(this)
+            R.id.go_apt -> AptSimpleActivity.startAct(this)
         }
     }
 

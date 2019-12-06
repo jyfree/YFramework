@@ -15,6 +15,12 @@ android {
         versionName "1.0"
         flavorDimensions "versionCode"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //apt 用到
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath false
+            }
+        }
     }
 
     productFlavors {
@@ -56,6 +62,12 @@ android {
     dataBinding {
         enabled true
     }
+
+    //apt 用到
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 aspectjx {
@@ -87,6 +99,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.android.support:multidex:1.0.3'
+    //apt
+    implementation project(':aptlibrary')
+    annotationProcessor project(":aptlibrary")
 }
 
 repositories {
