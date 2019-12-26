@@ -131,11 +131,10 @@
         <activity
             android:name=".simple.social.ExtLoginSimpleActivity"
             android:screenOrientation="portrait" />
+
         <activity
-            android:name=".simple.social.ext.login.SDKLoginActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask"
-            android:theme="@style/Theme.Transparent" />
+            android:name=".simple.social.ExtPaySimpleActivity"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".simple.apt.AptSimpleActivity"
@@ -146,6 +145,27 @@
             android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
+        <!--*****************************二次封装透明activity**********************************-->
+
+        <activity
+            android:name=".simple.social.ext.login.SDKLoginActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Transparent" />
+
+        <activity
+            android:name=".simple.social.ext.pay.SDKPayActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="${WX_VALUE}" />
+            </intent-filter>
+        </activity>
+
+        <!--*****************************二次封装透明activity end******************************-->
 
         <!--***************************微信支付&登录*************************-->
         <activity
