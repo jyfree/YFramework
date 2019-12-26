@@ -11,7 +11,7 @@ import jy.cn.com.yframework.simple.loading.callback.ErrorCallback;
 import jy.cn.com.yframework.simple.loading.callback.ImageLoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.LoadingCallback;
 import jy.cn.com.yframework.simple.loading.callback.TimeoutCallback;
-import jy.cn.com.yframework.simple.strategy.LevelUpMsgHandler;
+import jy.cn.com.yframework.simple.strategy.StrategyManager;
 import jy.cn.com.ylibrary.BaseApplication;
 import jy.cn.com.ylibrary.db.DBManager;
 import jy.cn.com.ylibrary.glide.ImageLoaderConfiguration;
@@ -19,7 +19,6 @@ import jy.cn.com.ylibrary.helper.LogCatHelper;
 import jy.cn.com.ylibrary.loadsir.callback.SuccessCallback;
 import jy.cn.com.ylibrary.loadsir.core.LoadSir;
 import jy.cn.com.ylibrary.selector.XSelector;
-import jy.cn.com.ylibrary.strategy.MsgHandleOptions;
 import jy.cn.com.ylibrary.util.AppUtils;
 import jy.cn.com.ylibrary.util.CrashUtils;
 import jy.cn.com.ylibrary.util.YLogUtil;
@@ -66,7 +65,7 @@ public class TestApplication extends BaseApplication {
             //初始化crash捕获
             initCrashUtils();
             //初始化消息策略
-            initMsgHandle();
+            StrategyManager.INSTANCE.init();
         }
     }
 
@@ -116,13 +115,5 @@ public class TestApplication extends BaseApplication {
                 AppUtils.INSTANCE.relaunchApp();
             }
         });
-    }
-
-    /**
-     * 初始化消息策略
-     */
-    private void initMsgHandle() {
-        MsgHandleOptions.INSTANCE.beginBuilder()
-                .addMsgHandle(LevelUpMsgHandler.class.getSimpleName(), LevelUpMsgHandler.class);
     }
 }
