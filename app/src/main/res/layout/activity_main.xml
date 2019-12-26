@@ -196,6 +196,13 @@
             android:layout_height="wrap_content"
             android:onClick="go2Act"
             android:text="apt示例" />
+
+        <Button
+            android:id="@+id/go_chain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="消息策略示例" />
     </LinearLayout>
 
 </ScrollView>

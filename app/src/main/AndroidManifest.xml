@@ -140,6 +140,10 @@
         <activity
             android:name=".simple.apt.AptSimpleActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".simple.strategy.StrategySimpleActivity"
+            android:screenOrientation="portrait" />
         <!--**********************************************************************-->
 
 

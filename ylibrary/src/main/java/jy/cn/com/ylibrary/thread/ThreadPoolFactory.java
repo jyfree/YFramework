@@ -2,6 +2,7 @@ package jy.cn.com.ylibrary.thread;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -19,6 +20,15 @@ public class ThreadPoolFactory {
 
     public static Executor createExecutor(int threadPoolSize, int threadPriority,
                                           QueueProcessingType tasksProcessingType) {
+        boolean lifo = tasksProcessingType == QueueProcessingType.LIFO;
+        BlockingQueue<Runnable> taskQueue =
+                lifo ? new LIFOLinkedBlockingDeque<Runnable>() : new LinkedBlockingQueue<Runnable>();
+        return new ThreadPoolExecutor(threadPoolSize, threadPoolSize, 0L, TimeUnit.MILLISECONDS, taskQueue,
+                createThreadFactory(threadPriority, "uil-pool-"));
+    }
+
+    public static ExecutorService createExecutorService(int threadPoolSize, int threadPriority,
+                                                        QueueProcessingType tasksProcessingType) {
         boolean lifo = tasksProcessingType == QueueProcessingType.LIFO;
         BlockingQueue<Runnable> taskQueue =
                 lifo ? new LIFOLinkedBlockingDeque<Runnable>() : new LinkedBlockingQueue<Runnable>();
