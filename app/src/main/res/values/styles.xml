@@ -31,7 +31,7 @@
         <item name="android:windowIsTranslucent">true</item><!--半透明-->
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowBackground">@android:color/transparent</item><!--背景透明-->
-        <item name="android:backgroundDimAmount">0.3</item>
+        <item name="android:backgroundDimAmount">0.0</item>
     </style>
 
 </resources>

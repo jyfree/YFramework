@@ -160,7 +160,7 @@ class SDKPayManager {
     }
 
     /**
-     * 摧毁本库的 SDKLoginActivity
+     * 摧毁本库的 SDKPayActivity
      */
     private fun onDestroy(activity: Activity?) {
         showSDKProgress(false)

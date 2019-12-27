@@ -2,9 +2,12 @@ package jy.cn.com.socialsdklibrary.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.os.Build;
 import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -40,6 +43,7 @@ public class SDKShareDialog extends Dialog {
 
         setContentView(R.layout.social_sdk_dialog_share);
 
+        if (getWindow() == null) return;
         getWindow().setGravity(Gravity.BOTTOM);
         WindowManager.LayoutParams lp = getWindow().getAttributes();
 
@@ -49,6 +53,40 @@ public class SDKShareDialog extends Dialog {
         this.setCanceledOnTouchOutside(true);
         this.setCancelable(true);
     }
+
+    /**
+     * 解决虚拟按键遮挡，show之前调用
+     */
+    public void initSystemUI() {
+        if (getWindow() == null) return;
+        setNavBarVisibility(getWindow(), false);
+    }
+
+    private void setNavBarVisibility(final Window window, boolean isVisible) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) return;
+        final ViewGroup decorView = (ViewGroup) window.getDecorView();
+        for (int i = 0, count = decorView.getChildCount(); i < count; i++) {
+            final View child = decorView.getChildAt(i);
+            final int id = child.getId();
+            if (id != View.NO_ID) {
+                String resourceEntryName = getContext()
+                        .getResources()
+                        .getResourceEntryName(id);
+                if ("navigationBarBackground".equals(resourceEntryName)) {
+                    child.setVisibility(isVisible ? View.VISIBLE : View.INVISIBLE);
+                }
+            }
+        }
+        final int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+        if (isVisible) {
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~uiOptions);
+        } else {
+            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | uiOptions);
+        }
+    }
+
 
     private void initUI() {
         final ImageView iv_close = findViewById(R.id.social_sdk_close);

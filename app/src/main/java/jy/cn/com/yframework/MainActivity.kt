@@ -62,6 +62,7 @@ class MainActivity : BaseActivity() {
             R.id.go_cmd -> CMDSimpleActivity.startAct(this)
             R.id.go_bar -> BarSimpleActivity.startAct(this)
             R.id.go_share -> ShareSimpleActivity.startAct(this)
+            R.id.go_share_ext -> ExtShareSimpleActivity.startAct(this)
             R.id.go_login -> LoginSimpleActivity.startAct(this)
             R.id.go_login_ext -> ExtLoginSimpleActivity.startAct(this)
             R.id.go_pay -> PaySimpleActivity.startAct(this)

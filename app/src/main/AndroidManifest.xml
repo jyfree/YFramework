@@ -137,6 +137,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".simple.social.ExtShareSimpleActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".simple.apt.AptSimpleActivity"
             android:screenOrientation="portrait" />
 
@@ -164,6 +168,12 @@
                 <data android:scheme="${WX_VALUE}" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".simple.social.ext.share.SDKShareActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTask"
+            android:theme="@style/Theme.Transparent" />
 
         <!--*****************************二次封装透明activity end******************************-->
 

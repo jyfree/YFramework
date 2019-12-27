@@ -86,6 +86,13 @@
             android:text="分享示例" />
 
         <Button
+            android:id="@+id/go_share_ext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="go2Act"
+            android:text="分享示例(二次封装)" />
+
+        <Button
             android:id="@+id/go_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
