@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 
+import jy.cn.com.ylibrary.acp.MiuiOs;
 import jy.cn.com.ylibrary.util.HandlerUtil;
 import jy.cn.com.ylibrary.util.YLogUtil;
 
@@ -108,7 +109,13 @@ public class PicManager {
     }
 
     private void executePhotoAlbum(Activity context) {
-        Intent intent = new Intent(Intent.ACTION_PICK, null);
+        String action = Intent.ACTION_PICK;
+        if (MiuiOs.isMIUI()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                action = Intent.ACTION_OPEN_DOCUMENT;
+            }
+        }
+        Intent intent = new Intent(action, null);
         intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 "image/*");
         context.startActivityForResult(intent, REQUEST_CODE_PICTURE);

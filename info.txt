@@ -12,3 +12,9 @@ adb shell am start -S -W com.jj.mitao2/jy.cn.com.yframework.MainActivity
 
 anr
 adb pull data/anr/traces.txt
+
+查看第三方安装包
+adb shell pm list package -3
+
+获取当前打开的APP包名（前面的为包名，斜杠后面的是当前启动的acivity）
+adb shell dumpsys window | findstr mCurrentFocus
