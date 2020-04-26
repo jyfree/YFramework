@@ -1,6 +1,6 @@
 @[TOC](YFramework框架)
 
-# 欢迎使用YFramework框架
+# 欢迎使用YFramework框架（已停止维护），升级版为YLibrary https://github.com/jyfree/YLibrary
 
 
 ## 主要功能
